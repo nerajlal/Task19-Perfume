@@ -1,6 +1,6 @@
 @extends('layouts.storefront')
 
-@section('title', 'Contact Us | Nurah')
+@section('title', 'Contact Us | Task19 Perfumes')
 
 @section('content')
 <div class="static-page-container">
@@ -13,7 +13,7 @@
             
             <div class="info-item">
                 <i class="fa-solid fa-envelope"></i>
-                <span>support@nurah.com</span>
+                <span>support@task19.com</span>
             </div>
             <div class="info-item">
                 <i class="fa-solid fa-phone"></i>

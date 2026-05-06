@@ -39,7 +39,7 @@ class AuthController extends Controller
         // Sync session cart to DB
         \App\Http\Controllers\CartController::syncSession($user->id);
 
-        return redirect()->route('home')->with('success', 'Registration successful! Welcome to Nurah Perfumes.');
+        return redirect()->route('home')->with('success', 'Registration successful! Welcome to Task19 Perfumes.');
     }
 
     public function login(Request $request)

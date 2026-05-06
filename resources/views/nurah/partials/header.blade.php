@@ -1,7 +1,7 @@
 <header class="store-header">
     <div class="header-container">
         <a href="{{ route('home') }}" class="logo">
-            NURAH
+            Task19 Perfumes
         </a>
 
         <div class="search-bar">

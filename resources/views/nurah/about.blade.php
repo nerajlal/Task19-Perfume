@@ -1,12 +1,12 @@
 @extends('layouts.storefront')
 
-@section('title', 'About Us | Nurah')
+@section('title', 'About Us | Task19 Perfumes')
 
 @section('content')
 <div class="static-page-container">
-    <h1 class="page-title">The Story of Nurah</h1>
+    <h1 class="page-title">The Story of Task19 Perfumes</h1>
     <div class="page-content">
-        <p>Nurah was born from a passion for the world's most exquisite scents. We believe that a fragrance is more than just a smell—it's a memory, an emotion, and a signature of who you are.</p>
+        <p>Task19 Perfumes was born from a passion for the world's most exquisite scents. We believe that a fragrance is more than just a smell—it's a memory, an emotion, and a signature of who you are.</p>
         <p>Our collection is meticulously curated from artisanal perfumers and essential oil distillers around the globe, ensuring that every drop tells a story of craftsmanship and luxury.</p>
         
         <img src="https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&q=80&w=1200" alt="Perfume Craft" class="content-img">
