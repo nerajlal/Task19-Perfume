@@ -65,12 +65,11 @@
         </aside>
 
         <main class="main-content">
-            <div class="content-container">
-                @yield('content')
-            </div>
-            @include('nurah.partials.footer')
+            @yield('content')
         </main>
     </div>
+
+    @include('nurah.partials.footer')
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     @yield('scripts')

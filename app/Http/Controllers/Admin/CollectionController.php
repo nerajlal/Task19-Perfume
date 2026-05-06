@@ -76,8 +76,8 @@ class CollectionController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'image' => 'nullable|image|mimes:webp|max:2048',
-            'status' => 'boolean',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
+            'status' => 'nullable',
         ]);
 
         $slug = Str::slug($request->name);
@@ -98,7 +98,7 @@ class CollectionController extends Controller
             'slug' => $slug,
             'description' => $request->description,
             'image' => $imagePath,
-            'status' => $request->has('status'),
+            'status' => $request->has('status') ? 1 : 0,
         ]);
 
         return redirect()->route('admin.collections')->with('success', 'Collection created successfully.');
@@ -132,8 +132,8 @@ class CollectionController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'image' => 'nullable|image|mimes:webp|max:2048',
-            'status' => 'boolean',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
+            'status' => 'nullable',
         ]);
 
         $slug = Str::slug($request->name);
@@ -149,8 +149,8 @@ class CollectionController extends Controller
 
         $imagePath = $collection->image;
         if ($request->hasFile('image')) {
-            // Delete old image if exists
-            if ($collection->image) {
+            // Delete old image if it was in storage
+            if ($collection->image && Storage::disk('public')->exists($collection->image)) {
                 Storage::disk('public')->delete($collection->image);
             }
             $imagePath = $request->file('image')->store('collections', 'public');
@@ -161,7 +161,7 @@ class CollectionController extends Controller
             'slug' => $slug,
             'description' => $request->description,
             'image' => $imagePath,
-            'status' => $request->has('status'),
+            'status' => $request->has('status') ? 1 : 0,
         ]);
 
         return redirect()->route('admin.collections')->with('success', 'Collection updated successfully.');

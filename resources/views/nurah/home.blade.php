@@ -14,7 +14,7 @@
     </div>
 
     <!-- Featured Categories Grid (Quick Access) -->
-    <div class="department-section">
+    <!-- <div class="department-section">
         <div class="section-header">
             <h2 class="section-title">Shop by Family</h2>
         </div>
@@ -34,7 +34,7 @@
                 </a>
             @endforeach
         </div>
-    </div>
+    </div> -->
 
     <!-- Collections Sections (Department Style) -->
     @php 

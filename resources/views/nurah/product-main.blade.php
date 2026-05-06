@@ -16,7 +16,12 @@
         <!-- Gallery -->
         <div class="product-gallery">
             <div class="main-image-display">
-                <img src="{{ asset($product->image) }}" id="p-main-img" alt="{{ $product->title }}">
+                @php 
+                    $mainImg = $product->image;
+                    if (Str::startsWith($mainImg, 'storage/')) $mainImg = asset($mainImg);
+                    elseif (!Str::startsWith($mainImg, 'http')) $mainImg = asset($mainImg);
+                @endphp
+                <img src="{{ $mainImg }}" id="p-main-img" alt="{{ $product->title }}" onerror="this.src='{{ asset('images/g-load.webp') }}'">
             </div>
             <div class="thumb-strip">
                 <img src="{{ asset($product->image) }}" class="t-item active" onclick="updateImg(this.src, this)" alt="Main">

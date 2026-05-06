@@ -1,6 +1,16 @@
 <div class="product-card">
     <a href="{{ route('product', ['id' => $product->id]) }}" class="card-img">
-        <img src="{{ asset($product->image) }}" alt="{{ $product->title }}" onerror="this.src='{{ asset('images/g-load.webp') }}'">
+        @php 
+            $imagePath = $product->image;
+            if (Str::startsWith($imagePath, 'storage/')) {
+                $imagePath = asset($imagePath);
+            } elseif (Str::startsWith($imagePath, 'http')) {
+                $imagePath = $imagePath;
+            } else {
+                $imagePath = asset($imagePath);
+            }
+        @endphp
+        <img src="{{ $imagePath }}" alt="{{ $product->title }}" onerror="this.src='{{ asset('images/g-load.webp') }}'">
     </a>
     <div class="card-info">
         <span class="p-price">₹{{ number_format($product->price, 2) }}</span>
