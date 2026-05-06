@@ -48,6 +48,9 @@
                 @if($product->compare_at_price > $product->starting_price)
                     <span class="p-compare-lg">₹{{ number_format($product->compare_at_price, 2) }}</span>
                 @endif
+                <div class="p-quick-add-badge" onclick="addToCart()">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                </div>
             </div>
 
             <div class="p-spec-grid">
@@ -57,7 +60,7 @@
                 </div>
                 <div class="p-spec-item">
                     <span class="s-label">Intensity</span>
-                    <span class="s-value">{{ $product->intensity }}</span>
+                    <span class="s-value">{{ $product->intensity ?? 'Medium' }}</span>
                 </div>
                 <div class="p-spec-item">
                     <span class="s-label">Type</span>
@@ -65,30 +68,84 @@
                 </div>
             </div>
 
-            <div class="p-selection-section">
-                <h3 class="selection-title">Select Volume</h3>
-                <div class="size-options-grid">
-                    @foreach($product->variants as $index => $variant)
-                        <button class="size-btn-lg {{ $index == 0 ? 'active' : '' }}" 
-                                data-price="{{ $variant->price }}" 
-                                data-size="{{ $variant->size }}"
-                                onclick="selectVariant(this)">
-                            {{ $variant->size }}
-                        </button>
+            <!-- Main Accords Section -->
+            <div class="p-accords-section">
+                <h3 class="p-section-title">Main Accords</h3>
+                <div class="accords-list">
+                    @php
+                        $accords = [
+                            ['name' => $product->olfactory_family, 'width' => '95%', 'color' => '#8B4513'],
+                            ['name' => 'Warm Spicy', 'width' => '75%', 'color' => '#B22222'],
+                            ['name' => 'Amber', 'width' => '60%', 'color' => '#FF8C00'],
+                            ['name' => 'Aromatic', 'width' => '45%', 'color' => '#556B2F'],
+                            ['name' => 'Citrus', 'width' => '30%', 'color' => '#FFD700'],
+                        ];
+                    @endphp
+                    @foreach($accords as $accord)
+                        <div class="accord-item">
+                            <div class="accord-bar" style="width: {{ $accord['width'] }}; background-color: {{ $accord['color'] }};">
+                                {{ $accord['name'] }}
+                            </div>
+                        </div>
                     @endforeach
                 </div>
             </div>
 
-            <div class="p-action-bar-lg">
-                <div class="p-qty-selector">
-                    <button onclick="changePageQty(-1)">-</button>
-                    <span id="page-qty">1</span>
-                    <button onclick="changePageQty(1)">+</button>
+            <!-- Size Selection Grid -->
+            <div class="p-variants-section">
+                <h3 class="p-section-title">Select Size</h3>
+                <div class="variant-grid">
+                    @foreach($product->variants as $variant)
+                        <div class="variant-card {{ $loop->first ? 'active' : '' }}" onclick="selectVariant(this, {{ $variant->price }}, '{{ $variant->size }}', {{ $variant->id }})">
+                            <i class="fa-solid fa-bottle-droplet bottle-icon"></i>
+                            <span class="v-size">{{ $variant->size }}</span>
+                            <span class="v-price">₹{{ number_format($variant->price, 0) }}</span>
+                        </div>
+                    @endforeach
                 </div>
-                <button class="btn-add-primary" id="add-to-cart-page-btn">
-                    Add to Cart
+                <input type="hidden" id="selected-variant-id" name="variant_id" value="{{ $product->variants->first()->id ?? '' }}">
+            </div>
+
+            <div class="p-actions-lg">
+                <div class="p-qty-selector">
+                    <button onclick="changePageQty(-1)"><i class="fa-solid fa-minus"></i></button>
+                    <span id="page-qty">1</span>
+                    <button onclick="changePageQty(1)"><i class="fa-solid fa-plus"></i></button>
+                </div>
+                <button class="add-to-cart-lg btn-primary" id="add-to-cart-page-btn">
+                    <span>Add to Cart</span>
+                    <span class="btn-divider"></span>
+                    <span id="btn-price-display">₹{{ number_format($product->starting_price, 0) }}</span>
                 </button>
             </div>
+
+            <!-- Concentration Guide -->
+            <div class="p-concentration-guide">
+                <div class="concentration-grid">
+                    <div class="conc-item {{ str_contains(strtolower($product->type), 'toilette') ? 'active' : '' }}">
+                        <div class="conc-icon"><i class="fa-solid fa-droplet opacity-25"></i></div>
+                        <div class="conc-info">
+                            <span class="conc-name">EDT</span>
+                            <span class="conc-desc">5-15% Oil</span>
+                        </div>
+                    </div>
+                    <div class="conc-item {{ str_contains(strtolower($product->type), 'parfum') && !str_contains(strtolower($product->type), 'extrait') ? 'active' : '' }}">
+                        <div class="conc-icon"><i class="fa-solid fa-droplet opacity-60"></i></div>
+                        <div class="conc-info">
+                            <span class="conc-name">EDP</span>
+                            <span class="conc-desc">15-20% Oil</span>
+                        </div>
+                    </div>
+                    <div class="conc-item {{ str_contains(strtolower($product->type), 'extrait') || str_contains(strtolower($product->type), 'oil') ? 'active' : '' }}">
+                        <div class="conc-icon"><i class="fa-solid fa-droplet"></i></div>
+                        <div class="conc-info">
+                            <span class="conc-name">Extrait</span>
+                            <span class="conc-desc">20-40% Oil</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
 
             <div class="p-tabs">
                 <div class="tab-headers">
@@ -181,6 +238,9 @@
     }
 </style>
 
+@endsection
+
+@section('scripts')
 <script>
     let qty = 1;
 
@@ -190,10 +250,21 @@
         el.classList.add('active');
     }
 
-    function selectVariant(el) {
-        document.querySelectorAll('.size-btn-lg').forEach(b => b.classList.remove('active'));
-        el.classList.add('active');
-        document.getElementById('p-price-display').innerText = '₹' + new Intl.NumberFormat().format(el.dataset.price);
+    function selectVariant(element, price, size, id) {
+        // Update active class
+        document.querySelectorAll('.variant-card').forEach(card => card.classList.remove('active'));
+        element.classList.add('active');
+
+        // Update Price displays
+        const formattedPrice = new Intl.NumberFormat('en-IN', {
+            maximumFractionDigits: 0
+        }).format(price);
+        
+        document.getElementById('p-price-display').innerText = '₹' + formattedPrice;
+        document.getElementById('btn-price-display').innerText = '₹' + formattedPrice;
+        
+        // Update hidden input
+        document.getElementById('selected-variant-id').value = id;
     }
 
     function changePageQty(delta) {
@@ -210,8 +281,16 @@
         document.getElementById('tab-' + tab).classList.remove('d-none');
     }
 
-    document.getElementById('add-to-cart-page-btn').addEventListener('click', function() {
-        const size = document.querySelector('.size-btn-lg.active').dataset.size;
+    function addToCart() {
+        const variantId = document.getElementById('selected-variant-id').value;
+        const activeCard = document.querySelector('.variant-card.active');
+        const size = activeCard ? activeCard.querySelector('.v-size').innerText : '';
+        const btn = document.getElementById('add-to-cart-page-btn');
+        const originalText = btn.innerHTML;
+
+        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Adding...';
+        btn.disabled = true;
+
         $.ajax({
             url: "{{ route('cart.add') }}",
             method: "POST",
@@ -219,13 +298,34 @@
                 _token: "{{ csrf_token() }}",
                 id: "{{ $product->id }}",
                 quantity: qty,
-                size: size
+                size: size,
+                variant_id: variantId
             },
             success: function(response) {
-                $('#cart-count').text(response.cartCount);
-                alert('Added to cart!');
+                if(response.success) {
+                    $('#cart-count').text(response.cartCount);
+                    btn.innerHTML = '<i class="fa-solid fa-check"></i> Added!';
+                    btn.classList.add('success-btn');
+                    
+                    setTimeout(() => {
+                        btn.innerHTML = originalText;
+                        btn.classList.remove('success-btn');
+                        btn.disabled = false;
+                    }, 2000);
+                } else {
+                    alert('Error: ' + response.message);
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                }
+            },
+            error: function() {
+                alert('Something went wrong. Please try again.');
+                btn.innerHTML = originalText;
+                btn.disabled = false;
             }
         });
-    });
+    }
+
+    document.getElementById('add-to-cart-page-btn').addEventListener('click', addToCart);
 </script>
 @endsection

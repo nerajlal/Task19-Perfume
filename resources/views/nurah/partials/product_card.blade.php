@@ -19,7 +19,7 @@
         <a href="{{ route('product', ['id' => $product->id]) }}" class="p-name">{{ $product->title }}</a>
         <span class="p-meta">{{ $product->olfactory_family }} • {{ $product->type }}</span>
     </div>
-    <button class="cart-add-btn" data-product-id="{{ $product->id }}">
+    <button class="cart-add-btn" data-product-id="{{ $product->id }}" data-default-size="{{ $product->variants->first()->size ?? '' }}">
         <i class="fa-solid fa-plus"></i>
     </button>
 </div>

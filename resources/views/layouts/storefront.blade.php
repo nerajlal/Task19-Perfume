@@ -72,6 +72,47 @@
     @include('nurah.partials.footer')
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // Use a more specific unbind/bind or check to prevent double-firing
+        $(document).off('click', '.cart-add-btn').on('click', '.cart-add-btn', function(e) {
+            e.preventDefault();
+            e.stopImmediatePropagation(); // Prevent other listeners if any
+            
+            const productId = $(this).data('product-id');
+            const defaultSize = $(this).data('default-size');
+            const btn = $(this);
+            
+            // Prevent multiple clicks while processing
+            if(btn.hasClass('processing')) return;
+            btn.addClass('processing');
+            
+            $.ajax({
+                url: "{{ route('cart.add') }}",
+                method: "POST",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    id: productId,
+                    quantity: 1,
+                    size: defaultSize
+                },
+                success: function(response) {
+                    btn.removeClass('processing');
+                    if(response.success) {
+                        $('#cart-count').text(response.cartCount);
+                        btn.html('<i class="fa-solid fa-check"></i>');
+                        btn.css('background', '#10B981');
+                        setTimeout(() => {
+                            btn.html('<i class="fa-solid fa-plus"></i>');
+                            btn.css('background', '');
+                        }, 2000);
+                    }
+                },
+                error: function() {
+                    btn.removeClass('processing');
+                }
+            });
+        });
+    </script>
     @yield('scripts')
 </body>
 </html>

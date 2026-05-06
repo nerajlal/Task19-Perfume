@@ -73,35 +73,3 @@
     </div>
 @endsection
 
-@section('scripts')
-<script>
-    $(document).ready(function() {
-        $('.cart-add-btn').on('click', function(e) {
-            e.preventDefault();
-            const productId = $(this).data('product-id');
-            const btn = $(this);
-            
-            $.ajax({
-                url: "{{ route('cart.add') }}",
-                method: "POST",
-                data: {
-                    _token: "{{ csrf_token() }}",
-                    id: productId,
-                    quantity: 1
-                },
-                success: function(response) {
-                    $('#cart-count').text(response.cartCount);
-                    btn.html('<i class="fa-solid fa-check"></i>').addClass('success');
-                    setTimeout(() => {
-                        btn.html('<i class="fa-solid fa-plus"></i>').removeClass('success');
-                    }, 2000);
-                },
-                error: function(xhr) {
-                    console.error(xhr);
-                    alert('Error adding to cart. Please try again.');
-                }
-            });
-        });
-    });
-</script>
-@endsection

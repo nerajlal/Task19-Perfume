@@ -638,3 +638,418 @@ button, input, select, textarea {
     color: var(--text-muted);
     font-size: 0.95rem;
 }
+
+/* Premium Product Features */
+.p-section-title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--text-main);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 1.25rem;
+    display: block;
+}
+
+/* Accords */
+.p-accords-section {
+    margin-top: 2.5rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.accords-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.accord-item {
+    width: 100%;
+}
+
+.accord-bar {
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 0.85rem;
+    font-weight: 600;
+    white-space: nowrap;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease;
+}
+
+.accord-bar:hover {
+    transform: translateX(10px);
+}
+
+/* Variant Grid */
+.p-variants-section {
+    margin-top: 2.5rem;
+}
+
+.variant-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 1rem;
+}
+
+.variant-card {
+    border: 1px solid var(--border-color);
+    border-radius: 1rem;
+    padding: 1.25rem 0.75rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    transition: var(--transition);
+    background: #fff;
+    text-align: center;
+}
+
+.variant-card:hover {
+    border-color: var(--primary-color);
+    background: var(--section-bg);
+}
+
+.variant-card.active {
+    border-color: var(--primary-color);
+    background: #F8FAFC;
+    box-shadow: 0 10px 15px -3px rgba(15, 23, 42, 0.1);
+}
+
+.bottle-icon {
+    font-size: 1.25rem;
+    color: var(--text-muted);
+}
+
+.active .bottle-icon {
+    color: var(--primary-color);
+}
+
+.v-size {
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--text-main);
+}
+
+.v-price {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+/* Concentration Guide */
+.p-concentration-guide {
+    margin-top: 3rem;
+    background: var(--section-bg);
+    padding: 2rem;
+    border-radius: 1.5rem;
+}
+
+.concentration-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+}
+
+.conc-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    opacity: 0.5;
+    transition: var(--transition);
+}
+
+.conc-item.active {
+    opacity: 1;
+    transform: scale(1.05);
+}
+
+.conc-icon {
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+    color: var(--primary-color);
+}
+
+.conc-name {
+    font-weight: 800;
+    font-size: 0.85rem;
+    color: var(--primary-color);
+}
+
+.conc-desc {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+/* Refined Product Actions */
+.p-actions-lg {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2.5rem;
+    align-items: stretch;
+}
+
+.p-qty-selector {
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--border-color);
+    border-radius: 1rem;
+    padding: 0 1rem;
+    background: #fff;
+    gap: 1.5rem;
+}
+
+.p-qty-selector button {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 0.5rem;
+    transition: var(--transition);
+}
+
+.p-qty-selector button:hover {
+    color: var(--primary-color);
+}
+
+#page-qty {
+    font-weight: 700;
+    font-size: 1.1rem;
+    min-width: 20px;
+    text-align: center;
+}
+
+.add-to-cart-lg {
+    flex-grow: 1;
+    height: 60px;
+    border-radius: 1rem;
+    font-size: 1.1rem !important;
+}
+
+.wishlist-btn-lg {
+    width: 60px;
+    height: 60px;
+    border: 1px solid var(--border-color);
+    background: #fff;
+    border-radius: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.wishlist-btn-lg:hover {
+    border-color: #EF4444;
+    color: #EF4444;
+    background: #FEF2F2;
+}
+
+/* Polished Concentration Guide */
+.p-concentration-guide {
+    margin-top: 2.5rem;
+    background: #F8FAFC;
+    padding: 1.75rem;
+    border-radius: 1.25rem;
+    border: 1px solid #F1F5F9;
+}
+
+.concentration-grid {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.conc-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    opacity: 0.3;
+    transition: var(--transition);
+}
+
+.conc-item.active {
+    opacity: 1;
+}
+
+.conc-info {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.conc-icon {
+    font-size: 1.25rem;
+    margin-bottom: 0;
+}
+
+/* Perfection Tweaks */
+.accord-bar {
+    padding: 0.6rem 1.25rem;
+    border-radius: 999px;
+    letter-spacing: 0.02em;
+}
+
+.variant-card {
+    border-radius: 1.25rem;
+    padding: 1.5rem 1rem;
+}
+
+.variant-card.active {
+    border-width: 2px;
+}
+
+.p-tabs {
+    margin-top: 4rem;
+    border-top: 1px solid var(--border-color);
+    padding-top: 2rem;
+}
+
+.tab-headers {
+    display: flex;
+    gap: 3rem;
+    margin-bottom: 2rem;
+}
+
+.tab-btn {
+    background: none;
+    border: none;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding-bottom: 0.75rem;
+    position: relative;
+    transition: var(--transition);
+}
+
+.tab-btn.active {
+    color: var(--primary-color);
+}
+
+.tab-btn.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--accent-color);
+    border-radius: 99px;
+}
+
+.tab-content p {
+    color: var(--text-muted);
+    line-height: 1.8;
+    font-size: 1.05rem;
+}
+
+/* Sticky Gallery and Layout Perfection */
+.product-core-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start; /* Crucial for sticky */
+}
+
+.product-gallery {
+    position: sticky;
+    top: calc(var(--header-height) + 2rem);
+    height: fit-content;
+}
+
+/* Action Bar Fixes */
+.p-actions-lg {
+    display: flex;
+    gap: 1rem;
+    align-items: stretch;
+    width: 100%;
+}
+
+.p-qty-selector {
+    flex: 0 0 150px; /* Fixed width for qty */
+    height: 60px;
+    justify-content: space-between;
+}
+
+.add-to-cart-lg {
+    flex: 1; /* Take remaining space */
+    height: 60px;
+    white-space: nowrap;
+    padding: 0 1.5rem;
+    font-size: 1rem !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.wishlist-btn-lg {
+    flex: 0 0 60px; /* Fixed width for heart */
+    height: 60px;
+}
+
+/* Adjustments for mobile-like squeezing */
+@media (max-width: 1200px) {
+    .product-core-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .product-gallery { position: relative; top: 0; }
+    .p-actions-lg { flex-wrap: wrap; }
+    .p-qty-selector { flex: 1 1 100%; }
+}
+
+.btn-divider {
+    width: 1px;
+    height: 20px;
+    background: rgba(15, 23, 42, 0.15);
+    margin: 0 1rem;
+}
+
+/* Quick Add Badge at Top */
+.p-quick-add-badge {
+    width: 45px;
+    height: 45px;
+    background: var(--accent-color);
+    color: var(--primary-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    margin-left: auto;
+}
+
+.p-quick-add-badge:hover {
+    transform: scale(1.1) rotate(15deg);
+    background: var(--primary-color);
+    color: var(--accent-color);
+}
+
+/* Success Feedback */
+.success-btn {
+    background: #10B981 !important;
+    color: white !important;
+    border-color: #10B981 !important;
+}
+
+/* Enhanced Add to Cart Hover */
+.add-to-cart-lg:hover {
+    background: var(--primary-color) !important;
+    color: var(--accent-color) !important;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.2);
+}
+
+.add-to-cart-lg:active {
+    transform: translateY(-1px);
+}
+
+.add-to-cart-lg:hover .btn-divider {
+    background: rgba(212, 175, 55, 0.3);
+}
