@@ -1,15 +1,15 @@
 <div class="product-card">
     <a href="{{ route('product', ['id' => $product->id]) }}" class="card-img">
         @php 
-            $imagePath = $product->image;
-            if (Str::startsWith($imagePath, 'http')) {
-                // External URL
-            } elseif (Str::startsWith($imagePath, 'images/')) {
-                // Local public/images folder
-                $imagePath = asset($imagePath);
-            } else {
-                // Storage folder (uploaded via admin)
-                $imagePath = \Illuminate\Support\Facades\Storage::url($imagePath);
+            $imagePath = $product->main_image_url;
+            if (!$imagePath) {
+                // Fallback to legacy path if it exists or hardcoded images/ folder
+                $legacyImg = $product->image ?? 'images/products/p' . $product->id . '.png';
+                if (Str::startsWith($legacyImg, 'images/')) {
+                    $imagePath = asset($legacyImg);
+                } else {
+                    $imagePath = asset('images/g-load.webp');
+                }
             }
         @endphp
         <img src="{{ $imagePath }}" alt="{{ $product->title }}" onerror="this.src='{{ asset('images/g-load.webp') }}'">

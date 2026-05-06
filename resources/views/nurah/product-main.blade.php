@@ -17,14 +17,7 @@
         <div class="product-gallery">
             <div class="main-image-display">
                 @php 
-                    $mainImg = $product->image;
-                    if (Str::startsWith($mainImg, 'http')) {
-                        // External
-                    } elseif (Str::startsWith($mainImg, 'images/')) {
-                        $mainImg = asset($mainImg);
-                    } else {
-                        $mainImg = \Illuminate\Support\Facades\Storage::url($mainImg);
-                    }
+                    $mainImg = $product->main_image_url ?? asset('images/products/p' . $product->id . '.png');
                 @endphp
                 <img src="{{ $mainImg }}" id="p-main-img" alt="{{ $product->title }}" onerror="this.src='{{ asset('images/g-load.webp') }}'">
             </div>
