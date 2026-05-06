@@ -22,9 +22,18 @@
                 <img src="{{ $mainImg }}" id="p-main-img" alt="{{ $product->title }}" onerror="this.src='{{ asset('images/g-load.webp') }}'">
             </div>
             <div class="thumb-strip">
-                <img src="{{ asset($product->image) }}" class="t-item active" onclick="updateImg(this.src, this)" alt="Main">
                 @foreach($product->images as $img)
-                    <img src="{{ asset($img->path) }}" class="t-item" onclick="updateImg(this.src, this)" alt="Gallery">
+                    @php 
+                        $thumbPath = $img->path;
+                        if (Str::startsWith($thumbPath, 'http')) {
+                            // External
+                        } elseif (Str::startsWith($thumbPath, 'images/')) {
+                            $thumbPath = asset($thumbPath);
+                        } else {
+                            $thumbPath = \Illuminate\Support\Facades\Storage::url($thumbPath);
+                        }
+                    @endphp
+                    <img src="{{ $thumbPath }}" class="t-item {{ $loop->first ? 'active' : '' }}" onclick="updateImg(this.src, this)" alt="Gallery">
                 @endforeach
             </div>
         </div>
@@ -35,8 +44,8 @@
             <p class="p-vendor-lg">By Task19 Fragrance House</p>
             
             <div class="p-price-block-lg">
-                <span class="p-price-lg" id="p-price-display">₹{{ number_format($product->price, 2) }}</span>
-                @if($product->compare_at_price > $product->price)
+                <span class="p-price-lg" id="p-price-display">₹{{ number_format($product->starting_price, 2) }}</span>
+                @if($product->compare_at_price > $product->starting_price)
                     <span class="p-compare-lg">₹{{ number_format($product->compare_at_price, 2) }}</span>
                 @endif
             </div>

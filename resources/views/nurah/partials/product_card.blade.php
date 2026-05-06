@@ -15,7 +15,7 @@
         <img src="{{ $imagePath }}" alt="{{ $product->title }}" onerror="this.src='{{ asset('images/g-load.webp') }}'">
     </a>
     <div class="card-info">
-        <span class="p-price">₹{{ number_format($product->price, 2) }}</span>
+        <span class="p-price">₹{{ number_format($product->starting_price, 2) }}</span>
         <a href="{{ route('product', ['id' => $product->id]) }}" class="p-name">{{ $product->title }}</a>
         <span class="p-meta">{{ $product->olfactory_family }} • {{ $product->type }}</span>
     </div>
