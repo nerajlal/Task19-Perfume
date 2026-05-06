@@ -18,8 +18,13 @@
             <div class="main-image-display">
                 @php 
                     $mainImg = $product->image;
-                    if (Str::startsWith($mainImg, 'storage/')) $mainImg = asset($mainImg);
-                    elseif (!Str::startsWith($mainImg, 'http')) $mainImg = asset($mainImg);
+                    if (Str::startsWith($mainImg, 'http')) {
+                        // External
+                    } elseif (Str::startsWith($mainImg, 'images/')) {
+                        $mainImg = asset($mainImg);
+                    } else {
+                        $mainImg = \Illuminate\Support\Facades\Storage::url($mainImg);
+                    }
                 @endphp
                 <img src="{{ $mainImg }}" id="p-main-img" alt="{{ $product->title }}" onerror="this.src='{{ asset('images/g-load.webp') }}'">
             </div>

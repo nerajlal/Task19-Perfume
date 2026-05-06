@@ -91,7 +91,7 @@ class ProductController extends Controller
             'title' => 'required|string|max:255',
             'status' => 'required|in:active,draft',
             'variants' => 'array',
-            'media.*' => 'mimes:webp',
+            'media.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
         ]);
 
         $product = Product::create($request->only([
@@ -126,8 +126,6 @@ class ProductController extends Controller
             }
         }
         
-        // Handle Media URLs (if any, implemented later via generic input)
-
         return redirect()->route('admin.products')->with('success', 'Product created successfully.');
     }
 
@@ -145,7 +143,7 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-             'media.*' => 'mimes:webp',
+             'media.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
         ]);
 
         $product = Product::findOrFail($id);

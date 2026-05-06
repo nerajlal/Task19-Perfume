@@ -2,12 +2,14 @@
     <a href="{{ route('product', ['id' => $product->id]) }}" class="card-img">
         @php 
             $imagePath = $product->image;
-            if (Str::startsWith($imagePath, 'storage/')) {
+            if (Str::startsWith($imagePath, 'http')) {
+                // External URL
+            } elseif (Str::startsWith($imagePath, 'images/')) {
+                // Local public/images folder
                 $imagePath = asset($imagePath);
-            } elseif (Str::startsWith($imagePath, 'http')) {
-                $imagePath = $imagePath;
             } else {
-                $imagePath = asset($imagePath);
+                // Storage folder (uploaded via admin)
+                $imagePath = \Illuminate\Support\Facades\Storage::url($imagePath);
             }
         @endphp
         <img src="{{ $imagePath }}" alt="{{ $product->title }}" onerror="this.src='{{ asset('images/g-load.webp') }}'">
