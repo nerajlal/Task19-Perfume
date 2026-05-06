@@ -65,7 +65,10 @@
         </aside>
 
         <main class="main-content">
-            @yield('content')
+            <div class="content-container">
+                @yield('content')
+            </div>
+            @include('nurah.partials.footer')
         </main>
     </div>
 

@@ -119,38 +119,56 @@ button, input, select, textarea {
     color: var(--text-muted);
 }
 
-.header-actions {
+.action-btn {
+    background: none;
+    border: none;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 1.5rem;
+    gap: 0.25rem;
+    color: var(--text-main);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: var(--transition);
 }
 
-.nav-link {
-    font-weight: 600;
-    color: var(--text-main);
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
+.action-btn i {
+    font-size: 1.25rem;
+    color: var(--primary-color);
+}
+
+.action-btn:hover {
+    color: var(--accent-color);
+}
+
+.action-btn:hover i {
+    color: var(--accent-color);
 }
 
 .cart-btn {
     background: var(--primary-color);
     color: #fff;
-    padding: 0.6rem 1.25rem;
-    border-radius: 9999px;
+    padding: 0.5rem 1rem;
+    border-radius: 1rem;
     display: flex;
+    flex-direction: row;
     align-items: center;
     gap: 0.75rem;
     font-weight: 700;
     position: relative;
+    font-size: 0.9rem;
 }
+
+.cart-btn i { color: #fff; }
 
 .cart-count {
     background: var(--accent-color);
     color: var(--primary-color);
-    font-size: 0.75rem;
-    width: 20px;
-    height: 20px;
+    font-size: 0.7rem;
+    width: 18px;
+    height: 18px;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -177,8 +195,15 @@ button, input, select, textarea {
 
 .main-content {
     flex-grow: 1;
-    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100vh - var(--header-height));
     background: #fff;
+}
+
+.content-container {
+    flex-grow: 1;
+    padding: 2.5rem;
 }
 
 /* Sidebar Nav */
@@ -417,4 +442,127 @@ button, input, select, textarea {
     .search-bar { display: none; }
     .logo { font-size: 1.25rem; }
     .main-content { padding: 1rem; }
+}
+
+/* Footer */
+.store-footer {
+    background: var(--primary-color);
+    color: #fff;
+    padding: 5rem 2rem 2rem;
+    margin-top: 5rem;
+}
+
+.footer-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1.5fr;
+    gap: 4rem;
+}
+
+.footer-brand .logo {
+    color: var(--accent-color);
+    margin-bottom: 1.5rem;
+    display: block;
+}
+
+.footer-brand p {
+    color: #94A3B8;
+    line-height: 1.8;
+    font-size: 0.95rem;
+    max-width: 300px;
+}
+
+.footer-heading {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.footer-links {
+    list-style: none;
+}
+
+.footer-links li {
+    margin-bottom: 1rem;
+}
+
+.footer-links a {
+    color: #94A3B8;
+    font-size: 0.95rem;
+    transition: var(--transition);
+}
+
+.footer-links a:hover {
+    color: var(--accent-color);
+    padding-left: 0.5rem;
+}
+
+.footer-newsletter p {
+    color: #94A3B8;
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+}
+
+.newsletter-form {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.newsletter-form input {
+    flex-grow: 1;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 0.75rem 1rem;
+    border-radius: 0.75rem;
+    color: #fff;
+    font-size: 0.9rem;
+}
+
+.newsletter-form button {
+    background: var(--accent-color);
+    color: var(--primary-color);
+    border: none;
+    padding: 0.75rem 1.25rem;
+    border-radius: 0.75rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.footer-bottom {
+    max-width: 1400px;
+    margin: 4rem auto 0;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #64748B;
+    font-size: 0.85rem;
+}
+
+.social-links {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.social-links a {
+    font-size: 1.25rem;
+    color: #94A3B8;
+}
+
+.social-links a:hover {
+    color: var(--accent-color);
+}
+
+@media (max-width: 1024px) {
+    .footer-container { grid-template-columns: 1fr 1fr; gap: 3rem; }
+}
+
+@media (max-width: 768px) {
+    .footer-container { grid-template-columns: 1fr; gap: 2.5rem; }
+    .footer-bottom { flex-direction: column; gap: 1.5rem; text-align: center; }
 }
