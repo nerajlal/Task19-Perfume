@@ -22,9 +22,19 @@
                     </a>
                 </li>
                 @foreach($sidebarCollections as $col)
+                @php
+                    $icon = 'fa-droplet';
+                    $slug = strtolower($col->slug);
+                    if (str_contains($slug, 'signature')) $icon = 'fa-crown';
+                    elseif (str_contains($slug, 'floral')) $icon = 'fa-leaf';
+                    elseif (str_contains($slug, 'fresh') || str_contains($slug, 'zesty')) $icon = 'fa-wind';
+                    elseif (str_contains($slug, 'wood')) $icon = 'fa-tree';
+                    elseif (str_contains($slug, 'oriental') || str_contains($slug, 'oud')) $icon = 'fa-moon';
+                    elseif (str_contains($slug, 'spice') || str_contains($slug, 'warm')) $icon = 'fa-fire';
+                @endphp
                 <li class="menu-item">
                     <a href="{{ route('collection', ['slug' => $col->slug]) }}" class="menu-link {{ request()->query('slug') == $col->slug ? 'active' : '' }}">
-                        <i class="fa-solid fa-bottle-droplet"></i> {{ $col->name }}
+                        <i class="fa-solid {{ $icon }}"></i> {{ $col->name }}
                     </a>
                 </li>
                 @endforeach
@@ -65,7 +75,9 @@
         </aside>
 
         <main class="main-content">
-            @yield('content')
+            <div class="content-container">
+                @yield('content')
+            </div>
         </main>
     </div>
 

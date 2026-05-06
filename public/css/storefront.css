@@ -181,9 +181,7 @@ button, input, select, textarea {
 .main-wrapper {
     display: flex;
     min-height: calc(100vh - var(--header-height));
-    max-width: 1400px;
-    margin: 0 auto;
-    border-left: 1px solid var(--border-color); /* To match the sidebar border-right */
+    width: 100%;
 }
 
 .sidebar {
@@ -1053,3 +1051,4 @@ button, input, select, textarea {
 .add-to-cart-lg:hover .btn-divider {
     background: rgba(212, 175, 55, 0.3);
 }
+
