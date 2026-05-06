@@ -2,9 +2,10 @@
     <div class="footer-container">
         <div class="footer-brand">
             <a href="{{ route('home') }}" class="logo">Task19 Perfumes</a>
-            <p>Elevating the art of fine perfumery. Task19 brings you the world's most exquisite artisanal fragrances and essential oils.</p>
+            <p>Elevating the art of fine perfumery. Task19 brings you the world's most exquisite artisanal fragrances
+                and essential oils.</p>
         </div>
-        
+
         <div class="footer-group">
             <h3 class="footer-heading">Collections</h3>
             <ul class="footer-links">
@@ -22,7 +23,6 @@
                 <li><a href="{{ route('contact') }}">Contact Us</a></li>
                 <li><a href="{{ route('shipping-policy') }}">Shipping Policy</a></li>
                 <li><a href="{{ route('return-policy') }}">Return Policy</a></li>
-                <li><a href="{{ route('terms') }}">Terms of Service</a></li>
             </ul>
         </div>
 
