@@ -92,15 +92,15 @@
         @endif
     @endforeach
 
-    <!-- Newsletter / Trust Section -->
-    <div class="hero-banner" style="background: var(--section-bg); padding: 3rem; margin-top: 4rem; border: 1px solid var(--border-color);">
-        <div style="max-width: 100%; text-align: center;">
-            <h2 style="font-size: 2rem; color: var(--primary-color); margin-bottom: 1rem;">Experience Excellence</h2>
-            <p style="color: var(--text-muted); margin-bottom: 2rem; max-width: 600px; margin-left: auto; margin-right: auto;">Join our exclusive circle and be the first to know about new artisanal launches and limited edition scents.</p>
-            <div style="display: flex; gap: 1rem; justify-content: center; max-width: 500px; margin: 0 auto;">
-                <input type="email" placeholder="Enter your email" style="flex-grow: 1; padding: 1rem 1.5rem; border-radius: 9999px; border: 1px solid var(--border-color);">
-                <button class="btn-primary" style="padding: 1rem 2rem;">Subscribe</button>
-            </div>
+    <!-- Newsletter Section -->
+    <div class="newsletter-section">
+        <div class="newsletter-content">
+            <h2 class="newsletter-title">Experience Excellence</h2>
+            <p class="newsletter-subtitle">Join our exclusive circle and be the first to know about new artisanal launches and limited edition scents.</p>
+            <form class="newsletter-input-group">
+                <input type="email" placeholder="Your email address" class="newsletter-input">
+                <button type="button" class="newsletter-btn">Subscribe</button>
+            </form>
         </div>
     </div>
 @endsection
