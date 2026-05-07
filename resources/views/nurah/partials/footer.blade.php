@@ -1,5 +1,5 @@
 <footer class="store-footer">
-    <div class="footer-content-wrapper" style="max-width: 1400px; margin: 0 auto; padding: 0 2rem;">
+    <div class="footer-content-wrapper">
         <div class="footer-container">
             <div class="footer-brand">
                 <a href="{{ route('home') }}" class="logo">Task19 Perfumes</a>
