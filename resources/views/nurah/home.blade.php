@@ -12,6 +12,38 @@
         </div>
         <img src="{{ asset('images/hero-banner.png') }}" alt="Task19 Perfume" class="hero-image">
     </div>
+    
+    <!-- USP Trust Bar -->
+    <div class="usp-bar">
+        <div class="usp-item">
+            <i class="fa-solid fa-circle-check"></i>
+            <div class="usp-text">
+                <span class="usp-title">100% Authentic</span>
+                <span class="usp-desc">Direct from Task19</span>
+            </div>
+        </div>
+        <div class="usp-item">
+            <i class="fa-solid fa-truck-fast"></i>
+            <div class="usp-text">
+                <span class="usp-title">Express Delivery</span>
+                <span class="usp-desc">Across all major cities</span>
+            </div>
+        </div>
+        <div class="usp-item">
+            <i class="fa-solid fa-lock"></i>
+            <div class="usp-text">
+                <span class="usp-title">Secure Payment</span>
+                <span class="usp-desc">100% Protected transactions</span>
+            </div>
+        </div>
+        <div class="usp-item">
+            <i class="fa-solid fa-rotate-left"></i>
+            <div class="usp-text">
+                <span class="usp-title">Easy Returns</span>
+                <span class="usp-desc">14-Day easy window</span>
+            </div>
+        </div>
+    </div>
 
     <!-- Featured Categories Grid (Quick Access) -->
     <!-- <div class="department-section">

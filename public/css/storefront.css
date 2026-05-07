@@ -271,6 +271,7 @@ button, input, select, textarea {
     margin-bottom: 3rem;
     position: relative;
     overflow: hidden;
+    margin-bottom: 4rem;
 }
 
 .hero-content {
@@ -1095,6 +1096,81 @@ body.menu-open {
    Responsive Queries (Moved to bottom for reliable overrides)
    ========================================================================== */
 
+/* USP Bar */
+.usp-bar {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    padding: 3rem 0;
+    border-bottom: 1px solid var(--border-color);
+    margin: 2rem 0 4rem;
+}
+
+.usp-item {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+}
+
+.usp-item i {
+    font-size: 2rem;
+    color: var(--accent-color);
+    background: var(--section-bg);
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 1.25rem;
+    transition: var(--transition);
+}
+
+.usp-item:hover i {
+    transform: translateY(-5px);
+    background: var(--primary-color);
+    color: var(--accent-color);
+}
+
+.usp-title {
+    display: block;
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: var(--primary-color);
+}
+
+.usp-desc {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+/* Footer Trust */
+.footer-trust {
+    margin-top: 2rem;
+}
+
+.payment-methods {
+    display: flex;
+    gap: 1rem;
+    font-size: 1.5rem;
+    color: #94A3B8;
+    margin-bottom: 1rem;
+}
+
+.secure-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #94A3B8;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.secure-badge i {
+    color: #10B981;
+}
+
 @media (max-width: 1200px) {
     .product-core-grid { grid-template-columns: 1fr; gap: 2rem; }
     .product-gallery { position: relative; top: 0; }
@@ -1162,6 +1238,8 @@ body.menu-open {
     }
 
     .footer-container { grid-template-columns: 1fr 1fr; gap: 3rem; }
+
+    .usp-bar { grid-template-columns: repeat(2, 1fr); gap: 2.5rem; }
 }
 
 @media (max-width: 768px) {
@@ -1235,4 +1313,9 @@ body.menu-open {
     }
 
     .content-container { padding: 1rem; }
+
+    .usp-bar { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; padding: 2.5rem 0; }
+    .usp-item i { width: 50px; height: 50px; font-size: 1.5rem; }
+    .usp-title { font-size: 0.95rem; }
+    .usp-desc { font-size: 0.75rem; }
 }
