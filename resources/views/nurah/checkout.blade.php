@@ -95,7 +95,13 @@
                     @foreach($cart as $item)
                     <div class="s-item-row">
                         <div class="s-item-img">
-                            <img src="{{ asset($item['image']) }}" alt="{{ $item['name'] }}">
+                            @php 
+                                $checkoutImg = $item['image'] ?? 'images/g-load.webp';
+                                if (!$checkoutImg || $checkoutImg == '') {
+                                    $checkoutImg = 'images/g-load.webp';
+                                }
+                            @endphp
+                            <img src="{{ asset($checkoutImg) }}" alt="{{ $item['name'] }}" onerror="this.src='{{ asset('images/g-load.webp') }}'">
                             <span class="s-item-qty">{{ $item['quantity'] }}</span>
                         </div>
                         <div class="s-item-info">

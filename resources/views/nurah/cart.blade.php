@@ -16,7 +16,13 @@
             @foreach($cart as $id => $item)
             <div class="cart-item-card" id="item-{{ $id }}">
                 <div class="item-visual">
-                    <img src="{{ asset($item['image']) }}" alt="{{ $item['name'] }}">
+                    @php 
+                        $itemImg = $item['image'] ?? 'images/g-load.webp';
+                        if (!$itemImg || $itemImg == '') {
+                            $itemImg = 'images/g-load.webp';
+                        }
+                    @endphp
+                    <img src="{{ asset($itemImg) }}" alt="{{ $item['name'] }}" onerror="this.src='{{ asset('images/g-load.webp') }}'">
                 </div>
                 <div class="item-info-lg">
                     <div class="item-top-row">
