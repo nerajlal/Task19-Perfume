@@ -1,5 +1,8 @@
 <header class="store-header">
     <div class="header-container">
+        <button id="mobile-menu-toggle" class="mobile-toggle">
+            <i class="fa-solid fa-bars"></i>
+        </button>
         <a href="{{ route('home') }}" class="logo">
             Task19 Perfumes
         </a>
@@ -13,12 +16,12 @@
             @auth
                 <a href="{{ route('account.index') }}" class="action-btn">
                     <i class="fa-regular fa-user"></i>
-                    <span>Account</span>
+                    <span class="action-text">Account</span>
                 </a>
             @else
                 <button class="action-btn" onclick="document.getElementById('login-modal').style.display='flex'">
                     <i class="fa-regular fa-user"></i>
-                    <span>Log In</span>
+                    <span class="action-text">Log In</span>
                 </button>
             @endauth
 

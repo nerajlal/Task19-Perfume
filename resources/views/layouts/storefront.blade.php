@@ -9,10 +9,14 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body>
+    <div class="sidebar-overlay"></div>
     @include('nurah.partials.header')
 
     <div class="main-wrapper">
         <aside class="sidebar">
+            <button id="mobile-menu-close" class="mobile-close-btn">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
             <h2 class="sidebar-title">Categories</h2>
             <ul class="sidebar-menu">
                 @php $sidebarCollections = \App\Models\Collection::where('status', 1)->get(); @endphp
@@ -85,6 +89,30 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
+        $(document).ready(function() {
+            const $sidebar = $('.sidebar');
+            const $overlay = $('.sidebar-overlay');
+            const $toggle = $('#mobile-menu-toggle');
+            const $close = $('#mobile-menu-close');
+
+            function toggleMobileMenu() {
+                $sidebar.toggleClass('active');
+                $overlay.toggleClass('active');
+                $('body').toggleClass('menu-open');
+            }
+
+            $toggle.on('click', toggleMobileMenu);
+            $close.on('click', toggleMobileMenu);
+            $overlay.on('click', toggleMobileMenu);
+
+            // Close menu when clicking a link (optional, but good for SPA feel)
+            $('.menu-link').on('click', function() {
+                if ($(window).width() <= 1024) {
+                    toggleMobileMenu();
+                }
+            });
+        });
+
         // Use a more specific unbind/bind or check to prevent double-firing
         $(document).off('click', '.cart-add-btn').on('click', '.cart-add-btn', function(e) {
             e.preventDefault();
