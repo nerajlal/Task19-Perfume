@@ -113,7 +113,7 @@
     .item-top-row { display: flex; justify-content: space-between; align-items: flex-start; }
     .item-name-lg { font-size: 1.25rem; font-weight: 700; color: var(--primary-color); margin-bottom: 0.25rem; }
     .item-variant-lg { font-size: 0.9rem; color: var(--text-muted); font-weight: 500; }
-    .item-remove-btn { background: none; border: none; font-size: 1.25rem; color: var(--text-muted); cursor: pointer; transition: var(--transition); }
+    .item-remove-btn { background: none; border: none; font-size: 1.25rem; color: var(--text-muted); cursor: pointer; transition: var(--transition); padding: 0.5rem; display: flex; align-items: center; justify-content: center; }
     .item-remove-btn:hover { color: #ef4444; transform: rotate(90deg); }
 
     .item-bottom-row { display: flex; justify-content: space-between; align-items: center; }
@@ -145,9 +145,26 @@
     .empty-cart-state h2 { font-size: 2rem; font-weight: 800; margin-bottom: 1rem; }
     .empty-cart-state p { color: var(--text-muted); font-size: 1.1rem; }
 
-    @media (max-width: 1100px) {
-        .cart-main-grid { grid-template-columns: 1fr; gap: 3rem; }
-        .cart-sidebar-summary { order: -1; }
+    @media (max-width: 1024px) {
+        .cart-title-lg { font-size: 2rem; }
+        .cart-main-grid { grid-template-columns: 1fr; gap: 2rem; }
+        .cart-sidebar-summary { order: 2; }
+        
+        .cart-item-card { padding: 1.25rem; gap: 1.25rem; }
+        .item-visual { width: 100px; height: 100px; }
+        .item-name-lg { font-size: 1.1rem; }
+        .item-price-lg { font-size: 1.15rem; }
+    }
+
+    @media (max-width: 600px) {
+        .cart-item-card { padding: 1rem; gap: 1rem; align-items: center; }
+        .item-visual { width: 80px; height: 80px; border-radius: 0.75rem; }
+        .item-name-lg { font-size: 0.95rem; }
+        .item-price-lg { font-size: 1.1rem; }
+        .item-qty-control-lg { gap: 0.75rem; padding: 0.3rem 0.75rem; font-size: 0.9rem; }
+        .item-qty-control-lg button { font-size: 1rem; }
+        .item-bottom-row { margin-top: 1rem; }
+        .item-remove-btn { padding: 0.75rem; } /* Larger hit area for mobile */
     }
 </style>
 

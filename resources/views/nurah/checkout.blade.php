@@ -184,9 +184,24 @@
     .badge-item { font-size: 0.7rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; display: flex; flex-direction: column; align-items: center; gap: 0.5rem; }
     .badge-item i { font-size: 1.25rem; color: var(--accent-color); }
 
-    @media (max-width: 1100px) {
-        .checkout-main-grid { grid-template-columns: 1fr; }
-        .checkout-sticky-summary { order: -1; }
+    @media (max-width: 1024px) {
+        .checkout-title-lg { font-size: 2rem; }
+        .checkout-main-grid { grid-template-columns: 1fr; gap: 2rem; }
+        .checkout-sticky-summary { order: 2; position: static; }
+        
+        .checkout-card { padding: 1.5rem; }
+        .form-grid-lg { grid-template-columns: 1fr; gap: 1rem; }
+        .form-group-lg.full { grid-column: span 1; }
+        
+        .badge-item { font-size: 0.6rem; }
+    }
+
+    @media (max-width: 600px) {
+        .checkout-header-lg { margin-bottom: 2rem; }
+        .card-heading { font-size: 1.1rem; flex-wrap: wrap; }
+        .pay-option { padding: 1rem; gap: 1rem; }
+        .pay-title { font-size: 1rem; }
+        .btn-complete-order { font-size: 1.1rem; padding: 1.25rem; }
     }
 </style>
 @endsection
