@@ -104,25 +104,40 @@
                 <div class="video-container">
                     <iframe src="https://www.youtube.com/embed/167AIKitcZs?autoplay=1&mute=1&loop=1&playlist=167AIKitcZs&controls=0&modestbranding=1&rel=0&playsinline=1" title="Fragrance Story 1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
+                <div class="video-info">
+                    <a href="{{ route('all-products') }}" class="video-btn">Shop Collection</a>
+                </div>
             </div>
             <div class="video-card">
                 <div class="video-container">
                     <iframe src="https://www.youtube.com/embed/QM18rD-zrCs?autoplay=1&mute=1&loop=1&playlist=QM18rD-zrCs&controls=0&modestbranding=1&rel=0&playsinline=1" title="Fragrance Story 2" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                <div class="video-info">
+                    <a href="{{ route('all-products') }}" class="video-btn">Shop Collection</a>
                 </div>
             </div>
             <div class="video-card">
                 <div class="video-container">
                     <iframe src="https://www.youtube.com/embed/P7MxjMYwU_g?autoplay=1&mute=1&loop=1&playlist=P7MxjMYwU_g&controls=0&modestbranding=1&rel=0&playsinline=1" title="Fragrance Story 3" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
+                <div class="video-info">
+                    <a href="{{ route('all-products') }}" class="video-btn">Shop Collection</a>
+                </div>
             </div>
             <div class="video-card">
                 <div class="video-container">
                     <iframe src="https://www.youtube.com/embed/UujTjwkuqbE?autoplay=1&mute=1&loop=1&playlist=UujTjwkuqbE&controls=0&modestbranding=1&rel=0&playsinline=1" title="Fragrance Story 4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
+                <div class="video-info">
+                    <a href="{{ route('all-products') }}" class="video-btn">Shop Collection</a>
+                </div>
             </div>
             <div class="video-card">
                 <div class="video-container">
                     <iframe src="https://www.youtube.com/embed/WamyeDrjaVA?autoplay=1&mute=1&loop=1&playlist=WamyeDrjaVA&controls=0&modestbranding=1&rel=0&playsinline=1" title="Fragrance Story 5" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                <div class="video-info">
+                    <a href="{{ route('all-products') }}" class="video-btn">Shop Collection</a>
                 </div>
             </div>
         </div>
