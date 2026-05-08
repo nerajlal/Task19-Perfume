@@ -139,10 +139,16 @@ class PageController extends Controller
             if(in_array('100ml', $sizes)) $counts['size_100ml']++;
         }
 
+        $bundles = \App\Models\Bundle::where('status', 'active')
+            ->with(['products.variants'])
+            ->latest()
+            ->get();
+
         return view('nurah.all-products', [
             'title' => 'All Perfumes',
             'products' => $products,
-            'counts' => $counts
+            'counts' => $counts,
+            'bundles' => $bundles
         ]);
     }
 
