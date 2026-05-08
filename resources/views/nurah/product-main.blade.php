@@ -53,6 +53,28 @@
                 </div>
             </div>
 
+            <!-- Delivery Date Info -->
+            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; background: var(--section-bg); padding: 0.85rem 1.25rem; border-radius: 1rem; border: 1px solid var(--border-color); width: 100%;">
+                <i class="fa-solid fa-truck-fast" style="color: var(--accent-color); font-size: 1.1rem;"></i>
+                <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+                    <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">Arriving by</span>
+                    <span style="font-weight: 700; color: var(--primary-color); font-size: 0.9rem;">{{ now()->addDays(2)->format('l, M jS') }}</span>
+                </div>
+            </div>
+
+            <!-- Bundle Promo Box -->
+            @if(isset($bundle))
+            <div style="background: #FEFAF2; padding: 0.85rem 1.25rem; border-radius: 1rem; margin-bottom: 2.5rem; color: var(--primary-color); display: flex; align-items: center; justify-content: space-between; border: 1px solid rgba(212, 175, 55, 0.3); gap: 1rem; flex-wrap: wrap;">
+                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                    <i class="fa-solid fa-layer-group" style="color: var(--accent-color); font-size: 0.9rem;"></i>
+                    <span style="font-size: 0.9rem; font-weight: 500;">Save more with the <strong>{{ $bundle->title }}</strong> combo</span>
+                </div>
+                <a href="{{ route('combo', ['id' => $bundle->id]) }}" style="color: var(--accent-color); font-weight: 700; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: center; gap: 0.4rem; white-space: nowrap;">
+                    View Combo <i class="fa-solid fa-chevron-right"></i>
+                </a>
+            </div>
+            @endif
+
             <div class="p-spec-grid">
                 <div class="p-spec-item">
                     <span class="s-label">Family</span>
