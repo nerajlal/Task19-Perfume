@@ -153,6 +153,50 @@ Route::resource('admin/settings/delivery-partners', App\Http\Controllers\Admin\D
     'names' => 'admin.settings.delivery-partners'
 ])->except(['show', 'create', 'edit']);
 
+
+// v2 Velvet Theme Routes
+Route::prefix('v2')->name('velvet.')->group(function () {
+    Route::get('/', function() {
+        $bestsellers = \App\Models\HomeProduct::with(['product.variants', 'product.images', 'product.discounts'])
+            ->orderBy('sort_order', 'asc')
+            ->get();
+        $collections = \App\Models\Collection::where('status', 1)->get();
+        $bundles = \App\Models\Bundle::where('status', 'active')
+            ->where('type', '!=', 'pool')
+            ->with(['products.variants'])
+            ->latest()
+            ->take(4)
+            ->get();
+            
+        return view('velvet.home', compact('bestsellers', 'collections', 'bundles'));
+    })->name('home');
+
+    Route::get('/all-products', function() {
+        $products = \App\Models\Product::where('status', 'active')->with(['variants', 'images'])->latest()->get();
+        $collections = \App\Models\Collection::where('status', 1)->get();
+        return view('velvet.all-products', compact('products', 'collections'));
+    })->name('all-products');
+
+    Route::get('/collection/{slug}', function($slug) {
+        $collection = \App\Models\Collection::where('slug', $slug)->firstOrFail();
+        $products = $collection->products()->where('status', 'active')->with(['variants', 'images'])->get();
+        $collections = \App\Models\Collection::where('status', 1)->get();
+        return view('velvet.collection', compact('collection', 'products', 'collections'));
+    })->name('collection');
+
+    Route::get('/combos', function() {
+        $bundles = \App\Models\Bundle::where('status', 'active')->where('type', '!=', 'pool')->with(['products.variants'])->latest()->get();
+        $collections = \App\Models\Collection::where('status', 1)->get();
+        return view('velvet.combos', compact('bundles', 'collections'));
+    })->name('combos');
+
+    Route::get('/combo/{slug}', function($slug) {
+        $bundle = \App\Models\Bundle::where('slug', $slug)->with(['products.variants', 'products.images'])->firstOrFail();
+        $collections = \App\Models\Collection::where('status', 1)->get();
+        return view('velvet.combo-detail', compact('bundle', 'collections'));
+    })->name('combo');
+});
+
 // Super Admin Routes (Public for Verification)
 Route::prefix('su-admin')->name('super_admin.')->group(function () {
     Route::get('/', [App\Http\Controllers\SuperAdmin\DashboardController::class, 'index'])->name('dashboard');
