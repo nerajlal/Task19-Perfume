@@ -48,12 +48,63 @@ class CartController extends Controller
             }
         }
 
-        $total = 0;
-        foreach($cart as $id => $details) {
-            $total += $details['price'] * $details['quantity'];
-        }
+        $cartData = $this->calculateTotal($cart);
+        $total = $cartData['total'];
+        $savings = $cartData['savings'];
         
-        return view('nurah.cart', compact('cart', 'total'));
+        return view('nurah.cart', compact('cart', 'total', 'savings'));
+    }
+
+    private function calculateTotal(&$cart)
+    {
+        $total = 0;
+        $savings = 0;
+
+        foreach($cart as $key => &$item) {
+            if(isset($item['type']) && $item['type'] == 'product') {
+                // Find potential pack bundles for this product/size
+                $product = Product::find($item['product_id']);
+                if ($product) {
+                    $variant = null;
+                    if (isset($item['size']) && $item['size']) {
+                        $variant = $product->variants->where('size', $item['size'])->first();
+                    }
+
+                    $packBundle = Bundle::where('type', 'pack')
+                        ->where('status', 'active')
+                        ->whereHas('products', function($q) use ($item, $variant) {
+                            $q->where('product_id', $item['product_id']);
+                            if ($variant) {
+                                $q->where('product_variant_id', $variant->id);
+                            }
+                        })->first();
+
+                    if ($packBundle) {
+                        $packProd = $packBundle->products->first();
+                        $packQty = $packProd->pivot->quantity;
+                        
+                        if ($item['quantity'] >= $packQty) {
+                            $numPacks = floor($item['quantity'] / $packQty);
+                            $regularPrice = $item['price'];
+                            $packPrice = $packBundle->total_price;
+                            
+                            $lineSavings = ($regularPrice * $packQty - $packPrice) * $numPacks;
+                            $savings += $lineSavings;
+                            
+                            $item['pack_offer_applied'] = true;
+                            $item['pack_offer_text'] = "Volume Discount: {$packQty} units for ₹" . number_format($packPrice, 0);
+                        }
+                    }
+                }
+            }
+            $total += $item['price'] * $item['quantity'];
+        }
+
+        return [
+            'total' => max(0, $total - $savings),
+            'subtotal' => $total,
+            'savings' => $savings
+        ];
     }
 
     /**
@@ -93,12 +144,18 @@ class CartController extends Controller
                 if(isset($cart[$cartKey])) {
                     $cart[$cartKey]['quantity'] += $quantity;
                 } else {
+                    $bundleImage = $bundle->image ? \Illuminate\Support\Facades\Storage::url($bundle->image) : null;
+                    if (!$bundleImage && $bundle->type == 'pack') {
+                        $firstProd = $bundle->products->first();
+                        $bundleImage = $firstProd ? $firstProd->main_image_url : null;
+                    }
+                    
                     $cart[$cartKey] = [
                         "bundle_id" => $bundle->id,
                         "name" => $bundle->title,
                         "quantity" => $quantity,
                         "price" => $bundle->total_price,
-                        "image" => \Illuminate\Support\Facades\Storage::url($bundle->image),
+                        "image" => $bundleImage,
                         "size" => null,
                         "type" => "bundle"
                     ];
@@ -178,12 +235,14 @@ class CartController extends Controller
         
         // Calculate count
         $count = 0;
+        $cartData = $this->calculateTotal($cart);
         foreach($cart as $item) $count += $item['quantity'];
         
         return response()->json([
             'success' => true, 
             'message' => 'Product added to cart!',
-            'cartCount' => $count
+            'cartCount' => $count,
+            'cartTotal' => $cartData['total']
         ]);
     }
 
@@ -241,10 +300,10 @@ class CartController extends Controller
                 $itemTotal = $cart[$request->id]['price'] * $cart[$request->id]['quantity'];
             }
 
-            $cartTotal = 0;
+            $cartData = $this->calculateTotal($cart);
+            $cartTotal = $cartData['total'];
             $count = 0;
             foreach($cart as $item) {
-                $cartTotal += $item['price'] * $item['quantity'];
                 $count += $item['quantity'];
             }
             
@@ -252,7 +311,8 @@ class CartController extends Controller
                 'success' => true, 
                 'itemTotal' => $itemTotal,
                 'cartTotal' => $cartTotal,
-                'cartCount' => $count
+                'cartCount' => $count,
+                'savings' => $cartData['savings']
             ]);
         }
         
@@ -293,11 +353,11 @@ class CartController extends Controller
             }
             
             // Recalculate
-            $cartTotal = 0;
+            $cartData = $this->calculateTotal($cart);
+            $cartTotal = $cartData['total'];
             $count = 0;
             if($cart) {
                 foreach($cart as $item) {
-                    $cartTotal += $item['price'] * $item['quantity'];
                     $count += $item['quantity'];
                 }
             }
@@ -306,7 +366,8 @@ class CartController extends Controller
                 'success' => true,
                 'cartTotal' => $cartTotal,
                 'cartCount' => $count,
-                'isEmpty' => empty($cart)
+                'isEmpty' => empty($cart),
+                'savings' => $cartData['savings']
             ]);
         }
         
@@ -381,12 +442,19 @@ class CartController extends Controller
             if ($item->bundle_id && $item->bundle) {
                 // Bundle Logic
                 $key = 'bundle-' . $item->bundle_id;
+                
+                $bundleImage = $item->bundle->image ? \Illuminate\Support\Facades\Storage::url($item->bundle->image) : null;
+                if (!$bundleImage && $item->bundle->type == 'pack') {
+                    $firstProd = $item->bundle->products->first();
+                    $bundleImage = $firstProd ? $firstProd->main_image_url : null;
+                }
+
                 $cart[$key] = [
                     "bundle_id" => $item->bundle_id,
                     "name" => $item->bundle->title,
                     "quantity" => $item->quantity,
                     "price" => $item->bundle->total_price,
-                    "image" => \Illuminate\Support\Facades\Storage::url($item->bundle->image),
+                    "image" => $bundleImage,
                     "size" => null,
                     "type" => "bundle",
                     "stock" => $item->bundle->is_out_of_stock ? 0 : 100 

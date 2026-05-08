@@ -5,10 +5,84 @@
 @section('content')
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h1 class="h3 mb-0 text-dark">Bundles</h1>
-    <a href="{{ route('admin.bundles.create') }}" class="btn btn-success shadow-sm">Create bundle</a>
+    <div class="d-flex gap-2">
+        <button type="button" class="btn btn-outline-primary shadow-sm" data-bs-toggle="modal" data-bs-target="#packOfModal">
+            <i class="fas fa-layer-group me-1"></i> Pack Of
+        </button>
+        <a href="{{ route('admin.bundles.create') }}" class="btn btn-success shadow-sm">Create bundle</a>
+    </div>
+</div>
+
+<!-- Pack Of Modal -->
+<div class="modal fade" id="packOfModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <form action="{{ route('admin.bundles.pack-of') }}" method="POST" class="modal-content border-0 shadow">
+            @csrf
+            <div class="modal-header border-bottom-0 pt-4 px-4">
+                <h5 class="modal-title fw-bold">Create "Pack Of" Bundle</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body px-4 pb-4">
+                <p class="text-muted small mb-4">Quickly create bundles for multiple units of the same product variant.</p>
+                
+                <div class="mb-3">
+                    <label class="form-label small fw-bold text-secondary">1. Select Product</label>
+                    <select name="product_id" id="pack_product_id" class="form-select" required>
+                        <option value="">Choose a product...</option>
+                        @php $allProductsForPack = \App\Models\Product::where('status', 'active')->get(); @endphp
+                        @foreach($allProductsForPack as $product)
+                            <option value="{{ $product->id }}">{{ $product->title }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="mb-3 d-none" id="variant_container">
+                    <label class="form-label small fw-bold text-secondary">2. Select Variant (Size)</label>
+                    <select name="variant_id" id="pack_variant_id" class="form-select" required>
+                        <!-- Populated by JS -->
+                    </select>
+                </div>
+
+                <div class="row g-3">
+                    <div class="col-6">
+                        <label class="form-label small fw-bold text-secondary">3. Quantity</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-end-0 small">x</span>
+                            <input type="number" name="quantity" class="form-control border-start-0" value="2" min="2" required>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <label class="form-label small fw-bold text-secondary">4. Pack Price</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-end-0 small">₹</span>
+                            <input type="number" name="pack_price" class="form-control border-start-0" placeholder="0.00" required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer border-top-0 px-4 pb-4">
+                <button type="button" class="btn btn-white border px-4" data-bs-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-primary px-4">Create Pack</button>
+            </div>
+        </form>
+    </div>
 </div>
 
 <div class="card border shadow-sm">
+    <div class="card-header bg-white border-bottom-0 p-0">
+        <ul class="nav nav-tabs px-3 pt-2">
+            <li class="nav-item">
+                <a class="nav-link {{ !request('type') || request('type') == 'bundle' ? 'active fw-bold text-dark border-bottom-0' : 'text-muted' }}" href="{{ route('admin.bundles', array_merge(request()->query(), ['type' => 'bundle', 'page' => 1])) }}">
+                    Bundles
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{ request('type') == 'pack' ? 'active fw-bold text-dark border-bottom-0' : 'text-muted' }}" href="{{ route('admin.bundles', array_merge(request()->query(), ['type' => 'pack', 'page' => 1])) }}">
+                    Pack Of
+                </a>
+            </li>
+        </ul>
+    </div>
     <div class="card-header bg-light border-bottom p-3">
         <div class="d-flex gap-3">
             <div class="flex-grow-1">
@@ -18,7 +92,7 @@
                      @endforeach
                      <div class="input-group shadow-sm">
                          <span class="input-group-text bg-white border-end-0 text-muted"><i class="fas fa-search"></i></span>
-                         <input type="text" name="search" value="{{ request('search') }}" class="form-control border-start-0 ps-0 shadow-none" placeholder="Filter bundles">
+                         <input type="text" name="search" value="{{ request('search') }}" class="form-control border-start-0 ps-0 shadow-none" placeholder="Filter {{ request('type') == 'pack' ? 'packs' : 'bundles' }}">
                      </div>
                  </form>
             </div>
@@ -104,6 +178,32 @@
                 .catch(error => console.error('Error:', error));
             }, 300);
         });
+
+        // Pack Of Modal Logic
+        const packProductSelect = document.getElementById('pack_product_id');
+        const variantContainer = document.getElementById('variant_container');
+        const packVariantSelect = document.getElementById('pack_variant_id');
+
+        if (packProductSelect) {
+            packProductSelect.addEventListener('change', function() {
+                const productId = this.value;
+                if (!productId) {
+                    variantContainer.classList.add('d-none');
+                    return;
+                }
+
+                fetch(`/admin/products/${productId}/variants`)
+                    .then(response => response.json())
+                    .then(variants => {
+                        packVariantSelect.innerHTML = '<option value="">Choose a size...</option>';
+                        variants.forEach(v => {
+                            packVariantSelect.innerHTML += `<option value="${v.id}">${v.size} - ₹${v.price}</option>`;
+                        });
+                        variantContainer.classList.remove('d-none');
+                    })
+                    .catch(error => console.error('Error fetching variants:', error));
+            });
+        }
     });
 </script>
 <style>

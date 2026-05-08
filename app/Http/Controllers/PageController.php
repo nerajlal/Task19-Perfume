@@ -240,12 +240,19 @@ class PageController extends Controller
             ->orderByDesc('value')
             ->first();
 
-        // Fetch active bundle (if any)
+        // Fetch active bundle (regular combo)
         $bundle = $product->bundles()
             ->where('status', 'active')
+            ->where('type', 'bundle')
             ->first();
             
-        return view('nurah.product-main', compact('product', 'relatedProducts', 'coupon', 'bundle'));
+        // Fetch active "Pack Of" bundles
+        $packBundles = $product->bundles()
+            ->where('status', 'active')
+            ->where('type', 'pack')
+            ->get();
+            
+        return view('nurah.product-main', compact('product', 'relatedProducts', 'coupon', 'bundle', 'packBundles'));
     }
 
     public function shippingPolicy()

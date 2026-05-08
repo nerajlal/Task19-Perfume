@@ -51,7 +51,7 @@
 
         <div class="footer-bottom">
             <div class="copyright">
-                &copy; {{ date('Y') }} Task19 Perfumes. All rights reserved.
+                &copy; {{ date('Y') }} Task19 Perfumes. All rights reserved. <span style="opacity: 0.7; margin-left: 10px;">| Developed by <a href="#" style="color: inherit; text-decoration: none; font-weight: 600;">Task19 Technologies</a></span>
             </div>
             <div class="social-links">
                 <a href="#"><i class="fa-brands fa-instagram"></i></a>

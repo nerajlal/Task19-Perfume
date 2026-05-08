@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Bundle;
 use App\Models\Product;
+use App\Models\ProductVariant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -22,6 +23,13 @@ class BundleController extends Controller
         // Status Filter
         if ($request->filled('status')) {
             $query->where('status', $request->status);
+        }
+
+        // Type Filter (Tabs)
+        if ($request->filled('type')) {
+            $query->where('type', $request->type);
+        } else {
+            $query->where('type', 'bundle'); // Default to bundles tab
         }
 
         // Sorting
@@ -85,6 +93,7 @@ class BundleController extends Controller
         $bundle = Bundle::create([
             'title' => $request->title,
             'slug' => $slug,
+            'type' => 'bundle',
             'description' => $request->description,
             'image' => $imagePath,
             'status' => $request->status ?? 'draft',
@@ -142,10 +151,16 @@ class BundleController extends Controller
 
         $bundle->update($data);
 
-        // Use detach and attach to allow duplicate products (e.g. 2x Product A)
-        // sync() would remove duplicates from the input array
-        $bundle->products()->detach();
-        $bundle->products()->attach($request->products);
+        // For "Pack" type, we don't want to lose the quantity and variant_id during simple edits
+        if ($bundle->type == 'pack') {
+            // Keep the same product connection but update basic info
+            // (The products array in request will only have the one product ID)
+            // No changes needed to the pivot for simple edits (title/status/price)
+        } else {
+            // Standard bundle update: Use detach and attach to allow duplicate products
+            $bundle->products()->detach();
+            $bundle->products()->attach($request->products);
+        }
 
         return redirect()->route('admin.bundles')->with('success', 'Bundle updated successfully.');
     }
@@ -155,5 +170,50 @@ class BundleController extends Controller
         $bundle = Bundle::findOrFail($id);
         $bundle->delete();
         return redirect()->route('admin.bundles')->with('success', 'Bundle deleted successfully.');
+    }
+
+    public function storePackOf(Request $request)
+    {
+        $request->validate([
+            'product_id' => 'required|exists:products,id',
+            'variant_id' => 'required|exists:product_variants,id',
+            'quantity' => 'required|integer|min:2',
+            'pack_price' => 'required|numeric|min:0',
+        ]);
+
+        $product = Product::findOrFail($request->product_id);
+        $variant = ProductVariant::findOrFail($request->variant_id);
+
+        $title = "Pack of {$request->quantity} - {$product->title} - {$variant->size}";
+        $slug = Str::slug($title);
+        
+        // Ensure unique slug
+        $count = Bundle::where('slug', 'LIKE', "{$slug}%")->count();
+        if ($count > 0) {
+            $slug .= '-' . ($count + 1);
+        }
+
+        // Calculate discount value to reach the desired pack price
+        // Original total = variant price * quantity
+        $originalTotal = $variant->price * $request->quantity;
+        $discountValue = $originalTotal - $request->pack_price;
+
+        $bundle = Bundle::create([
+            'title' => $title,
+            'slug' => $slug,
+            'type' => 'pack',
+            'description' => "Special curated pack of {$request->quantity} units of {$product->title} ({$variant->size}).",
+            'status' => 'active',
+            'discount_type' => 'fixed',
+            'discount_value' => max(0, $discountValue),
+        ]);
+
+        // Attach the product with quantity and variant_id
+        $bundle->products()->attach($product->id, [
+            'quantity' => $request->quantity,
+            'product_variant_id' => $variant->id
+        ]);
+
+        return redirect()->route('admin.bundles')->with('success', "Pack of {$request->quantity} created successfully.");
     }
 }

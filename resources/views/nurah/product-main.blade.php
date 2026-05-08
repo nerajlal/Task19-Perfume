@@ -15,7 +15,17 @@
     <div class="product-core-grid">
         <!-- Gallery -->
         <div class="product-gallery">
-            <div class="main-image-display">
+            <div class="main-image-display" style="position: relative;">
+                @if(isset($packBundles) && $packBundles->count() > 0)
+                    @php 
+                        $bestPack = $packBundles->sortBy('total_price')->first(); 
+                        $bestQty = $bestPack->products->first()->pivot->quantity;
+                    @endphp
+                    <div style="position: absolute; top: 1.5rem; right: 1.5rem; background: var(--accent-color); color: var(--primary-color); padding: 0.6rem 1.2rem; border-radius: 999px; font-weight: 800; font-size: 0.85rem; box-shadow: 0 10px 20px rgba(212, 175, 55, 0.4); z-index: 10; display: flex; align-items: center; gap: 0.5rem; border: 2px solid #fff; animation: float 3s ease-in-out infinite;">
+                        <i class="fa-solid fa-tags"></i> Buy {{ $bestQty }} at ₹{{ number_format($bestPack->total_price, 0) }}
+                    </div>
+                @endif
+
                 @php 
                     $mainImg = $product->main_image_url ?? asset('images/products/p' . $product->id . '.png');
                 @endphp
@@ -135,6 +145,38 @@
                 </div>
                 <input type="hidden" id="selected-variant-id" name="variant_id" value="{{ $product->variants->first()->id ?? '' }}">
             </div>
+
+            <!-- Pack Of / Volume Deals -->
+            @if(isset($packBundles) && $packBundles->count() > 0)
+            <div style="margin-bottom: 2.5rem;">
+                <h3 class="p-section-title">Special Volume Deals</h3>
+                <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                    @foreach($packBundles as $pb)
+                        @php 
+                            $pb_prod = $pb->products->first();
+                            $pb_variant = $pb_prod ? $pb_prod->variants->firstWhere('id', $pb_prod->pivot->product_variant_id) : null;
+                        @endphp
+                        @if($pb_prod)
+                        <div class="pack-offer-item" style="display: flex; align-items: center; justify-content: space-between; background: #fff; border: 2px dashed #e2e8f0; padding: 1rem 1.25rem; border-radius: 1.25rem; transition: all 0.3s ease;">
+                            <div style="display: flex; flex-direction: column;">
+                                <span style="font-weight: 700; color: var(--primary-color); font-size: 1rem;">
+                                    Buy {{ $pb_prod->pivot->quantity }} 
+                                    @if($pb_variant) ({{ $pb_variant->size }}) @endif
+                                    at ₹{{ number_format($pb->total_price, 0) }}
+                                </span>
+                                <span style="font-size: 0.8rem; color: #10B981; font-weight: 600;">
+                                    Save ₹{{ number_format(($pb_variant ? $pb_variant->price : $pb_prod->starting_price) * $pb_prod->pivot->quantity - $pb->total_price, 0) }} instantly
+                                </span>
+                            </div>
+                            <button onclick="addPackToCart({{ $pb->id }})" style="background: var(--primary-color); color: #fff; border: none; padding: 0.6rem 1.2rem; border-radius: 0.75rem; font-weight: 700; font-size: 0.85rem; cursor: pointer; display: flex; align-items: center; gap: 0.5rem;">
+                                <i class="fa-solid fa-plus"></i> Add Pack
+                            </button>
+                        </div>
+                        @endif
+                    @endforeach
+                </div>
+            </div>
+            @endif
 
             <div class="p-actions-lg">
                 <div class="p-qty-selector">
@@ -270,6 +312,10 @@
         .product-core-grid { grid-template-columns: 1fr; gap: 3rem; }
         .product-details-panel { max-width: 800px; }
     }
+    @keyframes float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+    }
 </style>
 
 @endsection
@@ -369,5 +415,36 @@
     }
 
     document.getElementById('add-to-cart-page-btn').addEventListener('click', addToCart);
+
+    function addPackToCart(bundleId) {
+        const btn = event.currentTarget;
+        const originalHtml = btn.innerHTML;
+        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Adding...';
+        btn.disabled = true;
+
+        $.ajax({
+            url: "{{ route('cart.add') }}",
+            method: "POST",
+            data: {
+                _token: "{{ csrf_token() }}",
+                id: bundleId,
+                quantity: 1,
+                type: 'bundle'
+            },
+            success: function(response) {
+                if(response.success) {
+                    $('#cart-count').text(response.cartCount);
+                    btn.innerHTML = '<i class="fa-solid fa-check"></i> Added!';
+                    btn.style.background = '#10B981';
+                    
+                    setTimeout(() => {
+                        btn.innerHTML = originalHtml;
+                        btn.style.background = '';
+                        btn.disabled = false;
+                    }, 2000);
+                }
+            }
+        });
+    }
 </script>
 @endsection

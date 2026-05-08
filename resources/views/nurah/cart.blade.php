@@ -49,6 +49,12 @@
                         <i class="fa-solid fa-gift"></i> {{ $item['coupon']->code }} Applied
                     </div>
                     @endif
+
+                    @if(isset($item['pack_offer_applied']) && $item['pack_offer_applied'])
+                    <div class="item-promo-badge" style="background: #eff6ff; color: #3b82f6;">
+                        <i class="fa-solid fa-tags"></i> {{ $item['pack_offer_text'] }}
+                    </div>
+                    @endif
                 </div>
             </div>
             @endforeach
@@ -69,6 +75,10 @@
                 <div class="summary-row-lg">
                     <span>Tax</span>
                     <span>Included</span>
+                </div>
+                <div class="summary-row-lg" id="savings-row" style="{{ $savings > 0 ? '' : 'display: none;' }}">
+                    <span>Volume Discount</span>
+                    <span style="color: #10b981; font-weight: 700;">-₹<span id="savings-val">{{ number_format($savings, 2) }}</span></span>
                 </div>
                 <hr class="summary-hr">
                 <div class="summary-row-lg grand-total">
@@ -193,9 +203,19 @@
             success: function(response) {
                 qtyEl.innerText = newQty;
                 document.getElementById('price-' + id).innerText = '₹' + new Intl.NumberFormat().format(response.itemTotal);
-                document.getElementById('subtotal-val').innerText = '₹' + new Intl.NumberFormat().format(response.cartTotal);
+                document.getElementById('subtotal-val').innerText = '₹' + new Intl.NumberFormat().format(response.cartTotal + (response.savings || 0));
                 document.getElementById('total-val').innerText = '₹' + new Intl.NumberFormat().format(response.cartTotal);
                 $('#cart-count').text(response.cartCount);
+                
+                if (response.savings > 0) {
+                    document.getElementById('savings-row').style.display = 'flex';
+                    document.getElementById('savings-val').innerText = new Intl.NumberFormat().format(response.savings);
+                } else {
+                    document.getElementById('savings-row').style.display = 'none';
+                }
+                
+                // Note: Full page reload might be needed to update the "Volume Discount" badge on the item itself
+                // but we can at least update the totals for now.
             }
         });
     }

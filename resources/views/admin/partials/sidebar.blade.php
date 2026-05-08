@@ -1,8 +1,8 @@
 <aside id="adminSidebar" class="sidebar d-none d-md-flex flex-column bg-white border-end h-100">
     <div class="p-3 d-flex align-items-center justify-content-between border-bottom" style="height: 64px;">
         <div class="d-flex align-items-center gap-2">
-            <div class="d-flex align-items-center justify-content-center rounded bg-dark text-white fw-bold" style="width: 32px; height: 32px; font-size: 14px;">N</div>
-            <span class="fw-semibold text-secondary">xxxx Admin</span>
+            <div class="d-flex align-items-center justify-content-center rounded bg-dark text-white fw-bold" style="width: 32px; height: 32px; font-size: 14px;">T</div>
+            <span class="fw-semibold text-secondary">Task19 Admin</span>
         </div>
         <button class="btn btn-link text-secondary p-0 text-decoration-none d-md-none" onclick="toggleSidebar()"><i class="fas fa-chevron-left small"></i></button>
     </div>

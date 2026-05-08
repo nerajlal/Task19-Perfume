@@ -74,9 +74,26 @@
                             <div style="display: flex; align-items: center; gap: 1.5rem; padding: 1rem;">
                                 <img src="{{ $product->main_image_url }}" alt="{{ $product->title }}" onerror="this.src='{{ asset('images/g-load.webp') }}'" style="width: 60px; height: 60px; border-radius: 0.5rem; object-fit: cover;">
                                 <div style="flex-grow: 1;">
-                                    <h4 style="font-size: 1rem; font-weight: 700; margin-bottom: 0.25rem;">{{ $product->title }}</h4>
-                                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.25rem;">{{ $product->type }} • {{ $product->olfactory_family }}</p>
-                                    <div style="font-weight: 700; color: var(--primary-color); font-size: 0.9rem;">₹{{ number_format($product->starting_price, 2) }}</div>
+                                    <h4 style="font-size: 1rem; font-weight: 700; margin-bottom: 0.25rem;">
+                                        @if($product->pivot->quantity > 1) {{ $product->pivot->quantity }}x @endif
+                                        {{ $product->title }}
+                                    </h4>
+                                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.25rem;">
+                                        @if($product->pivot->product_variant_id)
+                                            @php $v = $product->variants->firstWhere('id', $product->pivot->product_variant_id); @endphp
+                                            {{ $v->size ?? $product->type }}
+                                        @else
+                                            {{ $product->type }}
+                                        @endif
+                                        • {{ $product->olfactory_family }}
+                                    </p>
+                                    <div style="font-weight: 700; color: var(--primary-color); font-size: 0.9rem;">
+                                        @if($product->pivot->product_variant_id)
+                                            ₹{{ number_format($v->price ?? $product->starting_price, 2) }}
+                                        @else
+                                            ₹{{ number_format($product->starting_price, 2) }}
+                                        @endif
+                                    </div>
                                 </div>
                                 <button onclick="toggleProductDetails({{ $product->id }})" style="background: none; border: none; font-size: 0.85rem; font-weight: 600; color: var(--accent-color); cursor: pointer; display: flex; align-items: center; gap: 0.5rem;">
                                     <span id="text-{{ $product->id }}">View Details</span> <i class="fa-solid fa-chevron-down" id="chevron-{{ $product->id }}" style="transition: transform 0.3s ease;"></i>

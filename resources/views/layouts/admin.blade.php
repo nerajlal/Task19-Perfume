@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nurah Perfumes Admin - @yield('title', 'Dashboard')</title>
+    <title>Task19 Perfumes Admin - @yield('title', 'Dashboard')</title>
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- FontAwesome -->
@@ -54,9 +54,8 @@
                 <div class="container-fluid max-w-xxl p-0">
                     @yield('content')
 
-                    <!-- Admin Footer -->
                     <div class="mt-5 pt-4 border-top text-center small text-muted">
-                        Developed by <a href="https://metora.in/" target="_blank" class="text-decoration-none fw-medium text-secondary">Metora</a>
+                        Developed by <a href="#" class="text-decoration-none fw-medium text-secondary">Task19 Technologies</a>
                     </div>
                 </div>
             </main>

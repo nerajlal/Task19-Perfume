@@ -229,4 +229,10 @@ class ProductController extends Controller
         $product->delete();
         return redirect()->route('admin.products')->with('success', 'Product deleted successfully.');
     }
+
+    public function getVariants($id)
+    {
+        $product = Product::with('variants')->findOrFail($id);
+        return response()->json($product->variants);
+    }
 }

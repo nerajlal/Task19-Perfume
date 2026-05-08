@@ -12,6 +12,7 @@ class Bundle extends Model
     protected $fillable = [
         'title',
         'slug',
+        'type',
         'description',
         'image',
         'status',
@@ -21,14 +22,25 @@ class Bundle extends Model
 
     public function products()
     {
-        return $this->belongsToMany(Product::class, 'bundle_product')->withPivot('quantity')->withTimestamps();
+        return $this->belongsToMany(Product::class, 'bundle_product')->withPivot('quantity', 'product_variant_id')->withTimestamps();
     }
 
     public function getTotalPriceAttribute()
     {
-        $total = $this->products->sum(function($product) {
-            return $product->variants->min('price') ?? 0;
-        });
+        $total = 0;
+        foreach ($this->products as $product) {
+            $quantity = $product->pivot->quantity ?? 1;
+            $variantId = $product->pivot->product_variant_id;
+            
+            if ($variantId) {
+                $variant = $product->variants->firstWhere('id', $variantId);
+                $price = $variant ? $variant->price : ($product->variants->min('price') ?? 0);
+            } else {
+                $price = $product->variants->min('price') ?? 0;
+            }
+            
+            $total += ($price * $quantity);
+        }
 
         if ($this->discount_value > 0) {
             if ($this->discount_type === 'percentage') {
