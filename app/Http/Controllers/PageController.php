@@ -18,7 +18,12 @@ class PageController extends Controller
             
         $collections = \App\Models\Collection::where('status', true)->get();
         
-        $bundles = \App\Models\Bundle::where('status', 'active')->with(['products.variants'])->latest()->take(4)->get();
+        $bundles = \App\Models\Bundle::where('status', 'active')
+            ->where('type', '!=', 'pool')
+            ->with(['products.variants'])
+            ->latest()
+            ->take(4)
+            ->get();
             
         return view('nurah.home', compact('sliders', 'bestsellers', 'collections', 'bundles'));
     }
@@ -140,6 +145,7 @@ class PageController extends Controller
         }
 
         $bundles = \App\Models\Bundle::where('status', 'active')
+            ->where('type', '!=', 'pool')
             ->with(['products.variants'])
             ->latest()
             ->get();

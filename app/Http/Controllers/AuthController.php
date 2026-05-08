@@ -32,6 +32,7 @@ class AuthController extends Controller
             'email' => $request->email,
             'phone' => $request->phone,
             'password' => Hash::make($request->password),
+            'tenant_id' => 1, // Default to Nurah Official
         ]);
 
         Auth::login($user);
@@ -109,6 +110,7 @@ class AuthController extends Controller
                         'google_id' => $googleUser->getId(),
                         'password' => Hash::make(\Illuminate\Support\Str::random(16)), // Random password
                         'email_verified_at' => now(), // Auto-verify Google users
+                        'tenant_id' => 1, // Default to Nurah Official
                     ]);
                     \Illuminate\Support\Facades\Log::info('New user created.');
                 }
