@@ -18,6 +18,7 @@ class Bundle extends Model
         'status',
         'discount_type',
         'discount_value',
+        'min_quantity',
     ];
 
     public function products()

@@ -6,6 +6,9 @@
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h1 class="h3 mb-0 text-dark">Bundles</h1>
     <div class="d-flex gap-2">
+        <a href="{{ route('admin.bundles.pool.create') }}" class="btn btn-outline-info shadow-sm">
+            <i class="fas fa-swimming-pool me-1"></i> Pool
+        </a>
         <button type="button" class="btn btn-outline-primary shadow-sm" data-bs-toggle="modal" data-bs-target="#packOfModal">
             <i class="fas fa-layer-group me-1"></i> Pack Of
         </button>
@@ -81,6 +84,11 @@
                     Pack Of
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link {{ request('type') == 'pool' ? 'active fw-bold text-dark border-bottom-0' : 'text-muted' }}" href="{{ route('admin.bundles', array_merge(request()->query(), ['type' => 'pool', 'page' => 1])) }}">
+                    Pool
+                </a>
+            </li>
         </ul>
     </div>
     <div class="card-header bg-light border-bottom p-3">
@@ -132,7 +140,9 @@
                     <th class="px-3 py-3" style="width: 50px;"><div class="form-check"><input type="checkbox" class="form-check-input"></div></th>
                     <th class="px-3 py-3">Title</th>
                     <th class="px-3 py-3">Status</th>
-                    <th class="px-3 py-3">Price</th>
+                    @if(request('type') != 'pool')
+                        <th class="px-3 py-3 text-nowrap">Price</th>
+                    @endif
                     <th class="px-3 py-3">Products</th>
                     <th class="px-3 py-3">Total Sales</th>
                     <th class="px-3 py-3" style="width: 80px;"></th>

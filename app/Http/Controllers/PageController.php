@@ -159,8 +159,9 @@ class PageController extends Controller
 
     public function combos()
     {
-        // Fetch all active bundles
+        // Fetch all active bundles (exclude pools)
         $bundles = \App\Models\Bundle::where('status', 'active')
+            ->where('type', '!=', 'pool')
             ->with(['products.variants'])
             ->orderBy('type', 'asc') // 'bundle' before 'pack'
             ->latest()
@@ -253,7 +254,14 @@ class PageController extends Controller
             ->where('type', 'pack')
             ->get();
             
-        return view('nurah.product-main', compact('product', 'relatedProducts', 'coupon', 'bundle', 'packBundles'));
+        // Fetch active "Pool" bundles
+        $poolBundles = $product->bundles()
+            ->where('status', 'active')
+            ->where('type', 'pool')
+            ->with('products')
+            ->get();
+            
+        return view('nurah.product-main', compact('product', 'relatedProducts', 'coupon', 'bundle', 'packBundles', 'poolBundles'));
     }
 
     public function shippingPolicy()

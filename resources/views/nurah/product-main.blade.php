@@ -178,6 +178,37 @@
             </div>
             @endif
 
+            <!-- Pool Offers Section -->
+            @if(isset($poolBundles) && $poolBundles->count() > 0)
+                <div class="p-pool-section" style="margin-bottom: 2.5rem; background: var(--bg-secondary); padding: 1.5rem; border-radius: 1.5rem; border: 2px dashed var(--accent-color);">
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem;">
+                        <h3 class="p-section-title" style="margin: 0; color: var(--accent-color); font-size: 1.1rem;">Mix & Match Offer</h3>
+                        <span style="background: var(--accent-color); color: var(--primary-color); padding: 0.25rem 0.75rem; border-radius: 0.5rem; font-size: 0.7rem; font-weight: 800; text-transform: uppercase;">Pool Deal</span>
+                    </div>
+                    
+                    @foreach($poolBundles as $pool)
+                        <div class="pool-item" style="margin-bottom: 1.5rem;">
+                            <p style="font-weight: 700; font-size: 0.95rem; margin-bottom: 0.75rem; color: var(--primary-color); line-height: 1.4;">
+                                Buy any {{ $pool->min_quantity }} items from this collection & get <span style="color: #10B981;">₹{{ number_format($pool->discount_value, 0) }} off</span> your total!
+                            </p>
+                            
+                            <div style="display: flex; gap: 0.75rem; overflow-x: auto; padding-bottom: 0.75rem;" class="hide-scrollbar">
+                                @foreach($pool->products as $poolProd)
+                                    <a href="{{ route('product', ['id' => $poolProd->id]) }}" style="flex: 0 0 85px; text-decoration: none; transition: transform 0.3s ease; display: block;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+                                        <div style="width: 85px; height: 85px; background: #fff; border-radius: 1rem; overflow: hidden; border: 1px solid var(--border-color); margin-bottom: 0.5rem; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+                                            <img src="{{ $poolProd->main_image_url }}" alt="{{ $poolProd->title }}" onerror="this.src='{{ asset('images/g-load.webp') }}'" style="width: 100%; height: 100%; object-fit: cover;">
+                                        </div>
+                                        <p style="font-size: 0.65rem; color: var(--text-muted); text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin: 0; font-weight: 600;">
+                                            {{ $poolProd->title }}
+                                        </p>
+                                    </a>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            @endif
+
             <div class="p-actions-lg">
                 <div class="p-qty-selector">
                     <button onclick="changePageQty(-1)"><i class="fa-solid fa-minus"></i></button>

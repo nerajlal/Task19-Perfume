@@ -76,8 +76,10 @@ Route::delete('/admin/collections/{id}', [App\Http\Controllers\Admin\CollectionC
 
 Route::get('/admin/bundles', [App\Http\Controllers\Admin\BundleController::class, 'index'])->name('admin.bundles');
 Route::get('/admin/bundles/create', [App\Http\Controllers\Admin\BundleController::class, 'create'])->name('admin.bundles.create');
+Route::get('/admin/bundles/pool/create', [App\Http\Controllers\Admin\BundleController::class, 'createPool'])->name('admin.bundles.pool.create');
 Route::post('/admin/bundles', [App\Http\Controllers\Admin\BundleController::class, 'store'])->name('admin.bundles.store');
 Route::post('/admin/bundles/pack-of', [App\Http\Controllers\Admin\BundleController::class, 'storePackOf'])->name('admin.bundles.pack-of');
+Route::post('/admin/bundles/pool', [App\Http\Controllers\Admin\BundleController::class, 'storePool'])->name('admin.bundles.pool');
 Route::get('/admin/bundles/{id}/edit', [App\Http\Controllers\Admin\BundleController::class, 'edit'])->name('admin.bundles.edit');
 Route::put('/admin/bundles/{id}', [App\Http\Controllers\Admin\BundleController::class, 'update'])->name('admin.bundles.update');
 Route::delete('/admin/bundles/{id}', [App\Http\Controllers\Admin\BundleController::class, 'destroy'])->name('admin.bundles.destroy');

@@ -29,7 +29,7 @@ class BundleController extends Controller
         if ($request->filled('type')) {
             $query->where('type', $request->type);
         } else {
-            $query->where('type', 'bundle'); // Default to bundles tab
+            $query->where('type', 'bundle'); // Default
         }
 
         // Sorting
@@ -65,6 +65,12 @@ class BundleController extends Controller
     {
         $products = Product::where('status', 'active')->get();
         return view('admin.bundles.create', compact('products'));
+    }
+
+    public function createPool()
+    {
+        $products = Product::where('status', 'active')->get();
+        return view('admin.bundles.create_pool', compact('products'));
     }
 
     public function store(Request $request)
@@ -110,11 +116,39 @@ class BundleController extends Controller
     {
         $bundle = Bundle::with('products')->findOrFail($id);
         $products = Product::where('status', 'active')->get();
+        
+        if ($bundle->type == 'pool') {
+            return view('admin.bundles.edit_pool', compact('bundle', 'products'));
+        }
+        
         return view('admin.bundles.edit', compact('bundle', 'products'));
     }
 
     public function update(Request $request, $id)
     {
+        $bundle = Bundle::findOrFail($id);
+
+        if ($bundle->type == 'pool') {
+            $request->validate([
+                'title' => 'required|string|max:255',
+                'product_ids' => 'required|array|min:1',
+                'product_ids.*' => 'exists:products,id',
+                'min_quantity' => 'required|integer|min:1',
+                'discount_amount' => 'required|numeric|min:0',
+            ]);
+
+            $bundle->update([
+                'title' => $request->title,
+                'min_quantity' => $request->min_quantity,
+                'discount_value' => $request->discount_amount,
+                'status' => $request->status ?? 'active'
+            ]);
+
+            $bundle->products()->sync($request->product_ids);
+
+            return redirect()->route('admin.bundles', ['type' => 'pool'])->with('success', 'Pool updated successfully.');
+        }
+
         $request->validate([
             'title' => 'required|string|max:255',
             'discount_type' => 'required|in:percentage,fixed',
@@ -215,5 +249,36 @@ class BundleController extends Controller
         ]);
 
         return redirect()->route('admin.bundles')->with('success', "Pack of {$request->quantity} created successfully.");
+    }
+
+    public function storePool(Request $request)
+    {
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'product_ids' => 'required|array|min:1',
+            'product_ids.*' => 'exists:products,id',
+            'min_quantity' => 'required|integer|min:1',
+            'discount_amount' => 'required|numeric|min:0',
+        ]);
+
+        $title = $request->title;
+        $slug = Str::slug($title);
+        $count = Bundle::where('slug', 'LIKE', "{$slug}%")->count();
+        if ($count > 0) $slug .= '-' . ($count + 1);
+
+        $bundle = Bundle::create([
+            'title' => $title,
+            'slug' => $slug,
+            'type' => 'pool',
+            'min_quantity' => $request->min_quantity,
+            'description' => "Bundle pool for multiple selected products.",
+            'status' => 'active',
+            'discount_type' => 'fixed',
+            'discount_value' => $request->discount_amount,
+        ]);
+
+        $bundle->products()->attach($request->product_ids);
+
+        return redirect()->route('admin.bundles', ['type' => 'pool'])->with('success', 'Pool bundle created successfully!');
     }
 }

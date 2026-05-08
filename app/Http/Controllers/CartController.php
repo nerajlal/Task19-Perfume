@@ -99,6 +99,27 @@ class CartController extends Controller
             }
             $total += $item['price'] * $item['quantity'];
         }
+        unset($item); // Clean up reference to prevent data corruption in subsequent loops
+
+        // 2. Calculate Pool savings
+        $activePools = Bundle::where('status', 'active')->where('type', 'pool')->with('products')->get();
+        foreach ($activePools as $pool) {
+            $poolProductIds = $pool->products->pluck('id')->toArray();
+            $qualifyingQty = 0;
+            
+            foreach ($cart as $item) {
+                // Only count individual products, not bundles
+                if (isset($item['type']) && $item['type'] == 'product' && in_array($item['product_id'], $poolProductIds)) {
+                    $qualifyingQty += $item['quantity'];
+                }
+            }
+            
+            if ($qualifyingQty >= $pool->min_quantity) {
+                $times = floor($qualifyingQty / $pool->min_quantity);
+                $poolSavings = ($times * $pool->discount_value);
+                $savings += $poolSavings;
+            }
+        }
 
         return [
             'total' => max(0, $total - $savings),

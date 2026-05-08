@@ -18,7 +18,9 @@
             {{ ucfirst($bundle->status) }}
         </span>
     </td>
-    <td class="px-3 py-3 fw-medium text-dark">₹ {{ number_format($bundle->total_price, 2) }}</td>
+    @if($bundle->type != 'pool')
+        <td class="px-3 py-3 fw-medium text-dark">₹ {{ number_format($bundle->total_price, 2) }}</td>
+    @endif
     <td class="px-3 py-3">{{ $bundle->products->count() }} products</td>
     <td class="px-3 py-3">{{ $bundle->total_sales }}</td>
     <td class="px-3 py-3 text-end">
