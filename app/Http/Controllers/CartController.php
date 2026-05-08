@@ -57,75 +57,7 @@ class CartController extends Controller
 
     private function calculateTotal(&$cart)
     {
-        $total = 0;
-        $savings = 0;
-
-        foreach($cart as $key => &$item) {
-            if(isset($item['type']) && $item['type'] == 'product') {
-                // Find potential pack bundles for this product/size
-                $product = Product::find($item['product_id']);
-                if ($product) {
-                    $variant = null;
-                    if (isset($item['size']) && $item['size']) {
-                        $variant = $product->variants->where('size', $item['size'])->first();
-                    }
-
-                    $packBundle = Bundle::where('type', 'pack')
-                        ->where('status', 'active')
-                        ->whereHas('products', function($q) use ($item, $variant) {
-                            $q->where('product_id', $item['product_id']);
-                            if ($variant) {
-                                $q->where('product_variant_id', $variant->id);
-                            }
-                        })->first();
-
-                    if ($packBundle) {
-                        $packProd = $packBundle->products->first();
-                        $packQty = $packProd->pivot->quantity;
-                        
-                        if ($item['quantity'] >= $packQty) {
-                            $numPacks = floor($item['quantity'] / $packQty);
-                            $regularPrice = $item['price'];
-                            $packPrice = $packBundle->total_price;
-                            
-                            $lineSavings = ($regularPrice * $packQty - $packPrice) * $numPacks;
-                            $savings += $lineSavings;
-                            
-                            $item['pack_offer_applied'] = true;
-                            $item['pack_offer_text'] = "Volume Discount: {$packQty} units for ₹" . number_format($packPrice, 0);
-                        }
-                    }
-                }
-            }
-            $total += $item['price'] * $item['quantity'];
-        }
-        unset($item); // Clean up reference to prevent data corruption in subsequent loops
-
-        // 2. Calculate Pool savings
-        $activePools = Bundle::where('status', 'active')->where('type', 'pool')->with('products')->get();
-        foreach ($activePools as $pool) {
-            $poolProductIds = $pool->products->pluck('id')->toArray();
-            $qualifyingQty = 0;
-            
-            foreach ($cart as $item) {
-                // Only count individual products, not bundles
-                if (isset($item['type']) && $item['type'] == 'product' && in_array($item['product_id'], $poolProductIds)) {
-                    $qualifyingQty += $item['quantity'];
-                }
-            }
-            
-            if ($qualifyingQty >= $pool->min_quantity) {
-                $times = floor($qualifyingQty / $pool->min_quantity);
-                $poolSavings = ($times * $pool->discount_value);
-                $savings += $poolSavings;
-            }
-        }
-
-        return [
-            'total' => max(0, $total - $savings),
-            'subtotal' => $total,
-            'savings' => $savings
-        ];
+        return \App\Services\CartService::calculateTotal($cart);
     }
 
     /**
@@ -516,17 +448,6 @@ class CartController extends Controller
 
     private function getActiveCoupon($product)
     {
-        if(!$product) return null;
-        
-        return $product->discounts()
-            ->where('status', 'active')
-            ->where(function($q) {
-                $q->whereNull('starts_at')->orWhere('starts_at', '<=', now());
-            })
-            ->where(function($q) {
-                $q->whereNull('ends_at')->orWhere('ends_at', '>=', now());
-            })
-            ->orderByDesc('value')
-            ->first();
+        return \App\Services\CartService::getActiveCoupon($product);
     }
 }

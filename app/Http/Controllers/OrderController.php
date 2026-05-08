@@ -37,35 +37,16 @@ class OrderController extends Controller
 
             foreach($items as $item) {
                  if($item->product_id && $item->product) {
-                    $price = $item->product->starting_price;
-                    
-                // Logic to check active coupon and apply discount
-                    $coupon = $this->getActiveCoupon($item->product);
-                    $couponCode = null;
-                    $savedAmount = 0;
-                    
-                    if($coupon) {
-                        $discountVal = $coupon->type == 'percentage' 
-                            ? $price * ($coupon->value / 100) 
-                            : $coupon->value;
-                        
-                        $savedAmount = min($discountVal, $price); // Cap savings at price
-                        $price = max(0, $price - $discountVal);
-                        $couponCode = $coupon->code;
-                    }
-
                     $cart[$item->product_id . '-' . $item->size] = [
                         "name" => $item->product->title,
                         "quantity" => $item->quantity,
-                        "price" => $price, // Effective Price
+                        "price" => $item->product->starting_price,
                         "original_price" => $item->product->starting_price,
-                        "coupon_code" => $couponCode,
-                        "saved_amount" => $savedAmount,
-                        "image" => $item->product->main_image_url,
                         "product_id" => $item->product_id,
                         "bundle_id" => null,
                         "size" => $item->size,
-                        "type" => "product"
+                        "type" => "product",
+                        "coupon" => \App\Services\CartService::getActiveCoupon($item->product)
                     ];
                 } elseif ($item->bundle_id && $item->bundle) {
                     $cart['bundle-' . $item->bundle_id] = [
@@ -105,12 +86,19 @@ class OrderController extends Controller
         }
 
         // 3. Calculate Totals
-        $subtotal = 0;
-        foreach($cart as $id => $details) {
-            $subtotal += $details['price'] * $details['quantity'];
-        }
+        $cartData = \App\Services\CartService::calculateTotal($cart);
+        $subtotal = $cartData['total'];
+        $savings = $cartData['savings'];
         $shipping = 0; // Free shipping
         $total = $subtotal + $shipping;
+
+        // Update item prices to effective prices for order items
+        foreach ($cart as &$item) {
+            if (isset($item['effective_price'])) {
+                $item['price'] = $item['effective_price'];
+            }
+        }
+        unset($item);
 
         // 3.5 Generate Custom Order Number
         // Format: NR-{Date 2digit}-{ProductID}-{Random 2digit 2alpha}
@@ -273,19 +261,5 @@ class OrderController extends Controller
         ]);
     }
 
-    private function getActiveCoupon($product)
-    {
-        if(!$product) return null;
-        
-        return $product->discounts()
-            ->where('status', 'active')
-            ->where(function($q) {
-                $q->whereNull('starts_at')->orWhere('starts_at', '<=', now());
-            })
-            ->where(function($q) {
-                $q->whereNull('ends_at')->orWhere('ends_at', '>=', now());
-            })
-            ->orderByDesc('value')
-            ->first();
-    }
+
 }

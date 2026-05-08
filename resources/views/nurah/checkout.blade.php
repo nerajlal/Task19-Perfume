@@ -82,7 +82,7 @@
                 </div>
 
                 <button type="submit" class="btn-complete-order">
-                    Complete Order • ₹{{ number_format($subtotal, 2) }}
+                    Complete Order • ₹{{ number_format($total, 2) }}
                 </button>
             </form>
         </div>
@@ -118,6 +118,12 @@
                         <span>Subtotal</span>
                         <span>₹{{ number_format($subtotal, 2) }}</span>
                     </div>
+                    @if($savings > 0)
+                    <div class="st-row" style="color: #10b981;">
+                        <span>Volume Discount</span>
+                        <span>-₹{{ number_format($savings, 2) }}</span>
+                    </div>
+                    @endif
                     <div class="st-row">
                         <span>Shipping</span>
                         <span style="color: #10b981; font-weight: 700;">FREE</span>
@@ -125,7 +131,7 @@
                     <hr class="st-divider">
                     <div class="st-row grand-total-lg">
                         <span>Grand Total</span>
-                        <span>₹{{ number_format($subtotal, 2) }}</span>
+                        <span>₹{{ number_format($total, 2) }}</span>
                     </div>
                 </div>
 
@@ -168,7 +174,8 @@
     .btn-complete-order { width: 100%; background: var(--primary-color); color: #fff; border: none; padding: 1.5rem; border-radius: 9999px; font-weight: 800; font-size: 1.25rem; cursor: pointer; transition: var(--transition); margin-top: 1rem; }
     .btn-complete-order:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); background: #1e293b; }
 
-    .order-summary-card { background: var(--section-bg); padding: 2.5rem; border-radius: 2rem; position: sticky; top: 7rem; border: 1px solid var(--border-color); }
+    .checkout-sticky-summary { position: sticky; top: 7rem; align-self: flex-start; }
+    .order-summary-card { background: var(--section-bg); padding: 2.5rem; border-radius: 2rem; border: 1px solid var(--border-color); }
     .summary-heading-sm { font-size: 1.25rem; font-weight: 700; margin-bottom: 2rem; }
     
     .summary-items-scroll { max-height: 300px; overflow-y: auto; margin-bottom: 2rem; padding-right: 0.5rem; }

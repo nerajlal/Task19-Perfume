@@ -369,19 +369,12 @@ class PageController extends Controller
             }
         }
 
-        $subtotal = 0;
-        foreach($cart as $item) {
-            $price = $item['price'];
-            if(isset($item['coupon']) && $item['coupon']) {
-                $discountVal = $item['coupon']->type == 'percentage' 
-                    ? $price * ($item['coupon']->value / 100) 
-                    : $item['coupon']->value;
-                $price = max(0, $price - $discountVal);
-            }
-            $subtotal += $price * $item['quantity'];
-        }
+        $cartData = \App\Services\CartService::calculateTotal($cart);
+        $total = $cartData['total'];
+        $subtotal = $cartData['subtotal'];
+        $savings = $cartData['savings'];
         
-        return view('nurah.checkout', compact('cart', 'subtotal', 'address'));
+        return view('nurah.checkout', compact('cart', 'total', 'subtotal', 'savings', 'address'));
     }
 
     private function getActiveCoupon($product)
