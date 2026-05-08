@@ -162,6 +162,7 @@ class PageController extends Controller
         // Fetch all active bundles
         $bundles = \App\Models\Bundle::where('status', 'active')
             ->with(['products.variants'])
+            ->orderBy('type', 'asc') // 'bundle' before 'pack'
             ->latest()
             ->get();
 

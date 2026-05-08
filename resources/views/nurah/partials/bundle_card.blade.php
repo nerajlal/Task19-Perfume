@@ -1,11 +1,17 @@
 <div class="product-card">
     <a href="{{ route('combo', ['id' => $bundle->id]) }}" class="card-img">
         @php 
-            $imagePath = $bundle->image ? Storage::url($bundle->image) : asset('images/g-load.webp');
+            $imagePath = $bundle->image ? Storage::url($bundle->image) : null;
+            if (!$imagePath && $bundle->type == 'pack') {
+                $firstProd = $bundle->products->first();
+                $imagePath = $firstProd ? $firstProd->main_image_url : asset('images/g-load.webp');
+            } elseif (!$imagePath) {
+                $imagePath = asset('images/g-load.webp');
+            }
         @endphp
         <img src="{{ $imagePath }}" alt="{{ $bundle->title }}" onerror="this.src='{{ asset('images/g-load.webp') }}'">
         <div style="position: absolute; top: 0.5rem; right: 0.5rem; background: var(--accent-color); color: var(--primary-color); padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 700;">
-            COMBO SAVINGS
+            {{ $bundle->type == 'pack' ? 'VOLUME DEAL' : 'COMBO SAVINGS' }}
         </div>
     </a>
     <div class="card-info">
