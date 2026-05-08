@@ -25,6 +25,11 @@
                         <i class="fa-solid fa-border-all"></i> All Products
                     </a>
                 </li>
+                <li class="menu-item">
+                    <a href="{{ route('combos') }}" class="menu-link {{ request()->routeIs('combos') || request()->routeIs('combo') ? 'active' : '' }}">
+                        <i class="fa-solid fa-layer-group"></i> Exclusive Combos
+                    </a>
+                </li>
                 @foreach($sidebarCollections as $col)
                 @php
                     $icon = 'fa-droplet';
@@ -120,6 +125,7 @@
             
             const productId = $(this).data('product-id');
             const defaultSize = $(this).data('default-size');
+            const type = $(this).data('type') || 'product';
             const btn = $(this);
             
             // Prevent multiple clicks while processing
@@ -133,7 +139,8 @@
                     _token: "{{ csrf_token() }}",
                     id: productId,
                     quantity: 1,
-                    size: defaultSize
+                    size: defaultSize,
+                    type: type
                 },
                 success: function(response) {
                     btn.removeClass('processing');

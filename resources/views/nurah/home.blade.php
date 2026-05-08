@@ -91,6 +91,22 @@
         </div>
         @endif
     @endforeach
+    
+    <!-- Exclusive Combos Section -->
+    @if(isset($bundles) && $bundles->count() > 0)
+    <div class="department-section">
+        <div class="section-header">
+            <h2 class="section-title">Exclusive Combos</h2>
+            <a href="{{ route('combos') }}" class="view-all">View all <i class="fa-solid fa-chevron-right ms-1"></i></a>
+        </div>
+        
+        <div class="product-grid">
+            @foreach($bundles as $bundle)
+                @include('nurah.partials.bundle_card', ['bundle' => $bundle])
+            @endforeach
+        </div>
+    </div>
+    @endif
 
     <!-- Fragrance Stories (Video Showcase) -->
     <div class="video-section">
