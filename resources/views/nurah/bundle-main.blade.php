@@ -91,9 +91,25 @@
                                         <div><strong style="display: block; color: var(--primary-color); margin-bottom: 0.25rem;">Base Notes</strong> {{ $product->notes_base }}</div>
                                     </div>
                                     <div style="margin-top: 1.5rem;">
-                                        <a href="{{ route('product', ['id' => $product->id]) }}" class="btn-primary" style="padding: 0.6rem 1.5rem; font-size: 0.85rem; border-radius: 9999px; display: inline-flex; align-items: center; gap: 0.5rem; background: var(--primary-color); color: #fff;">
-                                            Full Product Page <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.75rem;"></i>
-                                        </a>
+                                        <button onclick="showProductPopup({{ $product->id }})" class="btn-primary" style="padding: 0.6rem 1.5rem; font-size: 0.85rem; border-radius: 9999px; display: inline-flex; align-items: center; gap: 0.5rem; background: var(--primary-color); color: #fff; border: none; cursor: pointer;">
+                                            Quick View Details <i class="fa-solid fa-expand" style="font-size: 0.75rem;"></i>
+                                        </button>
+                                        
+                                        <!-- Hidden data for popup -->
+                                        <div id="product-data-{{ $product->id }}" style="display: none;">
+                                            {
+                                                "title": "{{ $product->title }}",
+                                                "image": "{{ $product->main_image_url }}",
+                                                "type": "{{ $product->type }}",
+                                                "family": "{{ $product->olfactory_family }}",
+                                                "description": "{{ addslashes($product->description) }}",
+                                                "notes_top": "{{ $product->notes_top }}",
+                                                "notes_heart": "{{ $product->notes_heart }}",
+                                                "notes_base": "{{ $product->notes_base }}",
+                                                "price": "₹{{ number_format($product->starting_price, 2) }}",
+                                                "url": "{{ route('product', ['id' => $product->id]) }}"
+                                            }
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -143,7 +159,106 @@
     @endif
 </div>
 
+<!-- Product Detail Modal -->
+<div id="product-modal" class="modal-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 9999; backdrop-filter: blur(8px); align-items: center; justify-content: center; padding: 1.5rem;">
+    <div class="modal-card" style="background: #fff; width: 100%; max-width: 900px; border-radius: 2rem; overflow: hidden; position: relative; display: grid; grid-template-columns: 1fr 1fr; animation: modalSlideUp 0.4s ease-out;">
+        <button id="modal-close-btn" onclick="closeProductModal()" style="position: absolute; top: 1.5rem; right: 1.5rem; background: #fff; border: none; width: 40px; height: 40px; border-radius: 50%; box-shadow: 0 4px 12px rgba(0,0,0,0.1); cursor: pointer; z-index: 10; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; color: var(--primary-color);">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+        
+        <div class="modal-gallery" style="background: #f8fafc; display: flex; align-items: center; justify-content: center; padding: 2rem;">
+            <img id="modal-img" src="" alt="" style="width: 100%; height: auto; border-radius: 1rem; object-fit: cover; box-shadow: 0 20px 40px rgba(0,0,0,0.1);">
+        </div>
+        
+        <div class="modal-info" style="padding: 3rem; display: flex; flex-direction: column; max-height: 80vh; overflow-y: auto;">
+            <div id="modal-tag" style="background: var(--accent-color); color: var(--primary-color); display: inline-block; padding: 0.2rem 1rem; border-radius: 9999px; font-weight: 800; font-size: 0.7rem; margin-bottom: 1rem; text-transform: uppercase; width: fit-content;">Fragrance Details</div>
+            <h2 id="modal-title" style="font-size: 2.25rem; font-weight: 800; color: var(--primary-color); margin-bottom: 0.5rem; line-height: 1.2;"></h2>
+            <p id="modal-subtitle" style="color: var(--text-muted); font-size: 1rem; margin-bottom: 2rem; font-weight: 500;"></p>
+            
+            <div style="margin-bottom: 2.5rem;">
+                <h4 style="font-size: 0.85rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; color: var(--primary-color); margin-bottom: 1rem;">Description</h4>
+                <p id="modal-desc" style="font-size: 1rem; color: var(--text-muted); line-height: 1.7;"></p>
+            </div>
+            
+            <div style="margin-bottom: 3rem;">
+                <h4 style="font-size: 0.85rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; color: var(--primary-color); margin-bottom: 1.25rem;">Olfactory Notes</h4>
+                <div style="display: flex; flex-direction: column; gap: 1rem;">
+                    <div style="display: flex; gap: 1rem; align-items: center;">
+                        <div style="width: 40px; font-weight: 800; font-size: 0.7rem; color: var(--accent-color);">TOP</div>
+                        <div id="modal-top" style="font-size: 0.95rem; color: var(--primary-color); font-weight: 500;"></div>
+                    </div>
+                    <div style="display: flex; gap: 1rem; align-items: center;">
+                        <div style="width: 40px; font-weight: 800; font-size: 0.7rem; color: var(--accent-color);">HEART</div>
+                        <div id="modal-heart" style="font-size: 0.95rem; color: var(--primary-color); font-weight: 500;"></div>
+                    </div>
+                    <div style="display: flex; gap: 1rem; align-items: center;">
+                        <div style="width: 40px; font-weight: 800; font-size: 0.7rem; color: var(--accent-color);">BASE</div>
+                        <div id="modal-base" style="font-size: 0.95rem; color: var(--primary-color); font-weight: 500;"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="margin-top: auto; display: flex; align-items: center; justify-content: space-between; pt-4; border-top: 1px solid #f1f5f9; padding-top: 2rem;">
+                <div id="modal-price" style="font-size: 1.5rem; font-weight: 800; color: var(--primary-color);"></div>
+                <a id="modal-link" href="" class="btn-primary" style="padding: 0.75rem 1.5rem; border-radius: 9999px; background: var(--primary-color); color: #fff; font-size: 0.9rem; text-decoration: none; font-weight: 700;">View Product Page</a>
+            </div>
+        </div>
+    </div>
+</div>
+
 <style>
+    @keyframes modalSlideUp {
+        from { opacity: 0; transform: translateY(40px) scale(0.95); }
+        to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    
+    @media (max-width: 850px) {
+        .modal-card { 
+            display: flex !important;
+            flex-direction: column !important;
+            max-height: 90vh !important; 
+            overflow-y: auto !important;
+            margin: 1rem;
+            border-radius: 2rem !important;
+            width: calc(100% - 2rem) !important;
+        }
+        .modal-gallery { 
+            padding: 1.5rem !important;
+            background: #f8fafc !important;
+            flex-shrink: 0;
+        }
+        .modal-gallery img {
+            max-height: 300px;
+            width: auto !important;
+            margin: 0 auto;
+            display: block;
+            border-radius: 1.5rem !important;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08) !important;
+        }
+        .modal-info { 
+            padding: 2rem !important; 
+            max-height: none !important;
+            overflow: visible !important;
+        }
+        #modal-title { 
+            font-size: 2rem !important; 
+            letter-spacing: -0.02em;
+        }
+        #modal-close-btn {
+            top: 1rem !important;
+            right: 1rem !important;
+            width: 36px !important;
+            height: 36px !important;
+            background: rgba(255,255,255,0.8) !important;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1) !important;
+        }
+        .modal-info > div { margin-bottom: 2rem !important; }
+        
+        #modal-price { font-size: 1.25rem !important; }
+        #modal-link { padding: 0.6rem 1.25rem !important; font-size: 0.85rem !important; }
+    }
+
     .product-page-container { padding: 1rem 0; }
     .breadcrumb { display: flex; align-items: center; gap: 0.75rem; font-size: 0.9rem; color: var(--text-muted); margin-bottom: 3rem; }
     .breadcrumb a:hover { color: var(--accent-color); }
@@ -195,6 +310,35 @@
             text.innerText = 'View Details';
         }
     }
+
+    function showProductPopup(id) {
+        const data = JSON.parse(document.getElementById('product-data-' + id).innerText);
+        
+        document.getElementById('modal-img').src = data.image;
+        document.getElementById('modal-title').innerText = data.title;
+        document.getElementById('modal-subtitle').innerText = data.type + ' • ' + data.family;
+        document.getElementById('modal-desc').innerText = data.description;
+        document.getElementById('modal-top').innerText = data.notes_top;
+        document.getElementById('modal-heart').innerText = data.notes_heart;
+        document.getElementById('modal-base').innerText = data.notes_base;
+        document.getElementById('modal-price').innerText = data.price;
+        document.getElementById('modal-link').href = data.url;
+        
+        const modal = document.getElementById('product-modal');
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeProductModal() {
+        const modal = document.getElementById('product-modal');
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+
+    // Close on overlay click
+    document.getElementById('product-modal').addEventListener('click', function(e) {
+        if (e.target === this) closeProductModal();
+    });
 
     function changePageQty(delta) {
         qty = Math.max(1, qty + delta);
