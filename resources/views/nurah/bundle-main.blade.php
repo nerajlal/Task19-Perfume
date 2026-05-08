@@ -46,6 +46,21 @@
                 @endif
             </div>
 
+            <!-- Tabby EMI Promo (Top) -->
+            <div style="margin-top: -1rem; margin-bottom: 2rem; display: flex; align-items: center; gap: 0.6rem; font-size: 0.9rem; color: var(--text-muted); background: #fdfdfd; padding: 0.5rem 0.75rem; border-radius: 0.75rem; width: fit-content; border: 1px solid #f1f5f9;">
+                <span style="display: flex; align-items: center; gap: 0.4rem;">or 4 interest-free payments of <strong style="color: var(--primary-color);">₹{{ number_format($bundle->total_price / 4, 0) }}</strong> with</span>
+                <span style="background: #3DF9D1; color: #000; padding: 0.15rem 0.6rem; border-radius: 0.3rem; font-weight: 900; font-size: 0.75rem; letter-spacing: -0.01em; text-transform: lowercase;">tabby</span>
+            </div>
+
+            <!-- Delivery Date Info -->
+            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; background: var(--section-bg); padding: 0.85rem 1.25rem; border-radius: 1rem; border: 1px solid var(--border-color); width: 100%;">
+                <i class="fa-solid fa-truck-fast" style="color: var(--accent-color); font-size: 1.1rem;"></i>
+                <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+                    <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">Arriving by</span>
+                    <span style="font-weight: 700; color: var(--primary-color); font-size: 0.9rem;">{{ now()->addDays(2)->format('l, M jS') }}</span>
+                </div>
+            </div>
+
             <div class="p-tabs" style="border-top: none; padding-top: 0; margin-bottom: 3rem;">
                 <h3 class="p-section-title">Description</h3>
                 <p style="color: var(--text-muted); line-height: 1.8;">{{ $bundle->description }}</p>
@@ -98,6 +113,12 @@
                     <span class="btn-divider"></span>
                     <span id="btn-price-display">₹{{ number_format($bundle->total_price, 0) }}</span>
                 </button>
+            </div>
+
+            <!-- Tabby EMI Promo (Bottom) -->
+            <div style="margin-top: 1rem; margin-bottom: 3rem; display: flex; align-items: center; gap: 0.75rem; font-size: 0.95rem; color: var(--text-muted); background: #f8fafc; padding: 1rem 1.5rem; border-radius: 1.25rem; width: 100%; border: 1px solid var(--border-color);">
+                <span style="display: flex; align-items: center; gap: 0.5rem; flex-grow: 1;">or 4 interest-free payments of <strong style="color: var(--primary-color); font-size: 1.1rem;">₹{{ number_format($bundle->total_price / 4, 0) }}</strong> with</span>
+                <span style="background: #3DF9D1; color: #000; padding: 0.25rem 0.75rem; border-radius: 0.4rem; font-weight: 900; font-size: 0.85rem; letter-spacing: -0.02em; text-transform: lowercase;">tabby</span>
             </div>
 
             <div style="margin-top: 3rem; background: #f0fdf4; border: 1px solid #bbf7d0; padding: 1.5rem; border-radius: 1.5rem; display: flex; align-items: center; gap: 1rem;">
