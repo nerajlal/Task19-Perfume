@@ -159,7 +159,8 @@ class CartController extends Controller
                     'user_id' => Auth::id(),
                     'product_id' => $id,
                     'quantity' => $quantity,
-                    'size' => $size
+                    'size' => $size,
+                    'product_variant_id' => $request->variant_id
                 ]);
             }
             
@@ -175,6 +176,7 @@ class CartController extends Controller
             } else {
                 $cart[$cartKey] = [
                     "product_id" => $product->id,
+                    "variant_id" => $request->variant_id,
                     "name" => $product->title,
                     "quantity" => $quantity,
                     "price" => $price,
@@ -431,6 +433,7 @@ class CartController extends Controller
                 
                 $cart[$key] = [
                     "product_id" => $item->product_id,
+                    "variant_id" => $item->product_variant_id,
                     "name" => $item->product->title,
                     "quantity" => $item->quantity,
                     "price" => $price,

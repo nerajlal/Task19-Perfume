@@ -15,24 +15,23 @@
     <div class="product-core-grid">
         <!-- Gallery -->
         <div class="product-gallery">
-            <div class="main-image-display" style="position: relative;">
+            <div class="main-image-display">
                 @if(isset($packBundles) && $packBundles->count() > 0)
                     @php 
                         $bestPack = $packBundles->sortBy('total_price')->first(); 
                         $bestQty = $bestPack->products->first()->pivot->quantity;
                     @endphp
-                    <div style="position: absolute; top: 1.5rem; right: 1.5rem; background: var(--accent-color); color: var(--primary-color); padding: 0.6rem 1.2rem; border-radius: 999px; font-weight: 800; font-size: 0.85rem; box-shadow: 0 10px 20px rgba(212, 175, 55, 0.4); z-index: 10; display: flex; align-items: center; gap: 0.5rem; border: 2px solid #fff; animation: float 3s ease-in-out infinite;">
+                    <div class="p-gallery-badge">
                         <i class="fa-solid fa-tags"></i> Buy {{ $bestQty }} at ₹{{ number_format($bestPack->total_price, 0) }}
                     </div>
                 @endif
-
                 @php 
                     $mainImg = $product->main_image_url ?? asset('images/products/p' . $product->id . '.png');
                 @endphp
                 <img src="{{ $mainImg }}" id="p-main-img" alt="{{ $product->title }}" onerror="this.src='{{ asset('images/g-load.webp') }}'">
             </div>
-            <div class="thumb-strip">
-                @foreach($product->images as $img)
+            <div class="thumb-grid">
+                @foreach($product->images->take(3) as $img)
                     @php 
                         $thumbPath = $img->path;
                         if (Str::startsWith($thumbPath, 'http')) {
@@ -43,103 +42,80 @@
                             $thumbPath = \Illuminate\Support\Facades\Storage::url($thumbPath);
                         }
                     @endphp
-                    <img src="{{ $thumbPath }}" class="t-item {{ $loop->first ? 'active' : '' }}" onclick="updateImg(this.src, this)" alt="Gallery">
+                    <div class="thumb-item {{ $loop->first ? 'active' : '' }}" onclick="updateImg('{{ $thumbPath }}', this)">
+                        <img src="{{ $thumbPath }}" alt="Gallery">
+                    </div>
                 @endforeach
             </div>
         </div>
 
         <!-- Info -->
         <div class="product-details-panel">
-            <h1 class="p-title-lg">{{ $product->title }}</h1>
-            <p class="p-vendor-lg">By Task19 Fragrance House</p>
+            <p class="p-vendor-label">TASK19 FRAGRANCE HOUSE</p>
+            <h1 class="p-title-serif">{{ $product->title }}</h1>
             
-            <div class="p-price-block-lg">
-                <span class="p-price-lg" id="p-price-display">₹{{ number_format($product->starting_price, 2) }}</span>
+            <div class="p-price-row">
                 @if($product->compare_at_price > $product->starting_price)
-                    <span class="p-compare-lg">₹{{ number_format($product->compare_at_price, 2) }}</span>
+                    <span class="p-compare-at">₹{{ number_format($product->compare_at_price, 0) }}</span>
                 @endif
-                <div class="p-quick-add-badge" onclick="addToCart()">
+                <span class="p-current-price" id="p-price-display">₹{{ number_format($product->starting_price, 0) }}</span>
+                @if($product->compare_at_price > $product->starting_price)
+                    @php $discount = round((($product->compare_at_price - $product->starting_price) / $product->compare_at_price) * 100); @endphp
+                    <span class="p-discount-badge">{{ $discount }}% Off</span>
+                @endif
+                
+                <div class="p-quick-add-badge" onclick="addToCart()" title="Quick Add to Cart">
                     <i class="fa-solid fa-cart-shopping"></i>
                 </div>
             </div>
 
-            <!-- Tabby EMI Promo (Top) -->
-            <div style="margin-top: -1rem; margin-bottom: 2rem; display: flex; align-items: center; gap: 0.6rem; font-size: 0.9rem; color: var(--text-muted); background: #fdfdfd; padding: 0.5rem 0.75rem; border-radius: 0.75rem; width: fit-content; border: 1px solid #f1f5f9;">
-                <span style="display: flex; align-items: center; gap: 0.4rem;">or 4 interest-free payments of <strong style="color: var(--primary-color);">₹<span class="tabby-emi-display">{{ number_format($product->starting_price / 4, 0) }}</span></strong> with</span>
-                <span style="background: #3DF9D1; color: #000; padding: 0.15rem 0.6rem; border-radius: 0.3rem; font-weight: 900; font-size: 0.75rem; letter-spacing: -0.01em; text-transform: lowercase;">tabby</span>
-            </div>
+            <p class="p-emi-info">or 4 interest-free payments of ₹<span class="tabby-emi-display">{{ number_format($product->starting_price / 4, 0) }}</span> with <strong>tabby</strong>. <i class="fa-solid fa-circle-info"></i></p>
 
-
-
-            <!-- Delivery Date Info -->
-            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; background: var(--section-bg); padding: 0.85rem 1.25rem; border-radius: 1rem; border: 1px solid var(--border-color); width: 100%;">
-                <i class="fa-solid fa-truck-fast" style="color: var(--accent-color); font-size: 1.1rem;"></i>
-                <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
-                    <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">Arriving by</span>
-                    <span style="font-weight: 700; color: var(--primary-color); font-size: 0.9rem;">{{ now()->addDays(2)->format('l, M jS') }}</span>
-                </div>
+            <div class="delivery-note" style="margin-top: -1rem; margin-bottom: 2rem; color: var(--accent-color); font-weight: 700; font-size: 0.9rem; display: flex; align-items: center; gap: 0.6rem;">
+                <i class="fa-solid fa-truck-fast"></i>
+                <span>Get it by <strong>{{ now()->addDays(2)->format('l, M jS') }}</strong></span>
             </div>
 
             <!-- Bundle Promo Box -->
             @if(isset($bundle))
-            <div style="background: #FEFAF2; padding: 0.85rem 1.25rem; border-radius: 1rem; margin-bottom: 2.5rem; color: var(--primary-color); display: flex; align-items: center; justify-content: space-between; border: 1px solid rgba(212, 175, 55, 0.3); gap: 1rem; flex-wrap: wrap;">
-                <div style="display: flex; align-items: center; gap: 0.75rem;">
-                    <i class="fa-solid fa-layer-group" style="color: var(--accent-color); font-size: 0.9rem;"></i>
-                    <span style="font-size: 0.9rem; font-weight: 500;">Save more with the <strong>{{ $bundle->title }}</strong> combo</span>
+            <div class="p-promo-box">
+                <div class="promo-content">
+                    <i class="fa-solid fa-layer-group"></i>
+                    <span>Save more with the <strong>{{ $bundle->title }}</strong> combo</span>
                 </div>
-                <a href="{{ route('combo', ['id' => $bundle->id]) }}" style="color: var(--accent-color); font-weight: 700; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: center; gap: 0.4rem; white-space: nowrap;">
+                <a href="{{ route('combo', ['id' => $bundle->id]) }}" class="promo-link">
                     View Combo <i class="fa-solid fa-chevron-right"></i>
                 </a>
             </div>
             @endif
 
-            <div class="p-spec-grid">
-                <div class="p-spec-item">
-                    <span class="s-label">Family</span>
-                    <span class="s-value">{{ $product->olfactory_family }}</span>
-                </div>
-                <div class="p-spec-item">
-                    <span class="s-label">Intensity</span>
-                    <span class="s-value">{{ $product->intensity ?? 'Medium' }}</span>
-                </div>
-                <div class="p-spec-item">
-                    <span class="s-label">Type</span>
-                    <span class="s-value">{{ $product->type }}</span>
-                </div>
+            <div class="p-specs-pill">
+                <div class="spec-part"><strong>Family:</strong> {{ $product->olfactory_family }}</div>
+                <div class="spec-part"><strong>Intensity:</strong> {{ $product->intensity ?? 'Long-lasting' }}</div>
+                <div class="spec-part"><strong>Type:</strong> {{ $product->type }}</div>
             </div>
 
-            <!-- Main Accords Section -->
-            <div class="p-accords-section">
-                <h3 class="p-section-title">Main Accords</h3>
-                <div class="accords-list">
+            <!-- Main Accords Pills -->
+            <div class="p-accords-wrapper">
+                <h3 class="p-section-label">Main Accords</h3>
+                <div class="accords-pills">
                     @php
-                        $accords = [
-                            ['name' => $product->olfactory_family, 'width' => '95%', 'color' => '#8B4513'],
-                            ['name' => 'Warm Spicy', 'width' => '75%', 'color' => '#B22222'],
-                            ['name' => 'Amber', 'width' => '60%', 'color' => '#FF8C00'],
-                            ['name' => 'Aromatic', 'width' => '45%', 'color' => '#556B2F'],
-                            ['name' => 'Citrus', 'width' => '30%', 'color' => '#FFD700'],
-                        ];
+                        $accords = [$product->olfactory_family, 'Warm Spicy', 'Amber', 'Aromatic'];
                     @endphp
                     @foreach($accords as $accord)
-                        <div class="accord-item">
-                            <div class="accord-bar" style="width: {{ $accord['width'] }}; background-color: {{ $accord['color'] }};">
-                                {{ $accord['name'] }}
-                            </div>
-                        </div>
+                        <span class="accord-pill">{{ $accord }}</span>
                     @endforeach
                 </div>
             </div>
 
-            <!-- Size Selection Grid -->
-            <div class="p-variants-section">
-                <h3 class="p-section-title">Select Size</h3>
-                <div class="variant-grid">
+            <!-- Size Selection -->
+            <div class="p-size-wrapper">
+                <h3 class="p-section-label">Select Size</h3>
+                <div class="size-rect-grid">
                     @foreach($product->variants as $variant)
-                        <div class="variant-card {{ $loop->first ? 'active' : '' }}" onclick="selectVariant(this, {{ $variant->price }}, '{{ $variant->size }}', {{ $variant->id }})">
-                            <i class="fa-solid fa-bottle-droplet bottle-icon"></i>
-                            <span class="v-size">{{ $variant->size }}</span>
-                            <span class="v-price">₹{{ number_format($variant->price, 0) }}</span>
+                        <div class="size-rect {{ $loop->first ? 'active' : '' }}" onclick="selectVariant(this, {{ $variant->price }}, '{{ $variant->size }}', {{ $variant->id }})">
+                            <span class="s-size">{{ $variant->size }}</span>
+                            <span class="s-price">₹{{ number_format($variant->price, 0) }}</span>
                         </div>
                     @endforeach
                 </div>
@@ -148,28 +124,23 @@
 
             <!-- Pack Of / Volume Deals -->
             @if(isset($packBundles) && $packBundles->count() > 0)
-            <div style="margin-bottom: 2.5rem;">
-                <h3 class="p-section-title">Special Volume Deals</h3>
-                <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+            <div class="p-volume-deals">
+                <h3 class="p-section-label">Special Volume Deals</h3>
+                <div class="deals-list">
                     @foreach($packBundles as $pb)
                         @php 
                             $pb_prod = $pb->products->first();
                             $pb_variant = $pb_prod ? $pb_prod->variants->firstWhere('id', $pb_prod->pivot->product_variant_id) : null;
                         @endphp
                         @if($pb_prod)
-                        <div class="pack-offer-item" style="display: flex; align-items: center; justify-content: space-between; background: #fff; border: 2px dashed #e2e8f0; padding: 1rem 1.25rem; border-radius: 1.25rem; transition: all 0.3s ease;">
-                            <div style="display: flex; flex-direction: column;">
-                                <span style="font-weight: 700; color: var(--primary-color); font-size: 1rem;">
-                                    Buy {{ $pb_prod->pivot->quantity }} 
-                                    @if($pb_variant) ({{ $pb_variant->size }}) @endif
-                                    at ₹{{ number_format($pb->total_price, 0) }}
-                                </span>
-                                <span style="font-size: 0.8rem; color: #10B981; font-weight: 600;">
-                                    Save ₹{{ number_format(($pb_variant ? $pb_variant->price : $pb_prod->starting_price) * $pb_prod->pivot->quantity - $pb->total_price, 0) }} instantly
-                                </span>
+                        <div class="deal-card">
+                            <div class="deal-info" style="flex-direction: row; align-items: center; gap: 1rem; flex-grow: 1;">
+                                <span class="deal-title" style="white-space: nowrap;">Buy {{ $pb_prod->pivot->quantity }} @if($pb_variant) ({{ $pb_variant->size }}) @endif</span>
+                                <div style="width: 1px; height: 16px; background: #eee;"></div>
+                                <span class="deal-save" style="white-space: nowrap;">Save ₹{{ number_format(($pb_variant ? $pb_variant->price : $pb_prod->starting_price) * $pb_prod->pivot->quantity - $pb->total_price, 0) }} instantly</span>
                             </div>
-                            <button onclick="addPackToCart({{ $pb->id }})" style="background: var(--primary-color); color: #fff; border: none; padding: 0.6rem 1.2rem; border-radius: 0.75rem; font-weight: 700; font-size: 0.85rem; cursor: pointer; display: flex; align-items: center; gap: 0.5rem;">
-                                <i class="fa-solid fa-plus"></i> Add Pack
+                            <button onclick="addPackToCart({{ $pb->id }})" class="btn-deal-add">
+                                Add ₹{{ number_format($pb->total_price, 0) }}
                             </button>
                         </div>
                         @endif
@@ -178,111 +149,103 @@
             </div>
             @endif
 
-            <!-- Pool Offers Section -->
+            <!-- Pool Deal Box -->
             @if(isset($poolBundles) && $poolBundles->count() > 0)
-                <div class="p-pool-section" style="margin-top: 3.5rem; margin-bottom: 3rem; background: #fafafa; padding: 1.75rem; border-radius: 1.5rem; border: 2px dashed var(--accent-color); position: relative;">
-                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem;">
-                        <h3 class="p-section-title" style="margin: 0; color: var(--accent-color); font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px;">Mix & Match Offer</h3>
-                        <span style="background: var(--accent-color); color: var(--primary-color); padding: 0.35rem 0.85rem; border-radius: 0.75rem; font-size: 0.7rem; font-weight: 800; text-transform: uppercase;">Pool Deal</span>
+                @php $pool = $poolBundles->first(); @endphp
+                <div class="p-pool-box">
+                    <div class="pool-header">
+                        <span class="pool-label">POOL DEAL • MIX & MATCH OFFER</span>
+                        <h4 class="pool-offer-title">Buy any {{ $pool->min_quantity }} items from this collection & get ₹{{ number_format($pool->discount_value, 0) }} off your total.</h4>
                     </div>
-                    
-                    @foreach($poolBundles as $pool)
-                        <div class="pool-item" style="margin-bottom: 1.5rem; last-child: margin-bottom: 0;">
-                            <p style="font-weight: 700; font-size: 0.95rem; margin-bottom: 1rem; color: var(--primary-color); line-height: 1.4;">
-                                Buy any {{ $pool->min_quantity }} items from this collection & get <span style="color: #10B981;">₹{{ number_format($pool->discount_value, 0) }} off</span> your total!
-                            </p>
-                            
-                            <div style="display: flex; gap: 1rem; overflow-x: auto; padding-bottom: 1rem;" class="hide-scrollbar">
-                                @foreach($pool->products as $poolProd)
-                                    @php 
-                                        $p_variant = $poolProd->variants->first(); 
-                                    @endphp
-                                    <div style="flex: 0 0 90px; position: relative;">
-                                        <a href="{{ route('product', ['id' => $poolProd->id]) }}" style="text-decoration: none; transition: transform 0.3s ease; display: block;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
-                                            <div style="width: 90px; height: 90px; background: #fff; border-radius: 1.25rem; overflow: hidden; border: 1px solid var(--border-color); margin-bottom: 0.5rem; box-shadow: 0 4px 12px rgba(0,0,0,0.06); position: relative;">
-                                                <img src="{{ $poolProd->main_image_url }}" alt="{{ $poolProd->title }}" onerror="this.src='{{ asset('images/g-load.webp') }}'" style="width: 100%; height: 100%; object-fit: cover;">
-                                            </div>
-                                            <p style="font-size: 0.65rem; color: var(--text-muted); text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin: 0; font-weight: 700;">
-                                                {{ $poolProd->title }}
-                                            </p>
-                                        </a>
-                                        <button onclick="quickAddPoolProduct(event, {{ $poolProd->id }}, {{ $p_variant->id ?? 'null' }}, '{{ $p_variant->size ?? '' }}')" 
-                                                style="position: absolute; top: 60px; right: -5px; width: 28px; height: 28px; border-radius: 50%; background: var(--primary-color); color: #fff; border: 2px solid #fff; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; box-shadow: 0 4px 8px rgba(0,0,0,0.15); cursor: pointer; z-index: 5;"
-                                                title="Quick Add to Cart">
-                                            <i class="fa-solid fa-cart-plus"></i>
-                                        </button>
-                                    </div>
-                                @endforeach
+                    <div class="pool-products-grid">
+                        @foreach($pool->products->take(4) as $poolProd)
+                            @php 
+                                $p_variant = $poolProd->variants->first(); 
+                                $p_data = [
+                                    'id' => $poolProd->id,
+                                    'title' => $poolProd->title,
+                                    'image' => $poolProd->main_image_url,
+                                    'family' => $poolProd->olfactory_family,
+                                    'type' => $poolProd->type,
+                                    'description' => $poolProd->description,
+                                    'notes_top' => $poolProd->notes_top,
+                                    'notes_heart' => $poolProd->notes_heart,
+                                    'notes_base' => $poolProd->notes_base,
+                                    'price' => '₹' . number_format($poolProd->starting_price, 0),
+                                    'url' => route('product', ['id' => $poolProd->id])
+                                ];
+                            @endphp
+                            <script type="application/json" id="product-data-{{ $poolProd->id }}">
+                                {!! json_encode($p_data) !!}
+                            </script>
+                            <div class="pool-prod-item {{ $poolProd->id == $product->id ? 'current' : '' }}">
+                                <div class="pool-prod-img" onclick="showProductPopup({{ $poolProd->id }})">
+                                    <img src="{{ $poolProd->main_image_url }}" alt="{{ $poolProd->title }}" onerror="this.src='{{ asset('images/g-load.webp') }}'">
+                                    <button class="pool-quick-add" onclick="quickAddPoolProduct(event, {{ $poolProd->id }}, {{ $p_variant->id ?? 'null' }}, '{{ $p_variant->size ?? '' }}')" title="Quick Add">
+                                        <i class="fa-solid fa-cart-plus"></i>
+                                    </button>
+                                </div>
+                                <a href="{{ route('product', ['id' => $poolProd->id]) }}" class="pool-prod-name">{{ $poolProd->title }}</a>
                             </div>
-                        </div>
-                    @endforeach
+                        @endforeach
+                    </div>
                 </div>
             @endif
 
-            <div class="p-actions-lg">
-                <div class="p-qty-selector">
-                    <button onclick="changePageQty(-1)"><i class="fa-solid fa-minus"></i></button>
+            <div class="p-actions-row">
+                <div class="qty-control">
+                    <button onclick="changePageQty(-1)">-</button>
                     <span id="page-qty">1</span>
-                    <button onclick="changePageQty(1)"><i class="fa-solid fa-plus"></i></button>
+                    <button onclick="changePageQty(1)">+</button>
                 </div>
-                <button class="add-to-cart-lg btn-primary" id="add-to-cart-page-btn">
-                    <span>Add to Cart</span>
-                    <span class="btn-divider"></span>
-                    <span id="btn-price-display">₹{{ number_format($product->starting_price, 0) }}</span>
+                <button class="btn-add-to-cart" id="add-to-cart-page-btn">
+                    ADD TO CART <span id="btn-price-display">₹{{ number_format($product->starting_price, 0) }}</span>
                 </button>
             </div>
-            <!-- Tabby EMI Promo (Bottom) -->
-            <div style="margin-top: 1rem; margin-bottom: 3rem; display: flex; align-items: center; gap: 0.75rem; font-size: 0.95rem; color: var(--text-muted); background: #f8fafc; padding: 1rem 1.5rem; border-radius: 1.25rem; width: 100%; border: 1px solid var(--border-color);">
-                <span style="display: flex; align-items: center; gap: 0.5rem; flex-grow: 1;">or 4 interest-free payments of <strong style="color: var(--primary-color); font-size: 1.1rem;">₹<span class="tabby-emi-display">{{ number_format($product->starting_price / 4, 0) }}</span></strong> with</span>
-                <span style="background: #3DF9D1; color: #000; padding: 0.25rem 0.75rem; border-radius: 0.4rem; font-weight: 900; font-size: 0.85rem; letter-spacing: -0.02em; text-transform: lowercase;">tabby</span>
-            </div>
+
             <!-- Concentration Guide -->
-            <div class="p-concentration-guide">
-                <div class="concentration-grid">
-                    <div class="conc-item {{ str_contains(strtolower($product->type), 'toilette') ? 'active' : '' }}">
-                        <div class="conc-icon"><i class="fa-solid fa-droplet opacity-25"></i></div>
-                        <div class="conc-info">
-                            <span class="conc-name">EDT</span>
-                            <span class="conc-desc">5-15% Oil</span>
-                        </div>
-                    </div>
-                    <div class="conc-item {{ str_contains(strtolower($product->type), 'parfum') && !str_contains(strtolower($product->type), 'extrait') ? 'active' : '' }}">
-                        <div class="conc-icon"><i class="fa-solid fa-droplet opacity-60"></i></div>
-                        <div class="conc-info">
-                            <span class="conc-name">EDP</span>
-                            <span class="conc-desc">15-20% Oil</span>
-                        </div>
-                    </div>
-                    <div class="conc-item {{ str_contains(strtolower($product->type), 'extrait') || str_contains(strtolower($product->type), 'oil') ? 'active' : '' }}">
-                        <div class="conc-icon"><i class="fa-solid fa-droplet"></i></div>
-                        <div class="conc-info">
-                            <span class="conc-name">Extrait</span>
-                            <span class="conc-desc">20-40% Oil</span>
-                        </div>
-                    </div>
+            <div class="p-concentration-bar">
+                <div class="conc-step {{ str_contains(strtolower($product->type), 'toilette') ? 'active' : '' }}">
+                    <span class="c-name">EDT</span>
+                    <span class="c-desc">5-15% Oil</span>
+                </div>
+                <div class="conc-step {{ str_contains(strtolower($product->type), 'parfum') && !str_contains(strtolower($product->type), 'extrait') ? 'active' : '' }}">
+                    <span class="c-name">EDP</span>
+                    <span class="c-desc">15-20% Oil</span>
+                </div>
+                <div class="conc-step {{ str_contains(strtolower($product->type), 'extrait') || str_contains(strtolower($product->type), 'oil') ? 'active' : '' }}">
+                    <span class="c-name">Extrait</span>
+                    <span class="c-desc">20-40% Oil</span>
                 </div>
             </div>
 
-
-            <div class="p-tabs">
-                <div class="tab-headers">
-                    <button class="tab-btn active" onclick="switchTab('desc')">Description</button>
-                    <button class="tab-btn" onclick="switchTab('notes')">Olfactory Notes</button>
-                    <button class="tab-btn" onclick="switchTab('shipping')">Shipping</button>
+            <div class="p-tabs-minimal">
+                <button class="tab-link active" onclick="switchTab('desc')">DESCRIPTION</button>
+                <button class="tab-link" onclick="switchTab('notes')">OLFACTORY NOTES</button>
+                <button class="tab-link" onclick="switchTab('shipping')">SHIPPING</button>
+            </div>
+            
+            <div class="tab-content-minimal" id="tab-desc">
+                <p>{{ $product->description }}</p>
+            </div>
+            <div class="tab-content-minimal d-none" id="tab-notes">
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem;">
+                    <div>
+                        <h4 style="font-size: 0.75rem; color: #999; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 1px;">Top Notes</h4>
+                        <p style="font-weight: 600; color: #000;">{{ $product->notes_top }}</p>
+                    </div>
+                    <div>
+                        <h4 style="font-size: 0.75rem; color: #999; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 1px;">Heart Notes</h4>
+                        <p style="font-weight: 600; color: #000;">{{ $product->notes_heart }}</p>
+                    </div>
+                    <div>
+                        <h4 style="font-size: 0.75rem; color: #999; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 1px;">Base Notes</h4>
+                        <p style="font-weight: 600; color: #000;">{{ $product->notes_base }}</p>
+                    </div>
                 </div>
-                <div class="tab-content" id="tab-desc">
-                    <p>{{ $product->description }}</p>
-                </div>
-                <div class="tab-content d-none" id="tab-notes">
-                    <ul style="list-style: none; padding: 0;">
-                        <li style="margin-bottom: 0.5rem;"><strong>Top Notes:</strong> {{ $product->notes_top }}</li>
-                        <li style="margin-bottom: 0.5rem;"><strong>Heart Notes:</strong> {{ $product->notes_heart }}</li>
-                        <li style="margin-bottom: 0.5rem;"><strong>Base Notes:</strong> {{ $product->notes_base }}</li>
-                    </ul>
-                </div>
-                <div class="tab-content d-none" id="tab-shipping">
-                    <p>Free express shipping on all orders over ₹999. Delivered within 3-5 business days across India.</p>
-                </div>
+            </div>
+            <div class="tab-content-minimal d-none" id="tab-shipping">
+                <p>Enjoy free express shipping on this order. Estimated delivery by <strong>{{ now()->addDays(2)->format('l, M jS') }}</strong> (within 2 business days).</p>
             </div>
         </div>
     </div>
@@ -301,61 +264,161 @@
         </div>
     </div>
     @endif
+
+    <!-- Product Modal -->
+    <div id="product-modal" class="modal-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 9999; backdrop-filter: blur(8px); align-items: center; justify-content: center; padding: 1.5rem;">
+        <div class="modal-card" style="background: #fff; width: 100%; max-width: 900px; border-radius: 2rem; overflow: hidden; position: relative; display: grid; grid-template-columns: 1fr 1fr;">
+            <button id="modal-close-btn" onclick="closeProductModal()" style="position: absolute; top: 1.5rem; right: 1.5rem; background: #fff; border: none; width: 40px; height: 40px; border-radius: 50%; box-shadow: 0 4px 12px rgba(0,0,0,0.1); cursor: pointer; z-index: 10; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; color: #000;">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="modal-gallery" style="background: #f8fafc; display: flex; align-items: center; justify-content: center; padding: 2rem;">
+                <img id="modal-img" src="" alt="" style="width: 100%; height: auto; border-radius: 1rem; object-fit: cover; box-shadow: 0 20px 40px rgba(0,0,0,0.1);">
+            </div>
+            <div class="modal-info" style="padding: 3rem; display: flex; flex-direction: column; max-height: 80vh; overflow-y: auto;">
+                <div id="modal-tag" style="background: var(--accent-color); color: var(--primary-color); display: inline-block; padding: 0.2rem 1rem; border-radius: 9999px; font-weight: 800; font-size: 0.7rem; margin-bottom: 1rem; text-transform: uppercase; width: fit-content;">Fragrance Details</div>
+                <h2 id="modal-title" style="font-size: 2.25rem; font-weight: 800; color: #000; margin-bottom: 0.5rem; line-height: 1.2; font-family: 'Playfair Display', serif;"></h2>
+                <p id="modal-subtitle" style="color: #666; font-size: 1rem; margin-bottom: 2rem; font-weight: 500;"></p>
+                
+                <div style="margin-bottom: 2rem;">
+                    <h4 style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: #000; margin-bottom: 0.75rem; font-weight: 800;">About the Scent</h4>
+                    <p id="modal-desc" style="font-size: 1rem; color: #444; line-height: 1.7;"></p>
+                </div>
+
+                <div style="margin-bottom: 2rem;">
+                    <h4 style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: #000; margin-bottom: 1rem; font-weight: 800;">Olfactory Profile</h4>
+                    <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                        <div style="display: flex; align-items: center; gap: 1rem;">
+                            <div style="width: 80px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; color: #999;">Top</div>
+                            <div id="modal-top" style="font-size: 0.95rem; color: #000; font-weight: 500;"></div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 1rem;">
+                            <div style="width: 80px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; color: #999;">Heart</div>
+                            <div id="modal-heart" style="font-size: 0.95rem; color: #000; font-weight: 500;"></div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 1rem;">
+                            <div style="width: 80px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; color: #999;">Base</div>
+                            <div id="modal-base" style="font-size: 0.95rem; color: #000; font-weight: 500;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top: auto; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid #eee; padding-top: 2rem;">
+                    <div id="modal-price" style="font-size: 1.5rem; font-weight: 800; color: #000;"></div>
+                    <a id="modal-link" href="" class="btn-primary" style="padding: 0.75rem 1.5rem; border-radius: 9999px; background: #000; color: #fff; font-size: 0.9rem; text-decoration: none; font-weight: 700;">View Product Page</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <style>
-    .product-page-container { padding: 1rem 0; }
-    .breadcrumb { display: flex; align-items: center; gap: 0.75rem; font-size: 0.9rem; color: var(--text-muted); margin-bottom: 3rem; }
+    .product-page-container { padding: 1rem 0; color: #1a1a1a; }
+    .breadcrumb { display: flex; align-items: center; gap: 0.75rem; font-size: 0.85rem; color: #666; margin-bottom: 2rem; }
     .breadcrumb a:hover { color: var(--accent-color); }
-    .breadcrumb i { font-size: 0.7rem; opacity: 0.5; }
+    
+    .product-core-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 4rem; align-items: start; }
 
-    .product-core-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 5rem; }
-
-    .main-image-display { background: var(--section-bg); border-radius: 2rem; overflow: hidden; aspect-ratio: 1; margin-bottom: 1.5rem; border: 1px solid var(--border-color); }
+    /* Gallery */
+    .main-image-display { background: #fdfdfd; border-radius: 0.5rem; overflow: hidden; aspect-ratio: 1; border: 1px solid #eee; margin-bottom: 1rem; }
     .main-image-display img { width: 100%; height: 100%; object-fit: cover; }
-    .thumb-strip { display: flex; gap: 1rem; overflow-x: auto; padding-bottom: 0.5rem; }
-    .t-item { width: 90px; height: 90px; border-radius: 1rem; border: 2px solid transparent; cursor: pointer; transition: var(--transition); object-fit: cover; }
-    .t-item.active { border-color: var(--accent-color); }
+    .thumb-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+    .thumb-item { border: 1px solid #eee; border-radius: 0.25rem; overflow: hidden; aspect-ratio: 1; cursor: pointer; transition: 0.3s; }
+    .thumb-item img { width: 100%; height: 100%; object-fit: cover; }
+    .thumb-item.active { border: 2px solid var(--accent-color); }
 
-    .p-title-lg { font-size: 3rem; font-weight: 800; color: var(--primary-color); line-height: 1.1; margin-bottom: 0.5rem; }
-    .p-vendor-lg { color: var(--text-muted); font-size: 1.1rem; margin-bottom: 2rem; font-weight: 500; }
+    /* Floating Gallery Badge */
+    .p-gallery-badge { position: absolute; top: 1.25rem; right: 1.25rem; background: var(--accent-color); color: var(--primary-color); padding: 0.5rem 1rem; border-radius: 999px; font-weight: 800; font-size: 0.8rem; box-shadow: 0 10px 20px rgba(212, 175, 55, 0.4); z-index: 10; display: flex; align-items: center; gap: 0.5rem; border: 2px solid #fff; animation: float 3s ease-in-out infinite; }
 
-    .p-price-block-lg { display: flex; align-items: baseline; gap: 1.5rem; margin-bottom: 3rem; }
-    .p-price-lg { font-size: 2.25rem; font-weight: 800; color: var(--primary-color); }
-    .p-compare-lg { font-size: 1.5rem; text-decoration: line-through; color: var(--text-muted); }
+    /* Info */
+    .p-vendor-label { font-size: 0.75rem; font-weight: 700; color: var(--accent-color); letter-spacing: 0.15em; margin-bottom: 0.5rem; }
+    .p-title-serif { font-family: 'Playfair Display', serif; font-size: 3.5rem; font-weight: 600; font-style: italic; color: #000; margin-bottom: 1rem; line-height: 1.1; }
+    
+    .p-price-row { display: flex; align-items: center; gap: 1.25rem; margin-bottom: 1rem; }
+    .p-compare-at { font-size: 1.5rem; text-decoration: line-through; color: #999; }
+    .p-current-price { font-size: 2.25rem; font-weight: 700; color: #000; }
+    .p-discount-badge { background: #B5A264; color: #fff; padding: 0.35rem 1rem; border-radius: 999px; font-size: 0.85rem; font-weight: 700; }
+    
+    .p-quick-add-badge { width: 45px; height: 45px; background: var(--accent-color); color: var(--primary-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; cursor: pointer; transition: 0.3s; margin-left: auto; box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3); }
+    .p-quick-add-badge:hover { transform: scale(1.1) rotate(-5deg); background: var(--primary-color); color: var(--accent-color); }
+    
+    .p-emi-info { font-size: 0.9rem; color: #444; margin-bottom: 2rem; }
+    .p-emi-info strong { color: #000; }
+    .p-emi-info i { font-size: 0.8rem; opacity: 0.5; margin-left: 0.25rem; }
 
-    .p-spec-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 3rem; background: var(--section-bg); padding: 1.5rem; border-radius: 1.5rem; }
-    .s-label { display: block; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); margin-bottom: 0.25rem; font-weight: 700; }
-    .s-value { font-weight: 600; font-size: 1rem; color: var(--primary-color); }
+    /* Promo Box (Combo) */
+    .p-promo-box { background: #FFFEF9; border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 0.75rem; padding: 1rem 1.25rem; margin-bottom: 2.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+    .promo-content { display: flex; align-items: center; gap: 0.75rem; font-size: 0.85rem; font-weight: 500; color: #1a1a1a; }
+    .promo-content i { color: var(--accent-color); font-size: 0.9rem; }
+    .promo-link { font-size: 0.75rem; font-weight: 800; color: var(--accent-color); text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: center; gap: 0.4rem; }
 
-    .p-selection-section { margin-bottom: 3rem; }
-    .selection-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 1.25rem; }
-    .size-options-grid { display: flex; gap: 1rem; flex-wrap: wrap; }
-    .size-btn-lg { padding: 1rem 2rem; border: 1px solid var(--border-color); border-radius: 1rem; background: #fff; cursor: pointer; font-weight: 600; transition: var(--transition); font-size: 1rem; }
-    .size-btn-lg.active { background: var(--primary-color); color: #fff; border-color: var(--primary-color); }
+    .p-specs-pill { display: flex; border: 1px solid #e5e5e5; border-radius: 999px; padding: 0.75rem 2rem; margin-bottom: 2.5rem; justify-content: space-between; font-size: 0.85rem; background: #fff; }
+    .spec-part { color: #666; }
+    .spec-part strong { color: #1a1a1a; font-weight: 600; }
+    .spec-part:not(:last-child) { padding-right: 1.5rem; border-right: 1px solid #eee; }
 
-    .p-action-bar-lg { display: flex; gap: 2rem; margin-bottom: 4rem; }
-    .p-qty-selector { display: flex; align-items: center; border: 1px solid var(--border-color); border-radius: 9999px; padding: 0.5rem 1.5rem; gap: 2rem; }
-    .p-qty-selector button { border: none; background: none; font-size: 1.5rem; color: var(--text-muted); cursor: pointer; }
-    .p-qty-selector span { font-weight: 700; font-size: 1.25rem; min-width: 30px; text-align: center; }
+    .p-section-label { font-size: 0.9rem; font-weight: 700; color: #000; margin-bottom: 1rem; }
+    .p-accords-wrapper { margin-bottom: 2.5rem; }
+    .accords-pills { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+    .accord-pill { border: 1px solid #e5e5e5; border-radius: 999px; padding: 0.5rem 1.25rem; font-size: 0.85rem; color: #444; font-weight: 500; }
 
-    .btn-add-primary { flex-grow: 1; background: var(--accent-color); color: var(--primary-color); border: none; border-radius: 9999px; font-weight: 700; font-size: 1.25rem; cursor: pointer; transition: var(--transition); }
-    .btn-add-primary:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(212, 175, 55, 0.3); }
+    .p-size-wrapper { margin-bottom: 2.5rem; }
+    .size-rect-grid { display: flex; gap: 1rem; }
+    .size-rect { flex: 1; border: 1.5px solid #e5e5e5; border-radius: 0.5rem; padding: 0.75rem 1.25rem; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 1rem; }
+    .size-rect.active { border-color: var(--accent-color); background: #fcfcfc; }
+    .s-size { font-weight: 700; font-size: 0.95rem; color: #000; }
+    .s-price { font-size: 0.95rem; color: #000; font-weight: 500; }
 
-    .p-tabs { border-top: 1px solid var(--border-color); padding-top: 2.5rem; }
-    .tab-headers { display: flex; gap: 2.5rem; margin-bottom: 2rem; }
-    .tab-btn { background: none; border: none; font-size: 1.1rem; font-weight: 600; color: var(--text-muted); cursor: pointer; padding-bottom: 0.5rem; border-bottom: 2px solid transparent; transition: var(--transition); }
-    .tab-btn.active { color: var(--primary-color); border-color: var(--accent-color); }
-    .tab-content { line-height: 1.8; color: var(--text-muted); font-size: 1.05rem; }
-    .d-none { display: none; }
+    /* Volume Deals (Pack Of) */
+    .p-volume-deals { margin-bottom: 2.5rem; }
+    .deals-list { display: flex; flex-direction: column; gap: 0.75rem; }
+    .deal-card { display: flex; align-items: center; justify-content: space-between; background: #fff; border: 1.5px dashed #e5e5e5; padding: 1rem 1.25rem; border-radius: 0.75rem; transition: 0.3s; }
+    .deal-info { display: flex; flex-direction: column; gap: 0.15rem; }
+    .deal-title { font-weight: 700; font-size: 0.95rem; color: #000; }
+    .deal-save { font-size: 0.75rem; font-weight: 700; color: #10B981; }
+    .btn-deal-add { background: #111; color: #fff; border: none; padding: 0.6rem 1.25rem; border-radius: 0.5rem; font-weight: 700; font-size: 0.8rem; cursor: pointer; transition: 0.3s; }
+    .btn-deal-add:hover { background: #000; transform: scale(1.02); }
+
+    /* Pool Box */
+    .p-pool-box { border: 2px solid #D4AF37; background: #FFFEF9; border-radius: 1rem; padding: 1.5rem; margin-bottom: 2.5rem; position: relative; box-shadow: 0 10px 30px rgba(212, 175, 55, 0.1); }
+    .pool-header { text-align: center; margin-bottom: 1.5rem; }
+    .pool-label { font-size: 0.7rem; font-weight: 800; color: #D4AF37; letter-spacing: 0.1em; }
+    .pool-offer-title { font-size: 1.1rem; font-weight: 700; color: #000; margin-top: 0.5rem; }
+    .pool-products-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+    .pool-prod-item { text-align: center; }
+    .pool-prod-img { aspect-ratio: 1; background: #fff; border-radius: 0.5rem; border: 1px solid #eee; overflow: hidden; margin-bottom: 0.5rem; position: relative; }
+    .pool-prod-item.current .pool-prod-img { border-color: #D4AF37; border-width: 2px; }
+    .pool-prod-img img { width: 100%; height: 100%; object-fit: cover; }
+    .pool-prod-name { font-size: 0.7rem; font-weight: 600; color: #666; display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    
+    .pool-quick-add { position: absolute; bottom: 0.5rem; right: 0.5rem; width: 28px; height: 28px; border-radius: 50%; background: #111; color: #fff; border: 1.5px solid #fff; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; cursor: pointer; opacity: 0; transform: translateY(5px); transition: 0.3s; z-index: 5; }
+    .pool-prod-img:hover .pool-quick-add { opacity: 1; transform: translateY(0); }
+
+    .p-actions-row { display: flex; gap: 1rem; margin-bottom: 2.5rem; }
+    .qty-control { display: flex; align-items: center; border: 1.5px solid #e5e5e5; border-radius: 0.5rem; overflow: hidden; background: #fff; }
+    .qty-control button { border: none; background: none; padding: 0.75rem 1rem; font-size: 1.25rem; cursor: pointer; color: #666; }
+    .qty-control span { padding: 0 1rem; font-weight: 700; min-width: 40px; text-align: center; }
+    .btn-add-to-cart { flex: 1; background: #111; color: #fff; border: none; border-radius: 0.5rem; font-weight: 700; font-size: 1rem; letter-spacing: 0.05em; padding: 1rem; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 1rem; }
+    .btn-add-to-cart:hover { background: #000; transform: translateY(-2px); }
+
+    /* Concentration Bar */
+    .p-concentration-bar { display: flex; border: 1.5px solid #e5e5e5; border-radius: 0.5rem; overflow: hidden; margin-bottom: 2.5rem; }
+    .conc-step { flex: 1; padding: 1rem; text-align: center; display: flex; flex-direction: column; gap: 0.25rem; position: relative; }
+    .conc-step:not(:last-child) { border-right: 1px solid #eee; }
+    .conc-step.active { background: #FFFEF9; border: 2px solid #D4AF37; z-index: 2; margin: -1.5px; }
+    .c-name { font-weight: 700; font-size: 0.95rem; color: #000; }
+    .c-desc { font-size: 0.75rem; color: #999; }
+    .conc-step.active .c-desc { color: #B5A264; }
+
+    /* Tabs minimal */
+    .p-tabs-minimal { display: flex; gap: 3rem; border-bottom: 1.5px solid #eee; margin-bottom: 1.5rem; }
+    .tab-link { background: none; border: none; padding: 1rem 0; font-size: 0.85rem; font-weight: 700; color: #999; cursor: pointer; position: relative; letter-spacing: 0.1em; }
+    .tab-link.active { color: #000; }
+    .tab-link.active::after { content: ''; position: absolute; bottom: -1.5px; left: 0; right: 0; height: 2px; background: #000; }
+    .tab-content-minimal { font-size: 0.95rem; color: #666; line-height: 1.6; }
+    .d-none { display: none !important; }
 
     @media (max-width: 1200px) {
         .product-core-grid { grid-template-columns: 1fr; gap: 3rem; }
-        .product-details-panel { max-width: 800px; }
-    }
-    @keyframes float {
-        0%, 100% { transform: translateY(0); }
-        50% { transform: translateY(-10px); }
     }
 </style>
 
@@ -373,7 +436,7 @@
 
     function selectVariant(element, price, size, id) {
         // Update active class
-        document.querySelectorAll('.variant-card').forEach(card => card.classList.remove('active'));
+        document.querySelectorAll('.size-rect').forEach(card => card.classList.remove('active'));
         element.classList.add('active');
 
         // Update Price displays
@@ -402,20 +465,20 @@
     }
 
     function switchTab(tab) {
-        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        document.querySelectorAll('.tab-content').forEach(c => c.classList.add('d-none'));
+        document.querySelectorAll('.tab-link').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-content-minimal').forEach(c => c.classList.add('d-none'));
         
-        const targetBtn = Array.from(document.querySelectorAll('.tab-btn')).find(b => b.innerText.toLowerCase().includes(tab));
+        const targetBtn = Array.from(document.querySelectorAll('.tab-link')).find(b => b.innerText.toLowerCase().includes(tab));
         if(targetBtn) targetBtn.classList.add('active');
         document.getElementById('tab-' + tab).classList.remove('d-none');
     }
 
     function addToCart() {
         const variantId = document.getElementById('selected-variant-id').value;
-        const activeCard = document.querySelector('.variant-card.active');
-        const size = activeCard ? activeCard.querySelector('.v-size').innerText : '';
+        const activeCard = document.querySelector('.size-rect.active');
+        const size = activeCard ? activeCard.querySelector('.s-size').innerText : '';
         const btn = document.getElementById('add-to-cart-page-btn');
-        const originalText = btn.innerHTML;
+        const originalHtml = btn.innerHTML;
 
         btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Adding...';
         btn.disabled = true;
@@ -433,23 +496,23 @@
             success: function(response) {
                 if(response.success) {
                     $('#cart-count').text(response.cartCount);
-                    btn.innerHTML = '<i class="fa-solid fa-check"></i> Added!';
-                    btn.classList.add('success-btn');
+                    btn.innerHTML = 'ADDED TO CART';
+                    btn.style.background = '#10B981';
                     
                     setTimeout(() => {
-                        btn.innerHTML = originalText;
-                        btn.classList.remove('success-btn');
+                        btn.innerHTML = originalHtml;
+                        btn.style.background = '';
                         btn.disabled = false;
                     }, 2000);
                 } else {
                     alert('Error: ' + response.message);
-                    btn.innerHTML = originalText;
+                    btn.innerHTML = originalHtml;
                     btn.disabled = false;
                 }
             },
             error: function() {
                 alert('Something went wrong. Please try again.');
-                btn.innerHTML = originalText;
+                btn.innerHTML = originalHtml;
                 btn.disabled = false;
             }
         });
@@ -522,5 +585,34 @@
             }
         });
     }
+
+    function showProductPopup(id) {
+        const data = JSON.parse(document.getElementById('product-data-' + id).innerText);
+        
+        document.getElementById('modal-img').src = data.image;
+        document.getElementById('modal-title').innerText = data.title;
+        document.getElementById('modal-subtitle').innerText = data.type + ' • ' + data.family;
+        document.getElementById('modal-desc').innerText = data.description;
+        document.getElementById('modal-top').innerText = data.notes_top;
+        document.getElementById('modal-heart').innerText = data.notes_heart;
+        document.getElementById('modal-base').innerText = data.notes_base;
+        document.getElementById('modal-price').innerText = data.price;
+        document.getElementById('modal-link').href = data.url;
+        
+        const modal = document.getElementById('product-modal');
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeProductModal() {
+        const modal = document.getElementById('product-modal');
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+
+    // Close on overlay click
+    $(document).on('click', '#product-modal', function(e) {
+        if (e.target === this) closeProductModal();
+    });
 </script>
 @endsection
