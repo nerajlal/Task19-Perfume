@@ -217,4 +217,45 @@
         .btn-complete-order { font-size: 1.1rem; padding: 1.25rem; }
     }
 </style>
+<script>
+    $(document).ready(function() {
+        $('#main-checkout-form').on('submit', function(e) {
+            e.preventDefault();
+            
+            const $btn = $('.btn-complete-order');
+            const originalHtml = $btn.html();
+            
+            $btn.html('<i class="fa-solid fa-spinner fa-spin"></i> Processing Order...').prop('disabled', true);
+            
+            $.ajax({
+                url: $(this).attr('action'),
+                method: 'POST',
+                data: $(this).serialize(),
+                success: function(response) {
+                    if(response.success) {
+                        window.location.href = response.redirect_url;
+                    } else {
+                        alert(response.message || 'Something went wrong.');
+                        $btn.html(originalHtml).prop('disabled', false);
+                    }
+                },
+                error: function(xhr) {
+                    let msg = 'Something went wrong. Please try again.';
+                    if(xhr.responseJSON && xhr.responseJSON.message) {
+                        msg = xhr.responseJSON.message;
+                    }
+                    alert(msg);
+                    $btn.html(originalHtml).prop('disabled', false);
+                }
+            });
+        });
+
+        // Payment option toggle
+        $('.pay-option').on('click', function() {
+            $('.pay-option').removeClass('active');
+            $(this).addClass('active');
+            $(this).find('input[type="radio"]').prop('checked', true);
+        });
+    });
+</script>
 @endsection

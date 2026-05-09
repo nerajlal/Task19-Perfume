@@ -8,6 +8,7 @@ use App\Models\OrderItem;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use App\Http\Controllers\CartController;
+use App\Services\CartService;
 
 class OrderController extends Controller
 {
@@ -15,14 +16,14 @@ class OrderController extends Controller
     {
         // 1. Validate Input
         $request->validate([
-            'first_name' => 'required',
-            'last_name' => 'required',
+            'name' => 'required',
             'email' => 'required|email',
             'address' => 'required',
             'city' => 'required',
             'state' => 'required',
-            'zip' => 'required',
+            'pincode' => 'required',
             'phone' => 'required',
+            'payment_method' => 'required'
         ]);
 
         try {
@@ -46,7 +47,7 @@ class OrderController extends Controller
                         "bundle_id" => null,
                         "size" => $item->size,
                         "type" => "product",
-                        "coupon" => \App\Services\CartService::getActiveCoupon($item->product)
+                        "coupon" => CartService::getActiveCoupon($item->product)
                     ];
                 } elseif ($item->bundle_id && $item->bundle) {
                     $cart['bundle-' . $item->bundle_id] = [
@@ -68,7 +69,7 @@ class OrderController extends Controller
                 if(isset($item['type']) && $item['type'] == 'product' && isset($item['product_id'])) {
                     $product = \App\Models\Product::find($item['product_id']);
                     if($product) {
-                        $coupon = $this->getActiveCoupon($product);
+                        $coupon = CartService::getActiveCoupon($product);
                         if($coupon) {
                             $basePrice = $item['price']; // Assuming session stores original price
                             $discountVal = $coupon->type == 'percentage' 
@@ -86,7 +87,7 @@ class OrderController extends Controller
         }
 
         // 3. Calculate Totals
-        $cartData = \App\Services\CartService::calculateTotal($cart);
+        $cartData = CartService::calculateTotal($cart);
         $subtotal = $cartData['total'];
         $savings = $cartData['savings'];
         $shipping = 0; // Free shipping
@@ -116,17 +117,23 @@ class OrderController extends Controller
         
         $orderNumber = "NR-{$dateCtx}-{$pid}-{$randomMix}";
 
+        // Split name for customer_name
+        $customerName = $request->name;
+        $nameParts = explode(' ', $customerName);
+        $firstName = $nameParts[0];
+        $lastName = isset($nameParts[1]) ? $nameParts[1] : '';
+
         // 4. Create Order
         $order = Order::create([
             'user_id' => Auth::id(),
             'order_number' => $orderNumber,
             'status' => 'pending',
-            'payment_method' => 'cod', // Hardcoded as per requirement
+            'payment_method' => $request->payment_method ?? 'cod',
             'payment_status' => 'pending',
             'subtotal' => $subtotal,
             'shipping_cost' => $shipping,
             'total_amount' => $total,
-            'customer_name' => $request->first_name . ' ' . $request->last_name,
+            'customer_name' => $customerName,
             'customer_email' => $request->email,
             'customer_phone' => $request->phone,
             'shipping_address' => [
@@ -134,7 +141,7 @@ class OrderController extends Controller
                 'apartment' => $request->apartment,
                 'city' => $request->city,
                 'state' => $request->state,
-                'zip' => $request->zip,
+                'zip' => $request->pincode,
             ],
             'notes' => $request->notes,
             'placed_at' => now(),
@@ -157,7 +164,7 @@ class OrderController extends Controller
                         'address_line2' => $request->apartment,
                         'city' => $request->city,
                         'state' => $request->state,
-                        'zip' => $request->zip,
+                        'zip' => $request->pincode,
                         'country' => 'India',
                         'is_default' => true,
                     ]);
@@ -257,7 +264,7 @@ class OrderController extends Controller
         return response()->json([
             'success' => true,
             'order_id' => $order->order_number,
-            'redirect_url' => route('home') // Ideally a Thank You page
+            'redirect_url' => route('account.orders')
         ]);
     }
 
