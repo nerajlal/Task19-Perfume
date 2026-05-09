@@ -195,11 +195,11 @@
             <div class="p-actions-row">
                 <div class="qty-control">
                     <button onclick="changePageQty(-1)">-</button>
-                    <span id="page-qty">1</span>
+                    <span class="page-qty">1</span>
                     <button onclick="changePageQty(1)">+</button>
                 </div>
-                <button class="btn-add-to-cart" id="add-to-cart-page-btn">
-                    ADD TO CART <span id="btn-price-display">₹{{ number_format($product->starting_price, 0) }}</span>
+                <button class="btn-add-to-cart add-to-cart-btn" id="add-to-cart-page-btn">
+                    ADD TO CART <span class="btn-price-display">₹{{ number_format($product->starting_price, 0) }}</span>
                 </button>
             </div>
 
@@ -307,6 +307,21 @@
                     <a id="modal-link" href="" class="btn-primary" style="padding: 0.75rem 1.5rem; border-radius: 9999px; background: #000; color: #fff; font-size: 0.9rem; text-decoration: none; font-weight: 700;">View Product Page</a>
                 </div>
             </div>
+        </div>
+    </div>
+    </div>
+
+    <!-- Mobile Sticky Footer -->
+    <div class="mobile-sticky-footer">
+        <div class="p-actions-row">
+            <div class="qty-control">
+                <button onclick="changePageQty(-1)">-</button>
+                <span class="page-qty">1</span>
+                <button onclick="changePageQty(1)">+</button>
+            </div>
+            <button class="btn-add-to-cart add-to-cart-btn">
+                ADD TO CART <span class="btn-price-display">₹{{ number_format($product->starting_price, 0) }}</span>
+            </button>
         </div>
     </div>
 </div>
@@ -429,6 +444,25 @@
         .modal-info { padding: 1.5rem !important; }
         .p-price-row { flex-wrap: wrap; }
     }
+    .mobile-sticky-footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: #fff;
+        padding: 0.75rem 1rem;
+        box-shadow: 0 -10px 30px rgba(0,0,0,0.08);
+        z-index: 1000;
+        display: none;
+    }
+    .mobile-sticky-footer .p-actions-row { margin-bottom: 0; gap: 0.75rem; }
+    .mobile-sticky-footer .qty-control button { padding: 0.5rem 0.75rem; }
+    .mobile-sticky-footer .btn-add-to-cart { padding: 0.75rem; font-size: 0.9rem; }
+
+    @media (max-width: 768px) {
+        .mobile-sticky-footer { display: block; }
+        .product-page-container { padding-bottom: 70px; } /* Space for sticky footer */
+    }
 </style>
 
 @endsection
@@ -470,7 +504,9 @@
 
     function changePageQty(delta) {
         qty = Math.max(1, qty + delta);
-        document.getElementById('page-qty').innerText = qty;
+        document.querySelectorAll('.page-qty').forEach(el => {
+            el.innerText = qty;
+        });
     }
 
     function switchTab(tab) {
@@ -482,11 +518,11 @@
         document.getElementById('tab-' + tab).classList.remove('d-none');
     }
 
-    function addToCart() {
+    function addToCart(event) {
+        const btn = event.currentTarget;
         const variantId = document.getElementById('selected-variant-id').value;
         const activeCard = document.querySelector('.size-rect.active');
         const size = activeCard ? activeCard.querySelector('.s-size').innerText : '';
-        const btn = document.getElementById('add-to-cart-page-btn');
         const originalHtml = btn.innerHTML;
 
         btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Adding...';
@@ -505,13 +541,17 @@
             success: function(response) {
                 if(response.success) {
                     $('#cart-count').text(response.cartCount);
-                    btn.innerHTML = 'ADDED TO CART';
-                    btn.style.background = '#10B981';
+                    document.querySelectorAll('.add-to-cart-btn').forEach(b => {
+                        b.innerHTML = 'ADDED TO CART';
+                        b.style.background = '#10B981';
+                    });
                     
                     setTimeout(() => {
-                        btn.innerHTML = originalHtml;
-                        btn.style.background = '';
-                        btn.disabled = false;
+                        document.querySelectorAll('.add-to-cart-btn').forEach(b => {
+                            b.innerHTML = originalHtml; // Note: originalHtml might be different for each btn, but usually they are same text
+                            b.style.background = '';
+                            b.disabled = false;
+                        });
                     }, 2000);
                 } else {
                     alert('Error: ' + response.message);
@@ -527,7 +567,9 @@
         });
     }
 
-    document.getElementById('add-to-cart-page-btn').addEventListener('click', addToCart);
+    document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
+        btn.addEventListener('click', addToCart);
+    });
 
     function addPackToCart(bundleId) {
         const btn = event.currentTarget;
