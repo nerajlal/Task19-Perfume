@@ -346,22 +346,22 @@
     .p-emi-info i { font-size: 0.8rem; opacity: 0.5; margin-left: 0.25rem; }
 
     /* Promo Box (Combo) */
-    .p-promo-box { background: #FFFEF9; border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 0.75rem; padding: 1rem 1.25rem; margin-bottom: 2.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+    .p-promo-box { background: #FFFEF9; border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 0.75rem; padding: 1rem 1.25rem; margin-bottom: 1.25rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
     .promo-content { display: flex; align-items: center; gap: 0.75rem; font-size: 0.85rem; font-weight: 500; color: #1a1a1a; }
     .promo-content i { color: var(--accent-color); font-size: 0.9rem; }
     .promo-link { font-size: 0.75rem; font-weight: 800; color: var(--accent-color); text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: center; gap: 0.4rem; }
 
-    .p-specs-pill { display: flex; border: 1px solid #e5e5e5; border-radius: 999px; padding: 0.75rem 2rem; margin-bottom: 2.5rem; justify-content: space-between; font-size: 0.85rem; background: #fff; }
+    .p-specs-pill { display: flex; border: 1px solid #e5e5e5; border-radius: 999px; padding: 0.75rem 2rem; margin-bottom: 1.25rem; justify-content: space-between; font-size: 0.85rem; background: #fff; }
     .spec-part { color: #666; }
     .spec-part strong { color: #1a1a1a; font-weight: 600; }
     .spec-part:not(:last-child) { padding-right: 1.5rem; border-right: 1px solid #eee; }
 
     .p-section-label { font-size: 0.9rem; font-weight: 700; color: #000; margin-bottom: 1rem; }
-    .p-accords-wrapper { margin-bottom: 2.5rem; }
+    .p-accords-wrapper { margin-bottom: 1.25rem; }
     .accords-pills { display: flex; flex-wrap: wrap; gap: 0.75rem; }
     .accord-pill { border: 1px solid #e5e5e5; border-radius: 999px; padding: 0.5rem 1.25rem; font-size: 0.85rem; color: #444; font-weight: 500; }
 
-    .p-size-wrapper { margin-bottom: 2.5rem; }
+    .p-size-wrapper { margin-bottom: 1.25rem; }
     .size-rect-grid { display: flex; gap: 1rem; }
     .size-rect { flex: 1; border: 1.5px solid #e5e5e5; border-radius: 0.5rem; padding: 0.75rem 1.25rem; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 1rem; }
     .size-rect.active { border-color: var(--accent-color); background: #fcfcfc; }
@@ -369,7 +369,7 @@
     .s-price { font-size: 0.95rem; color: #000; font-weight: 500; }
 
     /* Volume Deals (Pack Of) */
-    .p-volume-deals { margin-bottom: 2.5rem; }
+    .p-volume-deals { margin-bottom: 1.25rem; }
     .deals-list { display: flex; flex-direction: column; gap: 0.75rem; }
     .deal-card { display: flex; align-items: center; justify-content: space-between; background: #fff; border: 1.5px dashed #e5e5e5; padding: 1rem 1.25rem; border-radius: 0.75rem; transition: 0.3s; }
     .deal-info { display: flex; flex-direction: column; gap: 0.15rem; }
@@ -379,7 +379,7 @@
     .btn-deal-add:hover { background: #000; transform: scale(1.02); }
 
     /* Pool Box */
-    .p-pool-box { border: 2px solid #D4AF37; background: #FFFEF9; border-radius: 1rem; padding: 1.5rem; margin-bottom: 2.5rem; position: relative; box-shadow: 0 10px 30px rgba(212, 175, 55, 0.1); }
+    .p-pool-box { border: 2px solid #D4AF37; background: #FFFEF9; border-radius: 1rem; padding: 1.25rem; margin-bottom: 1.25rem; position: relative; box-shadow: 0 10px 30px rgba(212, 175, 55, 0.1); }
     .pool-header { text-align: center; margin-bottom: 1.5rem; }
     .pool-label { font-size: 0.7rem; font-weight: 800; color: #D4AF37; letter-spacing: 0.1em; }
     .pool-offer-title { font-size: 1.1rem; font-weight: 700; color: #000; margin-top: 0.5rem; }
@@ -393,7 +393,7 @@
     .pool-quick-add { position: absolute; bottom: 0.5rem; right: 0.5rem; width: 28px; height: 28px; border-radius: 50%; background: #111; color: #fff; border: 1.5px solid #fff; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; cursor: pointer; opacity: 0; transform: translateY(5px); transition: 0.3s; z-index: 5; }
     .pool-prod-img:hover .pool-quick-add { opacity: 1; transform: translateY(0); }
 
-    .p-actions-row { display: flex; gap: 1rem; margin-bottom: 2.5rem; }
+    .p-actions-row { display: flex; gap: 1rem; margin-bottom: 1.25rem; }
     .qty-control { display: flex; align-items: center; border: 1.5px solid #e5e5e5; border-radius: 0.5rem; overflow: hidden; background: #fff; }
     .qty-control button { border: none; background: none; padding: 0.75rem 1rem; font-size: 1.25rem; cursor: pointer; color: #666; }
     .qty-control span { padding: 0 1rem; font-weight: 700; min-width: 40px; text-align: center; }
@@ -401,7 +401,7 @@
     .btn-add-to-cart:hover { background: #000; transform: translateY(-2px); }
 
     /* Concentration Bar */
-    .p-concentration-bar { display: flex; border: 1.5px solid #e5e5e5; border-radius: 0.5rem; overflow: hidden; margin-bottom: 2.5rem; }
+    .p-concentration-bar { display: flex; border: 1.5px solid #e5e5e5; border-radius: 0.5rem; overflow: hidden; margin-bottom: 1.25rem; }
     .conc-step { flex: 1; padding: 1rem; text-align: center; display: flex; flex-direction: column; gap: 0.25rem; position: relative; }
     .conc-step:not(:last-child) { border-right: 1px solid #eee; }
     .conc-step.active { background: #FFFEF9; border: 2px solid #D4AF37; z-index: 2; margin: -1.5px; }
