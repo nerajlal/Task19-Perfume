@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use App\Models\Order;
 use App\Models\OrderItem;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use App\Http\Controllers\CartController;
 use App\Services\CartService;
+use App\Services\WhatsAppService;
 
 class OrderController extends Controller
 {
@@ -252,6 +254,15 @@ class OrderController extends Controller
             \App\Models\Cart::where('user_id', Auth::id())->delete();
         }
         session()->forget('cart');
+
+        // 8. Send WhatsApp Notification to Owner
+        try {
+            $waService = new WhatsAppService();
+            $waService->sendOrderNotification($order);
+        } catch (\Exception $e) {
+            Log::error("WhatsApp Notification Failed: " . $e->getMessage());
+            // We don't fail the order if notification fails
+        }
 
         } catch (\Exception $e) {
             return response()->json([
