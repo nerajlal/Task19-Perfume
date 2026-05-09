@@ -50,25 +50,10 @@
 <!-- Product Grid -->
 <div class="v-grid">
     @foreach($bestsellers as $item)
-    <div class="v-card">
-        <div class="v-img-box">
-            @if($loop->first)
-            <span class="v-badge">Trending</span>
-            @endif
-            <img src="{{ $item->product->main_image_url ?? asset('images/g-load.webp') }}" 
-                 onerror="this.src='{{ asset('images/g-load.webp') }}'"
-                 alt="{{ $item->product->title }}">
-        </div>
-        <div class="v-details">
-            <span class="v-family">{{ $item->product->olfactory_family ?? 'Signature' }}</span>
-            <h3 class="v-name">{{ $item->product->title }}</h3>
-            <p class="v-price">₹{{ number_format($item->product->starting_price, 0) }}</p>
-            
-            <button class="btn-add-v">
-                <i class="fa-solid fa-cart-plus mr-2"></i> Add to Bag
-            </button>
-        </div>
-    </div>
+        @include('velvet.partials.product_card', [
+            'product' => $item->product,
+            'badge' => $loop->first ? 'Trending' : null
+        ])
     @endforeach
 </div>
 

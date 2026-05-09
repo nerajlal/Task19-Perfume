@@ -16,22 +16,7 @@
 @if($products->count() > 0)
     <div class="v-grid">
         @foreach($products as $product)
-        <div class="v-card">
-            <div class="v-img-box">
-                <img src="{{ $product->main_image_url ?? asset('images/g-load.webp') }}" 
-                     onerror="this.src='{{ asset('images/g-load.webp') }}'"
-                     alt="{{ $product->title }}">
-            </div>
-            <div class="v-details">
-                <span class="v-family">{{ $product->olfactory_family ?? 'Signature' }}</span>
-                <h3 class="v-name">{{ $product->title }}</h3>
-                <p class="v-price">₹{{ number_format($product->starting_price, 0) }}</p>
-                
-                <button class="btn-add-v">
-                    <i class="fa-solid fa-cart-plus mr-2"></i> Add to Bag
-                </button>
-            </div>
-        </div>
+            @include('velvet.partials.product_card', ['product' => $product])
         @endforeach
     </div>
 @else

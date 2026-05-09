@@ -69,6 +69,46 @@
         </main>
     </div>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function quickAdd(productId, size, variantId) {
+            const btn = event.currentTarget;
+            const originalHtml = btn.innerHTML;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Adding...';
+            btn.disabled = true;
+
+            $.ajax({
+                url: "{{ route('cart.add') }}",
+                method: "POST",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    id: productId,
+                    quantity: 1,
+                    size: size,
+                    variant_id: variantId
+                },
+                success: function(response) {
+                    if(response.success) {
+                        $('.cart-count-v').text(response.cartCount);
+                        btn.innerHTML = '<i class="fa-solid fa-check"></i> Added!';
+                        btn.style.background = '#10B981';
+                        btn.style.color = '#fff';
+                        
+                        setTimeout(() => {
+                            btn.innerHTML = originalHtml;
+                            btn.style.background = '';
+                            btn.style.color = '';
+                            btn.disabled = false;
+                        }, 2000);
+                    }
+                },
+                error: function() {
+                    btn.innerHTML = originalHtml;
+                    btn.disabled = false;
+                }
+            });
+        }
+    </script>
     @stack('scripts')
 </body>
 </html>

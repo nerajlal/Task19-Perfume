@@ -270,6 +270,36 @@ class PageController extends Controller
         return view('nurah.product-main', compact('product', 'relatedProducts', 'coupon', 'bundle', 'packBundles', 'poolBundles'));
     }
 
+    public function velvetProduct($id)
+    {
+        $product = \App\Models\Product::where('status', 'active')
+            ->with(['variants', 'images'])
+            ->findOrFail($id);
+
+        // Fetch active bundle (regular combo)
+        $bundle = $product->bundles()
+            ->where('status', 'active')
+            ->where('type', 'bundle')
+            ->first();
+            
+        // Fetch active "Pack Of" bundles
+        $packBundles = $product->bundles()
+            ->where('status', 'active')
+            ->where('type', 'pack')
+            ->get();
+            
+        // Fetch active "Pool" bundles
+        $poolBundles = $product->bundles()
+            ->where('status', 'active')
+            ->where('type', 'pool')
+            ->with('products')
+            ->get();
+            
+        $collections = \App\Models\Collection::where('status', 1)->get();
+
+        return view('velvet.product-main', compact('product', 'bundle', 'packBundles', 'poolBundles', 'collections'));
+    }
+
     public function shippingPolicy()
     {
         return view('nurah.shipping-policy');

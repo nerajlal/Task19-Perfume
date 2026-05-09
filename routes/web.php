@@ -195,6 +195,8 @@ Route::prefix('v2')->name('velvet.')->group(function () {
         $collections = \App\Models\Collection::where('status', 1)->get();
         return view('velvet.combo-detail', compact('bundle', 'collections'));
     })->name('combo');
+
+    Route::get('/product/{id}', [PageController::class, 'velvetProduct'])->name('product');
 });
 
 // Super Admin Routes (Public for Verification)
