@@ -390,8 +390,8 @@
     .pool-prod-img img { width: 100%; height: 100%; object-fit: cover; }
     .pool-prod-name { font-size: 0.7rem; font-weight: 600; color: #666; display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     
-    .pool-quick-add { position: absolute; bottom: 0.5rem; right: 0.5rem; width: 28px; height: 28px; border-radius: 50%; background: #111; color: #fff; border: 1.5px solid #fff; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; cursor: pointer; opacity: 0; transform: translateY(5px); transition: 0.3s; z-index: 5; }
-    .pool-prod-img:hover .pool-quick-add { opacity: 1; transform: translateY(0); }
+    .pool-quick-add { position: absolute; bottom: 0.5rem; right: 0.5rem; width: 28px; height: 28px; border-radius: 50%; background: #111; color: #fff; border: 1.5px solid #fff; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; cursor: pointer; opacity: 1; z-index: 5; transition: 0.3s; }
+    .pool-prod-img:hover .pool-quick-add { transform: scale(1.1); }
 
     .p-actions-row { display: flex; gap: 1rem; margin-bottom: 1.25rem; }
     .qty-control { display: flex; align-items: center; border: 1.5px solid #e5e5e5; border-radius: 0.5rem; overflow: hidden; background: #fff; }
