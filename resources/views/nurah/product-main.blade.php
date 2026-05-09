@@ -338,10 +338,10 @@
     .p-current-price { font-size: 2.25rem; font-weight: 700; color: #000; }
     .p-discount-badge { background: #B5A264; color: #fff; padding: 0.35rem 1rem; border-radius: 999px; font-size: 0.85rem; font-weight: 700; }
     
-    .p-quick-add-badge { width: 45px; height: 45px; background: var(--accent-color); color: var(--primary-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; cursor: pointer; transition: 0.3s; margin-left: auto; box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3); }
+    .p-quick-add-badge { width: 35px; height: 35px; background: var(--accent-color); color: var(--primary-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1rem; cursor: pointer; transition: 0.3s; margin-left: auto; box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3); }
     .p-quick-add-badge:hover { transform: scale(1.1) rotate(-5deg); background: var(--primary-color); color: var(--accent-color); }
     
-    .p-emi-info { font-size: 0.9rem; color: #444; margin-bottom: 2rem; }
+    .p-emi-info { font-size: 0.85rem; color: #444; margin-bottom: 1.5rem; }
     .p-emi-info strong { color: #000; }
     .p-emi-info i { font-size: 0.8rem; opacity: 0.5; margin-left: 0.25rem; }
 
@@ -418,7 +418,16 @@
     .d-none { display: none !important; }
 
     @media (max-width: 1200px) {
-        .product-core-grid { grid-template-columns: 1fr; gap: 3rem; }
+        .product-core-grid { grid-template-columns: 1fr; gap: 2rem; }
+    }
+
+    @media (max-width: 768px) {
+        .p-title-serif { font-size: 2.2rem; }
+        .p-tabs-minimal { gap: 1.5rem; }
+        .pool-products-grid { grid-template-columns: repeat(2, 1fr); }
+        .modal-card { grid-template-columns: 1fr !important; max-height: 90vh; overflow-y: auto; }
+        .modal-info { padding: 1.5rem !important; }
+        .p-price-row { flex-wrap: wrap; }
     }
 </style>
 
