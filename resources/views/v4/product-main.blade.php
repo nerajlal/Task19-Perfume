@@ -145,28 +145,28 @@
                 </div>
                 @endif
 
-                <div class="a-scent-profile">
-                    <h3>Fragrance Pyramid</h3>
-                    <div class="a-notes-grid">
-                        <div class="a-note-item">
-                            <div class="a-note-icon">TOP</div>
-                            <div class="a-note-text">
-                                <strong>Top Notes</strong>
-                                <p>Bergamot, Lemon, Pink Pepper</p>
+                <div class="v4-fragrance-pyramid">
+                    <h3 class="serif">Fragrance Pyramid</h3>
+                    <div class="pyramid-container">
+                        <!-- Top Notes -->
+                        <div class="pyramid-layer top">
+                            <div class="layer-content">
+                                <span class="layer-label">TOP NOTES</span>
+                                <h4 class="layer-title">Bergamot, Lemon, Pink Pepper</h4>
                             </div>
                         </div>
-                        <div class="a-note-item">
-                            <div class="a-note-icon">HEART</div>
-                            <div class="a-note-text">
-                                <strong>Heart Notes</strong>
-                                <p>Rose, Jasmine, Patchouli</p>
+                        <!-- Heart Notes -->
+                        <div class="pyramid-layer heart">
+                            <div class="layer-content">
+                                <span class="layer-label">HEART NOTES</span>
+                                <h4 class="layer-title">Rose, Jasmine, Patchouli</h4>
                             </div>
                         </div>
-                        <div class="a-note-item">
-                            <div class="a-note-icon">BASE</div>
-                            <div class="a-note-text">
-                                <strong>Base Notes</strong>
-                                <p>Oud, Amber, Musk, Vanilla</p>
+                        <!-- Base Notes -->
+                        <div class="pyramid-layer base">
+                            <div class="layer-content">
+                                <span class="layer-label">BASE NOTES</span>
+                                <h4 class="layer-title">Oud, Amber, Musk, Vanilla</h4>
                             </div>
                         </div>
                     </div>
@@ -181,7 +181,7 @@
                         </div>
                     </div>
                     <div class="v4-trust-item">
-                        <div class="v4-trust-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                        <div class="v4-trust-icon"><i class="fa-solid fa-lock"></i></div>
                         <div class="v4-trust-text">
                             <strong>100% AUTHENTIC</strong>
                             <span>Directly from Task19 Fragrance House</span>
@@ -259,8 +259,9 @@
     <style>
         .a-product-detail-layout {
             display: grid;
-            grid-template-columns: 1fr 450px;
-            gap: 80px;
+            grid-template-columns: 0.9fr 1.1fr;
+            gap: 60px;
+            align-items: start;
         }
 
         .a-product-media {
@@ -278,6 +279,9 @@
             background: var(--bg-soft);
             border-radius: 12px;
             overflow: hidden;
+            max-height: 550px;
+            width: 100%;
+            margin: 0 auto;
         }
 
         .a-main-image {
@@ -476,31 +480,71 @@
             display: block;
         }
 
-        /* Scent Profile */
-        .a-scent-profile {
-            margin-top: 40px;
-            padding-top: 30px;
+        /* Fragrance Pyramid */
+        .v4-fragrance-pyramid {
+            margin-top: 50px;
+            padding-top: 40px;
             border-top: 1px solid var(--aj-border);
+            text-align: center;
         }
-        .a-scent-profile h3 { font-size: 14px; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 20px; font-weight: 800; }
-        
-        .a-notes-grid { display: flex; flex-direction: column; gap: 20px; }
-        .a-note-item { display: flex; align-items: center; gap: 20px; }
-        .a-note-icon {
-            width: 60px;
-            height: 60px;
-            border: 1px solid var(--aj-gold);
-            border-radius: 50%;
+
+        .v4-fragrance-pyramid h3 { 
+            font-size: 16px; 
+            letter-spacing: 2px; 
+            text-transform: uppercase; 
+            margin-bottom: 40px; 
+            font-weight: 800; 
+        }
+
+        .pyramid-container {
             display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: center;
+            gap: 10px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .pyramid-layer {
+            width: 100%;
+            background: #fff;
+            border: 1px solid #eee;
+            padding: 25px;
+            position: relative;
+            transition: 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            cursor: default;
+        }
+
+        .pyramid-layer.top { width: 50%; border-radius: 100px 100px 10px 10px; background: #fffaf0; border-color: var(--aj-gold); }
+        .pyramid-layer.heart { width: 75%; border-radius: 10px; }
+        .pyramid-layer.base { width: 100%; border-radius: 10px 10px 100px 100px; }
+
+        .pyramid-layer:hover {
+            transform: scale(1.02);
+            border-color: var(--aj-gold);
+            z-index: 2;
+            box-shadow: 0 10px 30px rgba(176, 141, 87, 0.1);
+        }
+
+        .layer-label {
+            display: block;
             font-size: 9px;
             font-weight: 900;
             color: var(--aj-gold);
-            flex-shrink: 0;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
         }
-        .a-note-text strong { display: block; font-size: 14px; color: var(--aj-dark); margin-bottom: 4px; }
-        .a-note-text p { font-size: 13px; color: var(--aj-gray); margin: 0; }
+
+        .layer-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--aj-dark);
+            margin: 0;
+        }
+
+        @media (max-width: 1024px) {
+            .pyramid-layer.top, .pyramid-layer.heart { width: 100%; }
+        }
 
         .a-related-section { 
             margin-top: 100px; 
@@ -576,9 +620,21 @@
         .v4-pool-header h4 { font-size: 16px; font-weight: 800; color: var(--aj-dark); margin-top: 5px; }
         .v4-pool-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; }
         .v4-pool-item { text-align: center; }
-        .v4-pool-img { aspect-ratio: 1; background: #f9f9f9; border-radius: 8px; overflow: hidden; position: relative; margin-bottom: 8px; border: 1px solid #eee; }
+        .v4-pool-img { 
+            width: 100%;
+            aspect-ratio: 1; 
+            background: #f9f9f9; 
+            border-radius: 8px; 
+            overflow: hidden; 
+            position: relative; 
+            margin-bottom: 8px; 
+            border: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
         .v4-pool-item.current .v4-pool-img { border: 2px solid var(--aj-gold); }
-        .v4-pool-img img { width: 100%; height: 100%; object-fit: cover; }
+        .v4-pool-img img { width: 100%; height: 100%; object-fit: contain; padding: 5px; }
         .v4-pool-quick-add { position: absolute; bottom: 5px; right: 5px; width: 24px; height: 24px; border-radius: 50%; background: #000; color: #fff; border: none; display: flex; align-items: center; justify-content: center; font-size: 10px; cursor: pointer; transition: 0.3s; }
         .v4-pool-quick-add:hover { background: var(--aj-gold); }
         .v4-pool-name { font-size: 10px; font-weight: 600; color: var(--aj-gray); display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -602,6 +658,52 @@
         .c-name { font-weight: 900; font-size: 13px; color: var(--aj-dark); }
         .c-desc { font-size: 10px; color: var(--aj-gray); font-weight: 600; }
         .conc-step.active .c-name { color: var(--aj-gold); }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .a-product-detail-layout {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .a-product-media {
+                position: relative;
+                top: 0;
+            }
+
+            .a-product-details {
+                padding-top: 0;
+            }
+
+            .serif { font-size: 28px !important; }
+
+            .a-detail-actions {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .a-qty-selector, #addToCartBtn {
+                width: 100%;
+            }
+
+            #addToCartBtn {
+                padding: 18px;
+            }
+
+            .v4-trust-badges {
+                grid-template-columns: 1fr;
+            }
+
+            .a-product-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+
+            .a-related-section {
+                margin-top: 60px;
+                padding-top: 50px;
+            }
+        }
     </style>
 
     <script>
@@ -638,42 +740,46 @@
             const size = document.querySelector('.a-variant-btn.active')?.dataset.size || '';
             const qty = document.getElementById('productQty').value;
             
+            // UI Feedback for all buttons
             btns.forEach(btn => {
                 if(!btn) return;
-                const originalHtml = btn.innerHTML;
+                btn.dataset.originalHtml = btn.innerHTML;
                 btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
                 btn.disabled = true;
+            });
 
-                $.ajax({
-                    url: "{{ route('cart.add') }}",
-                    method: "POST",
-                    data: {
-                        _token: "{{ csrf_token() }}",
-                        id: "{{ $product->id }}",
-                        quantity: qty,
-                        size: size
-                    },
-                    success: function(response) {
-                        if(response.success) {
-                            $('#cart-count').text(response.cartCount);
+            $.ajax({
+                url: "{{ route('cart.add') }}",
+                method: "POST",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    id: "{{ $product->id }}",
+                    quantity: qty,
+                    size: size
+                },
+                success: function(response) {
+                    if(response.success) {
+                        $('#cart-count').text(response.cartCount);
+                        
+                        // Open Cart Drawer
+                        if(typeof toggleCart === 'function') {
+                            setTimeout(() => {
+                                toggleCart();
+                            }, 500);
+                        }
+
+                        btns.forEach(btn => {
+                            if(!btn) return;
                             btn.innerHTML = '<i class="fa-solid fa-check"></i>';
                             btn.style.background = '#10B981';
-                            
-                            // Open Cart Drawer
-                            if(typeof toggleCart === 'function') {
-                                setTimeout(() => {
-                                    toggleCart();
-                                }, 500);
-                            }
-
                             setTimeout(() => {
-                                btn.innerHTML = originalHtml;
+                                btn.innerHTML = btn.dataset.originalHtml;
                                 btn.style.background = '';
                                 btn.disabled = false;
                             }, 2000);
-                        }
+                        });
                     }
-                });
+                }
             });
         }
 

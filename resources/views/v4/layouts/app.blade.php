@@ -351,7 +351,7 @@
                 <div class="header-right">
                     <a href="#" class="action-item"><i class="fa-regular fa-user"></i></a>
                     <a href="#" class="action-item"><i class="fa-regular fa-heart"></i></a>
-                    <a href="javascript:void(0)" onclick="toggleCart()" class="action-item">
+                    <a href="{{ route('v4.cart') }}" class="action-item">
                         <i class="fa-solid fa-bag-shopping"></i>
                         <span class="cart-badge" id="cart-count">{{ \App\Services\CartService::getCount() }}</span>
                     </a>
@@ -435,6 +435,11 @@
             text-transform: uppercase;
         }
 
+        .drawer-overlay.open {
+            display: block;
+        }
+    </style>
+
     <div class="drawer-overlay" id="drawerOverlay" onclick="toggleMenu()"></div>
 
     <!-- Cart Drawer -->
@@ -467,7 +472,6 @@
         .cart-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 2004; display: none; }
         .cart-overlay.open { display: block; }
         @media (max-width: 450px) { .cart-drawer { width: 100%; right: -100%; } }
-        }
     </style>
 
     <script>
@@ -495,6 +499,60 @@
                 data: { theme: 'v4' },
                 success: function(html) {
                     $('#cartDrawerContent').html(html);
+                }
+            });
+        }
+
+        function quickAdd(productId) {
+            $.ajax({
+                url: "{{ route('cart.add') }}",
+                method: "POST",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    id: productId,
+                    quantity: 1
+                },
+                success: function(response) {
+                    if(response.success) {
+                        $('#cart-count').text(response.cartCount);
+                        toggleCart();
+                    }
+                }
+            });
+        }
+
+        function drawerUpdateQty(id, delta) {
+            $.ajax({
+                url: "{{ route('cart.update') }}",
+                method: "POST",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    id: id,
+                    quantity: delta,
+                    relative: true
+                },
+                success: function(response) {
+                    if(response.success) {
+                        $('#cart-count').text(response.cartCount);
+                        fetchCartDrawer();
+                    }
+                }
+            });
+        }
+
+        function drawerRemove(id) {
+            $.ajax({
+                url: "{{ route('cart.remove') }}",
+                method: "POST",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    id: id
+                },
+                success: function(response) {
+                    if(response.success) {
+                        $('#cart-count').text(response.cartCount);
+                        fetchCartDrawer();
+                    }
                 }
             });
         }

@@ -611,7 +611,13 @@ class CartController extends Controller
         $savings = $cartData['savings'];
 
         $theme = $request->theme ?? 'nurah';
-        $view = ($theme == 'velvet') ? 'velvet.partials.cart_drawer_items' : 'nurah.partials.cart_drawer_items';
+        if ($theme == 'v4') {
+            $view = 'v4.partials.cart_drawer_items';
+        } elseif ($theme == 'velvet') {
+            $view = 'velvet.partials.cart_drawer_items';
+        } else {
+            $view = 'nurah.partials.cart_drawer_items';
+        }
 
         return view($view, compact('cart', 'total', 'subtotal', 'savings'))->render();
     }
