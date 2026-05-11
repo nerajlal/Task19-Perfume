@@ -45,6 +45,10 @@ class PageController extends Controller
 
     public function ajmalCollection(Request $request)
     {
+        if (!$request->has('slug') && !$request->has('category') && !$request->has('gender')) {
+            $collections = \App\Models\Collection::where('status', true)->get();
+            return view('v4.collections-index', compact('collections'));
+        }
         return $this->handleCollection($request, 'v4.collection');
     }
 
@@ -92,14 +96,29 @@ class PageController extends Controller
         return $this->handleAllProducts('v3.all-products');
     }
 
-    public function ajmalAllProducts()
+    public function ajmalAllProducts(Request $request)
     {
-        return $this->handleAllProducts('v4.all-products');
+        return $this->handleAllProducts('v4.all-products', $request);
     }
 
-    private function handleAllProducts($view)
+    private function handleAllProducts($view, Request $request = null)
     {
-        $products = \App\Models\Product::where('status', 'active')->with(['variants', 'images'])->latest()->get();
+        $query = \App\Models\Product::where('status', 'active')->with(['variants', 'images']);
+
+        if ($request) {
+            if ($request->has('min_price') || $request->has('max_price')) {
+                $query->whereHas('variants', function($q) use ($request) {
+                    if ($request->has('min_price')) {
+                        $q->where('price', '>=', $request->min_price);
+                    }
+                    if ($request->has('max_price')) {
+                        $q->where('price', '<=', $request->max_price);
+                    }
+                });
+            }
+        }
+
+        $products = $query->latest()->get();
         $counts = ['stock_in' => 0, 'stock_out' => 0, 'gender_him' => 0, 'gender_her' => 0, 'gender_unisex' => 0, 'size_50ml' => 0, 'size_100ml' => 0];
         foreach($products as $product) {
             $inStock = $product->variants->sum('stock') > 0;
@@ -128,10 +147,9 @@ class PageController extends Controller
 
     private function handleCombos($view)
     {
-        $type = (str_starts_with($view, 'v3.')) ? 'bundle' : '!= pool';
         $query = \App\Models\Bundle::where('status', 'active');
         
-        if (str_starts_with($view, 'v3.')) {
+        if (str_starts_with($view, 'v3.') || str_starts_with($view, 'v4.')) {
             $query->where('type', 'bundle');
         } else {
             $query->where('type', '!=', 'pool');

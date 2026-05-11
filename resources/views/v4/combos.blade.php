@@ -3,14 +3,14 @@
 @section('title', 'Exclusive Combos & Bundles | Task19 Luxury Fragrance')
 
 @section('content')
-    <div class="container" style="margin-top: 30px;">
+    <div class="container" style="margin-top: 50px;">
         <nav class="v4-breadcrumb">
             <a href="{{ route('v4.home') }}">Home</a>
             <i class="fa-solid fa-chevron-right"></i>
             <span>Exclusive Combos</span>
         </nav>
 
-        <header class="v4-page-header text-center" style="margin-top: 50px; margin-bottom: 80px;">
+        <header class="v4-page-header text-center" style="margin-top: 60px; margin-bottom: 80px; position: relative; z-index: 1;">
             <h1 class="cursive aj-title">EXCLUSIVE <span class="sketch-under">COMBOS</span></h1>
             <p class="serif" style="font-size: 18px; color: var(--aj-gray); max-width: 600px; margin: 20px auto 0;">Experience the art of layering with our curated sets, designed to provide a complete and lasting luxury experience.</p>
         </header>

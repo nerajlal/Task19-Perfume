@@ -733,6 +733,38 @@
                 grid-template-columns: 1fr;
             }
 
+            .v4-pool-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .v4-conc-guide {
+                flex-wrap: wrap;
+            }
+            .conc-step {
+                flex: 0 0 50%;
+                border-bottom: 1px solid #eee;
+            }
+            .conc-step:nth-child(even) {
+                border-right: none;
+            }
+
+            .pyramid-container {
+                max-width: 100%;
+            }
+
+            .v4-deal-card {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            .v4-deal-add-btn {
+                width: 100%;
+            }
+
+            .a-main-image-container {
+                max-height: 400px;
+            }
+
             .a-product-grid {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 15px;
@@ -742,6 +774,55 @@
                 margin-top: 60px;
                 padding-top: 50px;
             }
+        }
+
+        @media (max-width: 480px) {
+            .conc-step {
+                flex: 0 0 100%;
+                border-right: none !important;
+            }
+            .v4-pool-grid {
+                gap: 10px;
+            }
+            .a-product-detail-layout {
+                padding: 0 20px;
+            }
+
+            .v4-breadcrumb {
+                padding: 0 20px;
+                margin-bottom: 20px;
+            }
+
+            /* Sticky Mobile Bar Styles */
+            .a-sticky-mobile-bar {
+                display: flex;
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                background: #fff;
+                padding: 15px 20px;
+                padding-bottom: calc(15px + env(safe-area-inset-bottom, 0px));
+                box-shadow: 0 -10px 30px rgba(0,0,0,0.08);
+                z-index: 1000;
+                align-items: center;
+                justify-content: space-between;
+                border-top: 1px solid #f0f0f0;
+                animation: v4StickySlide 0.4s ease;
+            }
+
+            @keyframes v4StickySlide {
+                from { transform: translateY(100%); }
+                to { transform: translateY(0); }
+            }
+
+            .a-sticky-info h4 { font-size: 14px; font-weight: 800; color: var(--aj-dark); margin: 0; }
+            .a-sticky-info p { font-size: 12px; font-weight: 700; color: var(--aj-gold); margin: 0; }
+            .a-sticky-btn { background: #000; color: #fff; border: none; padding: 12px 25px; border-radius: 4px; font-weight: 800; font-size: 13px; cursor: pointer; transition: 0.3s; }
+            .a-sticky-btn:hover { background: var(--aj-gold); }
+
+            /* Fix whitespace below */
+            body { padding-bottom: 80px; }
         }
     </style>
 

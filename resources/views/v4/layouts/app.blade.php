@@ -368,12 +368,10 @@
 
             <nav class="nav-row">
                 <a href="{{ route('v4.home') }}" class="nav-item">Home</a>
-                <a href="#" class="nav-item">Bestsellers</a>
-                <a href="#" class="nav-item">EDP</a>
-                <a href="#" class="nav-item">Attar</a>
-                <a href="#" class="nav-item">Gifting</a>
-                <a href="#" class="nav-item">New Arrivals</a>
-                <a href="#" class="nav-item">Dakhoon</a>
+                <a href="{{ route('v4.all-products') }}" class="nav-item">All Perfumes</a>
+                <a href="{{ route('v4.combos') }}" class="nav-item">Exclusive Combos</a>
+                <a href="{{ route('v4.collection') }}" class="nav-item">Collections</a>
+                <a href="#" class="nav-item">About Us</a>
             </nav>
         </div>
     </header>
@@ -387,12 +385,10 @@
         </div>
         <nav class="drawer-nav">
             <a href="{{ route('v4.home') }}">Home</a>
-            <a href="#">Bestsellers</a>
-            <a href="#">EDP</a>
-            <a href="#">Attar</a>
-            <a href="#">Gifting</a>
-            <a href="#">New Arrivals</a>
-            <a href="#">Dakhoon</a>
+            <a href="{{ route('v4.all-products') }}">All Perfumes</a>
+            <a href="{{ route('v4.combos') }}">Exclusive Combos</a>
+            <a href="{{ route('v4.collection') }}">Collections</a>
+            <a href="#">About Us</a>
         </nav>
     </div>
     <div class="drawer-overlay" id="drawerOverlay" onclick="toggleMenu()"></div>
