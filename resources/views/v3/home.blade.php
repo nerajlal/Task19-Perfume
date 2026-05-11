@@ -27,14 +27,15 @@
     .product-image { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
     .product-card:hover .product-image { transform: scale(1.08); }
     .product-badge { position: absolute; top: 15px; left: 15px; background: var(--white); color: var(--black); padding: 5px 12px; border-radius: 30px; font-size: 10px; font-weight: 800; text-transform: uppercase; z-index: 1; box-shadow: 0 4px 10px rgba(0,0,0,0.1); letter-spacing: 0.5px; }
-    .product-info { padding: 20px; text-align: center; }
-    .product-name { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 700; margin-bottom: 8px; color: var(--black); letter-spacing: -0.3px; }
-    .product-price { font-size: 15px; font-weight: 700; color: var(--dark-gold); }
+    .product-info { padding: 15px 12px; text-align: center; }
+    .product-name { font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 700; margin-bottom: 4px; color: var(--black); letter-spacing: -0.3px; line-height: 1.3; }
+    .product-price { font-size: 15px; font-weight: 700; color: var(--dark-gold); display: flex; align-items: center; justify-content: center; gap: 8px; }
+    .compare-price { font-size: 12px; color: var(--text-light); text-decoration: line-through; font-weight: 500; }
     .product-price span { font-weight: 500; color: var(--text-light); font-size: 12px; margin-right: 5px; text-transform: uppercase; letter-spacing: 1px; }
     .view-all-btn { display: block; width: max-content; margin: 50px auto 0; padding: 14px 40px; background: transparent; color: var(--black); text-decoration: none; border-radius: 40px; font-weight: 700; font-size: 13px; transition: all 0.3s; border: 2px solid var(--black); text-transform: uppercase; letter-spacing: 1px; }
     .view-all-btn:hover { background: var(--black); color: var(--white); transform: translateY(-2px); }
     
-    .add-btn { width: 100%; padding: 12px; background: var(--black); color: var(--white); border: none; border-radius: 12px; font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: all 0.3s; margin-top: 15px; }
+    .add-btn { width: 100%; padding: 10px; background: var(--black); color: var(--white); border: none; border-radius: 10px; font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: all 0.3s; margin-top: 10px; }
     .add-btn:hover { background: var(--gold); transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
     
     /* Toast Notification */
@@ -455,7 +456,12 @@
                     </div>
                     <div class="product-info">
                         <h3 class="product-name">{{ $item->product->title }}</h3>
-                        <p class="product-price"><span>From</span> ₹{{ number_format($item->product->starting_price, 0) }}</p>
+                        <p class="product-price">
+                            @if($item->product->compare_at_price > $item->product->starting_price)
+                                <span class="compare-price">₹{{ number_format($item->product->compare_at_price, 0) }}</span>
+                            @endif
+                            <span>From</span> ₹{{ number_format($item->product->starting_price, 0) }}
+                        </p>
                         <button class="add-btn" onclick="event.preventDefault(); addToCart({{ $item->product->id }}, '{{ $item->product->title }}', this, 'product')">Add to Cart</button>
                     </div>
                 </a>
@@ -566,7 +572,12 @@
                 </div>
                 <div class="product-info">
                     <h3 class="product-name">{{ $bundle->title }}</h3>
-                    <p class="product-price">₹{{ number_format($bundle->total_price, 0) }}</p>
+                    <p class="product-price">
+                        @if($bundle->discount_value > 0)
+                            <span class="compare-price">₹{{ number_format($bundle->base_price, 0) }}</span>
+                        @endif
+                        ₹{{ number_format($bundle->total_price, 0) }}
+                    </p>
                     <button class="add-btn" onclick="event.preventDefault(); addToCart({{ $bundle->id }}, '{{ $bundle->title }}', this, 'bundle')">Add to Cart</button>
                 </div>
             </a>

@@ -38,18 +38,9 @@
         color: var(--white);
     }
 
-    .filter-count {
-        background: var(--gold);
-        color: var(--white);
-        width: 20px;
-        height: 20px;
-        border-radius: 50%;
-        font-size: 11px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: 700;
-    }
+    /* Toast Notification */
+    .toast { position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--black); color: var(--white); padding: 12px 24px; border-radius: 25px; font-weight: 600; font-size: 14px; z-index: 3001; opacity: 0; transition: all 0.3s; pointer-events: none; }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
     /* Results Bar */
     .results-bar {
@@ -173,54 +164,64 @@
     }
 
     .product-info {
-        padding: 12px;
-    }
-
-    .product-details-row {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        gap: 10px;
-        margin-bottom: 8px;
+        padding: 15px 12px;
+        text-align: center;
     }
 
     .product-name {
         font-family: 'Playfair Display', serif;
         font-size: 15px;
         font-weight: 700;
+        margin-bottom: 4px;
         color: var(--black);
-        margin-bottom: 0;
+        letter-spacing: -0.3px;
         line-height: 1.3;
-        flex: 1;
     }
 
     .product-price {
         font-size: 14px;
         font-weight: 700;
-        color: var(--text);
-        margin-bottom: 0;
-        white-space: nowrap;
-        text-align: right;
+        color: var(--dark-gold);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        margin-bottom: 10px;
+    }
+    
+    .compare-price {
+        font-size: 11px;
+        color: var(--text-light);
+        text-decoration: line-through;
+        font-weight: 500;
     }
 
     .product-price span {
         font-size: 11px;
         font-weight: 500;
         color: var(--text-light);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
     }
 
     .quick-view-btn {
         width: 100%;
-        padding: 8px;
+        padding: 10px;
         background: var(--black);
         color: var(--white);
         border: none;
-        border-radius: 8px;
+        border-radius: 10px;
         font-weight: 700;
-        font-size: 12px;
+        font-size: 11px;
         text-transform: uppercase;
-        letter-spacing: 0.5px;
+        letter-spacing: 1px;
         cursor: pointer;
+        transition: all 0.3s;
+    }
+    .quick-view-btn:hover {
+        background: var(--gold);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
     }
 
     /* List View Styles */
@@ -855,12 +856,15 @@
                     @endif
                 </div>
                 <div class="product-info">
-                    <div class="product-details-row">
-                        <h3 class="product-name">{{ $product->title }}</h3>
-                        <p class="product-price"><span>From</span> ₹{{ number_format($product->starting_price, 0) }}</p>
-                    </div>
+                    <h3 class="product-name">{{ $product->title }}</h3>
+                    <p class="product-price">
+                        @if($product->compare_at_price > $product->starting_price)
+                            <span class="compare-price">₹{{ number_format($product->compare_at_price, 0) }}</span>
+                        @endif
+                        <span>From</span> ₹{{ number_format($product->starting_price, 0) }}
+                    </p>
                     <button class="quick-view-btn {{ $stock == 0 ? 'btn-blurred' : '' }}" 
-                            onclick="{{ $stock == 0 ? 'return false;' : 'addToCart(event, ' . $product->id . ')' }}"
+                            onclick="{{ $stock == 0 ? 'return false;' : 'addToCart(event, ' . $product->id . ', \'' . addslashes($product->title) . '\')' }}"
                             {{ $stock == 0 ? 'disabled' : '' }}>
                         {{ $stock == 0 ? 'Out of Stock' : 'Add to Cart' }}
                     </button>
@@ -1044,9 +1048,7 @@
     </div>
 
     <!-- Toast Notification -->
-    <div id="toast" style="position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: #000; color: #fff; padding: 15px 30px; font-size: 13px; font-weight: 500; letter-spacing: 1px; opacity: 0; pointer-events: none; transition: opacity 0.3s; z-index: 3001; text-transform: uppercase;">
-        Added to Bag
-    </div>
+    <div class="toast" id="toast">Added to cart! 🎉</div>
 
 <script>
     // Image Fallback
@@ -1307,7 +1309,7 @@
         observer.observe(card);
     });
     // Add to Cart
-    function addToCart(event, id) {
+    function addToCart(event, id, title) {
         event.preventDefault();
         event.stopPropagation();
         
@@ -1335,8 +1337,9 @@
             if(data.success) {
                 const toast = document.getElementById('toast');
                 if(toast) {
-                    toast.style.opacity = '1';
-                    setTimeout(() => toast.style.opacity = '0', 2500);
+                    toast.textContent = (title || 'Item') + ' added to cart!';
+                    toast.classList.add('show');
+                    setTimeout(() => toast.classList.remove('show'), 2500);
                 }
                 
                 // Update badge

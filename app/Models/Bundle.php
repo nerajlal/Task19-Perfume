@@ -21,6 +21,25 @@ class Bundle extends Model
         'min_quantity',
     ];
 
+    public function getBasePriceAttribute()
+    {
+        $total = 0;
+        foreach ($this->products as $product) {
+            $quantity = $product->pivot->quantity ?? 1;
+            $variantId = $product->pivot->product_variant_id;
+            
+            if ($variantId) {
+                $variant = $product->variants->firstWhere('id', $variantId);
+                $price = $variant ? $variant->price : ($product->variants->min('price') ?? 0);
+            } else {
+                $price = $product->variants->min('price') ?? 0;
+            }
+            
+            $total += ($price * $quantity);
+        }
+        return $total;
+    }
+
     public function products()
     {
         return $this->belongsToMany(Product::class, 'bundle_product')->withPivot('quantity', 'product_variant_id')->withTimestamps();
