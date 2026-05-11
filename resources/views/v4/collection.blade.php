@@ -1,6 +1,6 @@
 @extends('v4.layouts.app')
 
-@section('title', ($title ?? 'Collection') . ' | Ajmal Luxury Collection')
+@section('title', ($title ?? 'Collection') . ' | Task19 Luxury Collection')
 
 @section('content')
     <div class="a-page-header">

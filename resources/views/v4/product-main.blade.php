@@ -1,6 +1,6 @@
 @extends('v4.layouts.app')
 
-@section('title', $product->title . ' | Ajmal Luxury Fragrance')
+@section('title', $product->title . ' | Task19 Luxury Fragrance')
 
 @section('content')
     <div class="container" style="margin-top: 50px;">

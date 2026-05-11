@@ -1,42 +1,58 @@
 @extends('v4.layouts.app')
 
-@section('title', 'Ajmal Perfumes | Luxury Fragrance House Since 1951')
+@section('title', 'Task19 Perfumes | Luxury Fragrance House Since 1951')
 
 @section('content')
     <!-- Hero Split Banner -->
-    <div class="a-hero-split">
-        <div class="a-hero-half" style="background-image: url('https://ajmalperfume.com/cdn/shop/files/Mother_s_Day_Banner_Desktop.jpg');">
-            <div class="a-hero-overlay-text">
-                <span class="serif" style="font-size: 42px; color: #fff;">Mother's Day</span>
-                <p style="color: #fff; letter-spacing: 2px;">GIFTS STARTING AT ₹999</p>
-                <a href="#" class="a-btn-hero">Shop Now</a>
+    <div class="aj-hero-split {{ $sliders->count() < 2 ? 'single' : '' }}">
+        @if($sliders->count() > 0)
+            @foreach($sliders->take(2) as $index => $slide)
+                <div class="aj-hero-item" style="background-image: url('{{ asset('storage/' . $slide->image) }}');">
+                    <div class="aj-hero-box">
+                        <h2 class="serif">{{ $slide->title ?? 'New Collection' }}</h2>
+                        <p>{{ $slide->sub_title ?? 'EXCLUSIVE OFFERS' }}</p>
+                        @if($slide->link)
+                            <a href="{{ $slide->link }}" class="aj-btn-white">Shop Now</a>
+                        @endif
+                    </div>
+                </div>
+            @endforeach
+        @else
+            <!-- Fallback if no sliders in DB -->
+            <div class="aj-hero-item" style="background-image: url('https://ajmalperfume.com/cdn/shop/files/Mother_s_Day_Banner_Desktop.jpg');">
+                <div class="aj-hero-box">
+                    <h2 class="serif">Mother's Day</h2>
+                    <p>GIFTS STARTING AT ₹999</p>
+                    <a href="#" class="aj-btn-white">Shop Now</a>
+                </div>
             </div>
-        </div>
-        <div class="a-hero-half" style="background-image: url('https://ajmalperfume.com/cdn/shop/files/Aureum_Banner_Desktop.jpg');">
-            <div class="a-hero-overlay-text">
-                <span class="serif" style="font-size: 42px; color: #fff;">Signature Oudh</span>
-                <p style="color: #fff; letter-spacing: 2px;">PURE & AUTHENTIC</p>
-                <a href="#" class="a-btn-hero">Explore</a>
+            <div class="aj-hero-item" style="background-image: url('https://ajmalperfume.com/cdn/shop/files/Aureum_Banner_Desktop.jpg');">
+                <div class="aj-hero-box">
+                    <h2 class="serif">Signature Oudh</h2>
+                    <p>PURE & AUTHENTIC</p>
+                    <a href="#" class="aj-btn-white">Explore</a>
+                </div>
             </div>
-        </div>
+        @endif
     </div>
 
     <!-- OUR BESTSELLERS -->
-    <section class="a-section">
+    <section class="aj-section">
         <div class="container">
-            <div class="a-section-header">
-                <div class="a-title-with-tabs">
-                    <h2 class="serif" style="font-size: 32px; border-bottom: 3px solid var(--accent); padding-bottom: 10px;">OUR BESTSELLERS</h2>
-                    <div class="a-tabs">
+            <div class="aj-section-header">
+                <div class="aj-header-flex">
+                    <h2 class="aj-title">OUR <span class="gold-under">BESTSELLERS</span></h2>
+                    <div class="aj-tabs">
                         <button class="active">ALL</button>
                         <button>EDP</button>
                         <button>ATTAR</button>
                         <button>GIFTING</button>
+                        <a href="{{ route('v4.all-products') }}" class="view-all">View All</a>
                     </div>
                 </div>
             </div>
 
-            <div class="a-product-grid">
+            <div class="aj-product-grid">
                 @foreach($products->take(4) as $product)
                     @include('v4.partials.product_card', ['product' => $product])
                 @endforeach
@@ -45,86 +61,113 @@
     </section>
 
     <!-- LOVED BY CELEBRITIES -->
-    <section class="a-section" style="background: var(--bg-soft); text-align: center;">
-        <div class="container">
-            <h2 class="cursive" style="font-family: 'Dancing Script', cursive; font-size: 48px; color: var(--accent);">Loved by Celebrities</h2>
-            <div class="a-accent-line" style="width: 100px; height: 3px; background: var(--accent); margin: 10px auto;"></div>
+    <section class="aj-section bg-soft">
+        <div class="container text-center">
+            <h2 class="aj-title cursive">LOVED BY <span class="sketch-under">CELEBRITIES</span></h2>
+            
+            <div class="video-grid">
+                <div class="video-card">
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/167AIKitcZs?autoplay=1&mute=1&loop=1&playlist=167AIKitcZs&controls=0&modestbranding=1&rel=0&playsinline=1" title="Fragrance Story 1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div class="video-info">
+                        <a href="{{ route('v4.all-products') }}" class="video-btn">Shop Collection</a>
+                    </div>
+                </div>
+                <div class="video-card">
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/QM18rD-zrCs?autoplay=1&mute=1&loop=1&playlist=QM18rD-zrCs&controls=0&modestbranding=1&rel=0&playsinline=1" title="Fragrance Story 2" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div class="video-info">
+                        <a href="{{ route('v4.all-products') }}" class="video-btn">Shop Collection</a>
+                    </div>
+                </div>
+                <div class="video-card">
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/P7MxjMYwU_g?autoplay=1&mute=1&loop=1&playlist=P7MxjMYwU_g&controls=0&modestbranding=1&rel=0&playsinline=1" title="Fragrance Story 3" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div class="video-info">
+                        <a href="{{ route('v4.all-products') }}" class="video-btn">Shop Collection</a>
+                    </div>
+                </div>
+                <div class="video-card">
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/UujTjwkuqbE?autoplay=1&mute=1&loop=1&playlist=UujTjwkuqbE&controls=0&modestbranding=1&rel=0&playsinline=1" title="Fragrance Story 4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div class="video-info">
+                        <a href="{{ route('v4.all-products') }}" class="video-btn">Shop Collection</a>
+                    </div>
+                </div>
+                <div class="video-card">
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/WamyeDrjaVA?autoplay=1&mute=1&loop=1&playlist=WamyeDrjaVA&controls=0&modestbranding=1&rel=0&playsinline=1" title="Fragrance Story 5" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div class="video-info">
+                        <a href="{{ route('v4.all-products') }}" class="video-btn">Shop Collection</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
     <!-- CATEGORIES -->
-    <section class="a-section">
+    <section class="aj-section">
         <div class="container">
-            <div class="a-section-header" style="text-align: center;">
-                <h2 class="serif" style="font-size: 32px;">CATEGORIES</h2>
-            </div>
-            <div class="a-cat-grid">
-                <div class="a-cat-item big" style="background-image: url('https://ajmalperfume.com/cdn/shop/files/Perfume_Category.jpg');">
-                    <div class="a-cat-content">
-                        <h3>Perfume</h3>
-                        <p>Exquisite Sprays</p>
+            <h2 class="aj-title text-center" style="margin-bottom: 50px;">CATEGORIES</h2>
+            <div class="aj-cat-layout">
+                @php $colls = $collections->take(4); @endphp
+                
+                @if($colls->count() >= 1)
+                <a href="{{ route('v4.collection', ['slug' => $colls[0]->slug]) }}" class="aj-cat-big" style="background-image: url('{{ $colls[0]->image ? asset('storage/' . $colls[0]->image) : 'https://ajmalperfume.com/cdn/shop/files/Perfume_Category.jpg' }}'); background-color: #f4f4f4;">
+                    <div class="aj-cat-info">
+                        <h3>{{ $colls[0]->name }}</h3>
+                        <p>Discover Collection</p>
                     </div>
+                </a>
+                @endif
+
+                <div class="aj-cat-right">
+                    @if($colls->count() >= 2)
+                    <a href="{{ route('v4.collection', ['slug' => $colls[1]->slug]) }}" class="aj-cat-small" style="background-image: url('{{ $colls[1]->image ? asset('storage/' . $colls[1]->image) : 'https://ajmalperfume.com/cdn/shop/files/Attar_Category.jpg' }}'); background-color: #eee;">
+                        <div class="aj-cat-info">
+                            <h3>{{ $colls[1]->name }}</h3>
+                            <p>Pure Essence</p>
+                        </div>
+                    </a>
+                    @endif
+
+                    @if($colls->count() >= 3)
+                    <a href="{{ route('v4.collection', ['slug' => $colls[2]->slug]) }}" class="aj-cat-small" style="background-image: url('{{ $colls[2]->image ? asset('storage/' . $colls[2]->image) : 'https://ajmalperfume.com/cdn/shop/files/Dakhoon_Category.jpg' }}'); background-color: #ddd;">
+                        <div class="aj-cat-info">
+                            <h3>{{ $colls[2]->name }}</h3>
+                            <p>Traditional Blends</p>
+                        </div>
+                    </a>
+                    @endif
                 </div>
-                <div class="a-cat-item" style="background-image: url('https://ajmalperfume.com/cdn/shop/files/Attar_Category.jpg');">
-                    <div class="a-cat-content">
-                        <h3>Attar</h3>
-                        <p>Traditional Oils</p>
+
+                @if($colls->count() >= 4)
+                <a href="{{ route('v4.collection', ['slug' => $colls[3]->slug]) }}" class="aj-cat-wide" style="background-image: url('{{ $colls[3]->image ? asset('storage/' . $colls[3]->image) : 'https://ajmalperfume.com/cdn/shop/files/Gifting_Category.jpg' }}'); background-color: #ccc;">
+                    <div class="aj-cat-info">
+                        <h3>{{ $colls[3]->name }}</h3>
+                        <p>Luxury Gift Sets</p>
                     </div>
-                </div>
-                <div class="a-cat-item" style="background-image: url('https://ajmalperfume.com/cdn/shop/files/Dakhoon_Category.jpg');">
-                    <div class="a-cat-content">
-                        <h3>Dakhoon</h3>
-                        <p>Home Fragrance</p>
-                    </div>
-                </div>
-                <div class="a-cat-item wide" style="background-image: url('https://ajmalperfume.com/cdn/shop/files/Gifting_Category.jpg');">
-                    <div class="a-cat-content">
-                        <h3>Giftset</h3>
-                        <p>Thoughtful Presents</p>
-                    </div>
-                </div>
+                </a>
+                @endif
             </div>
         </div>
     </section>
 
-    <!-- USP ICONS -->
-    <section class="a-section" style="border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+    <!-- NEW ARRIVALS -->
+    <section class="aj-section bg-soft">
         <div class="container">
-            <div class="a-usp-row">
-                <div class="a-usp-item">
-                    <div class="a-usp-icon"><i class="fa-solid fa-earth-americas"></i></div>
-                    <h4>60+ Countries</h4>
-                    <p>Global Presence</p>
-                </div>
-                <div class="a-usp-item">
-                    <div class="a-usp-icon"><i class="fa-solid fa-store"></i></div>
-                    <h4>240+ Stores</h4>
-                    <p>Exclusive Outlets</p>
-                </div>
-                <div class="a-usp-item">
-                    <div class="a-usp-icon"><i class="fa-solid fa-award"></i></div>
-                    <h4>7 Decades</h4>
-                    <p>Of Craftsmanship</p>
+            <div class="aj-section-header">
+                <div class="aj-header-flex">
+                    <h2 class="aj-title">NEW <span class="gold-under">ARRIVALS</span></h2>
+                    <a href="{{ route('v4.all-products') }}" class="view-all">View All</a>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- SHOP BY OCCASIONS -->
-    <section class="a-section bg-soft">
-        <div class="container">
-            <div class="a-section-header" style="text-align: center;">
-                <h2 class="serif" style="font-size: 32px;">SHOP BY OCCASIONS</h2>
-                <div class="a-accent-line" style="width: 60px; height: 3px; background: var(--accent); margin: 15px auto;"></div>
-                <div class="a-tabs-centered" style="display: flex; justify-content: center; gap: 30px; margin-top: 20px;">
-                    <button class="active">PARTY WEAR</button>
-                    <button>DAY NIGHT</button>
-                    <button>OFFICE</button>
-                    <button>WEDDING</button>
-                    <button>LUXURY GIFTING</button>
-                </div>
-            </div>
-            <div class="a-product-grid" style="margin-top: 40px;">
+            <div class="aj-product-grid">
                 @foreach($products->skip(4)->take(4) as $product)
                     @include('v4.partials.product_card', ['product' => $product])
                 @endforeach
@@ -132,21 +175,41 @@
         </div>
     </section>
 
-    <!-- SHOP BY PRICE -->
-    <section class="a-section">
+    <!-- USP ROW -->
+    <section class="aj-usp-section">
         <div class="container">
-            <div class="a-section-header" style="text-align: center;">
-                <h2 class="serif" style="font-size: 32px;">SHOP BY PRICE</h2>
-                <div class="a-accent-line" style="width: 60px; height: 3px; background: var(--accent); margin: 15px auto;"></div>
-                <div class="a-tabs-centered" style="display: flex; justify-content: center; gap: 30px; margin-top: 20px;">
-                    <button class="active">UNDER ₹1000</button>
-                    <button>₹1000 - ₹2000</button>
-                    <button>₹2000 - ₹3000</button>
-                    <button>₹3000 - ₹5000</button>
-                    <button>ABOVE ₹5000</button>
+            <div class="aj-usp-grid">
+                <div class="aj-usp-item">
+                    <div class="aj-usp-icon"><img src="https://ajmalperfume.com/cdn/shop/files/60_Countries.png" alt="60+ Countries"></div>
+                    <h3>60+ Countries</h3>
+                    <p>Global Presence</p>
+                </div>
+                <div class="aj-usp-item">
+                    <div class="aj-usp-icon"><img src="https://ajmalperfume.com/cdn/shop/files/240_Stores.png" alt="240+ Stores"></div>
+                    <h3>240+ Stores</h3>
+                    <p>Exclusive Outlets</p>
+                </div>
+                <div class="aj-usp-item">
+                    <div class="aj-usp-icon"><img src="https://ajmalperfume.com/cdn/shop/files/7_Decades.png" alt="7 Decades"></div>
+                    <h3>70+ Years</h3>
+                    <p>Of Craftsmanship</p>
                 </div>
             </div>
-            <div class="a-product-grid" style="margin-top: 40px;">
+        </div>
+    </section>
+
+    <!-- SHOP BY OCCASIONS -->
+    <section class="aj-section">
+        <div class="container">
+            <h2 class="aj-title text-center">SHOP BY <span class="gold-under">OCCASIONS</span></h2>
+            <div class="aj-tabs-center">
+                <button class="active">PARTY WEAR</button>
+                <button>DAY NIGHT</button>
+                <button>OFFICE</button>
+                <button>WEDDING</button>
+                <button>LUXURY GIFTING</button>
+            </div>
+            <div class="aj-product-grid" style="margin-top: 40px;">
                 @foreach($products->skip(8)->take(4) as $product)
                     @include('v4.partials.product_card', ['product' => $product])
                 @endforeach
@@ -154,382 +217,318 @@
         </div>
     </section>
 
-    <!-- Process of Manufacturing -->
-    <section class="a-section bg-soft">
+    <!-- PROCESS OF MANUFACTURING -->
+    <section class="aj-section bg-soft">
         <div class="container">
-            <div class="a-manufacturing-grid">
-                <div class="a-manufacturing-content">
-                    <h2 class="serif" style="font-size: 36px; margin-bottom: 20px;">Process of <span style="color: var(--accent);">Manufacturing</span></h2>
-                    <p style="color: #666; font-size: 16px; line-height: 1.8; margin-bottom: 30px;">
-                        Each Ajmal fragrance is a masterpiece, born from a harmonious blend of nature's finest ingredients and scientific precision. Our state-of-the-art manufacturing facility in Dubai spans over 150,000 square feet, where we process rare resins, exotic flowers, and precious woods to create olfactory wonders.
-                    </p>
-                    <ul style="list-style: none; margin-bottom: 40px;">
-                        <li style="margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
-                            <i class="fa-solid fa-check" style="color: var(--accent);"></i>
-                            <span>Ethically sourced raw materials</span>
-                        </li>
-                        <li style="margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
-                            <i class="fa-solid fa-check" style="color: var(--accent);"></i>
-                            <span>Advanced R&D Laboratory</span>
-                        </li>
-                        <li style="margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
-                            <i class="fa-solid fa-check" style="color: var(--accent);"></i>
-                            <span>Strict Quality Assurance</span>
-                        </li>
-                    </ul>
-                    <a href="#" class="a-btn-outline">Learn More</a>
+            <div class="aj-manufacturing">
+                <div class="aj-man-media">
+                    <img src="https://ajmalperfume.com/cdn/shop/files/Process_of_Manufacturing.jpg" alt="Manufacturing">
+                    <div class="play-overlay"><i class="fa-solid fa-play"></i></div>
                 </div>
-                <div class="a-manufacturing-media">
-                    <div class="a-video-placeholder">
-                        <img src="https://ajmalperfume.com/cdn/shop/files/Process_of_Manufacturing.jpg" alt="Manufacturing">
-                        <button class="a-play-btn"><i class="fa-solid fa-play"></i></button>
-                    </div>
+                <div class="aj-man-text">
+                    <h2 class="aj-title">PROCESS OF <span class="gold-under">MANUFACTURING</span></h2>
+                    <p>Our state-of-the-art facility in Dubai is where magic happens. We combine traditional art with modern science to create fragrances that last forever.</p>
+                    <a href="#" class="aj-btn-outline">Learn More</a>
                 </div>
             </div>
         </div>
     </section>
 
     <style>
-        .a-hero-split {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            height: 500px;
-        }
-
-        .a-hero-half {
-            background-size: cover;
-            background-position: center;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-
-        .a-hero-overlay-text {
-            text-align: center;
-            background: rgba(0,0,0,0.2);
-            padding: 40px;
-            backdrop-filter: blur(2px);
-        }
-
-        .a-btn-hero {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 12px 30px;
-            background: #fff;
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 700;
-            text-transform: uppercase;
-            font-size: 12px;
+        .aj-section { padding: 80px 0; }
+        .bg-soft { background: #FBFBFB; }
+        
+        .aj-title {
+            font-size: 28px;
+            font-weight: 800;
             letter-spacing: 1px;
+            margin-bottom: 30px;
+            text-transform: uppercase;
         }
 
-        .a-title-with-tabs {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid var(--border);
-            margin-bottom: 40px;
-        }
-
-        .a-tabs {
-            display: flex;
-            gap: 20px;
-        }
-
-        .a-tabs button {
-            background: none;
-            border: none;
-            font-weight: 700;
-            font-size: 13px;
-            color: var(--text-muted);
-            cursor: pointer;
-            padding-bottom: 15px;
+        .gold-under {
             position: relative;
+            display: inline-block;
         }
-
-        .a-tabs button.active { color: var(--primary); }
-        .a-tabs button.active::after {
+        .gold-under::after {
             content: '';
             position: absolute;
-            bottom: 0;
+            bottom: -8px;
             left: 0;
             width: 100%;
             height: 3px;
-            background: var(--accent);
+            background: #B08D57;
         }
 
-        .a-cat-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            grid-template-rows: repeat(2, 250px);
-            gap: 20px;
-        }
-
-        .a-cat-item {
-            background-size: cover;
-            background-position: center;
-            border-radius: 10px;
+        .sketch-under {
             position: relative;
-            padding: 30px;
-            display: flex;
-            align-items: flex-end;
-            cursor: pointer;
-            overflow: hidden;
+            display: inline-block;
         }
-
-        .a-cat-item::before {
+        .sketch-under::after {
             content: '';
             position: absolute;
-            inset: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);
-        }
-
-        .a-cat-content { position: relative; color: #fff; }
-        .a-cat-content h3 { font-size: 24px; }
-
-        .a-cat-item.big { grid-row: span 2; }
-        .a-cat-item.wide { grid-column: span 1; }
-
-        .a-usp-row {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            text-align: center;
-        }
-
-        .a-usp-icon {
-            font-size: 40px;
-            color: var(--accent);
-            margin-bottom: 15px;
-        }
-
-        .a-usp-item h4 { font-size: 18px; margin-bottom: 5px; }
-        .a-usp-item p { color: var(--text-muted); font-size: 14px; }
-
-        @media (max-width: 768px) {
-            .a-hero-split { grid-template-columns: 1fr; height: auto; }
-            .a-hero-half { height: 300px; }
-            .a-cat-grid { grid-template-columns: 1fr; grid-template-rows: auto; }
-            .a-cat-item { height: 200px; }
-            .a-cat-item.big { grid-row: auto; }
-            .a-usp-row { grid-template-columns: 1fr; gap: 40px; }
-        }
-    </style>
-
-    <style>
-        .a-section { padding: 100px 0; }
-        .bg-soft { background: var(--bg-soft); }
-
-        .a-section-header {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-
-        .a-section-title {
-            font-size: 36px;
-            margin-bottom: 15px;
-            letter-spacing: -0.5px;
-        }
-
-        .a-section-subtitle {
-            color: var(--text-muted);
-            font-size: 14px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-weight: 600;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 10px;
+            background: url('https://ajmalperfume.com/cdn/shop/t/106/assets/title_bg.png') no-repeat center;
+            background-size: contain;
         }
 
         /* Hero */
-        .a-hero {
-            height: calc(100vh - 120px);
-            background: #f4f4f4;
+        .aj-hero-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            height: 600px;
+        }
+        .aj-hero-split.single { grid-template-columns: 1fr; }
+        .aj-hero-item {
+            background-size: cover;
+            background-position: center;
             display: flex;
             align-items: center;
+            justify-content: center;
+            min-height: 400px;
+        }
+        .aj-hero-box {
+            text-align: center;
+            color: #fff;
+        }
+        .aj-hero-box h2 { font-size: 64px; margin-bottom: 10px; }
+        .aj-hero-box p { font-size: 14px; letter-spacing: 3px; margin-bottom: 30px; }
+        /* Header Flex */
+        .aj-header-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+        }
+
+        .aj-btn-white {
+            display: inline-block;
+            padding: 15px 40px;
+            background: #fff;
+            color: #000;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 12px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: 0.3s;
+        }
+        .aj-btn-white:hover { background: var(--aj-gold); color: #fff; }
+
+        /* Video Grid */
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px;
+            margin-top: 50px;
+        }
+
+        .video-card {
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            transition: 0.3s;
+        }
+
+        .video-card:hover { transform: translateY(-5px); }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 177.77%; /* 9:16 Aspect Ratio */
+            height: 0;
             overflow: hidden;
         }
 
-        .a-hero-slide {
-            display: grid;
-            grid-template-columns: 1fr 1.2fr;
-            height: 100%;
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
+            height: 100%;
+            border: 0;
         }
 
-        .a-hero-content {
-            padding: 0 10%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            background: #fff;
-        }
+        .video-info { padding: 15px; }
 
-        .a-hero-tag {
-            text-transform: uppercase;
-            font-size: 12px;
-            letter-spacing: 3px;
-            font-weight: 800;
-            color: var(--text-muted);
-            margin-bottom: 20px;
+        .video-btn {
             display: block;
+            text-align: center;
+            background: var(--aj-dark);
+            color: #fff;
+            text-decoration: none;
+            padding: 10px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            border-radius: 4px;
+            transition: 0.3s;
         }
 
-        .a-hero-title {
-            font-size: 72px;
-            line-height: 1.1;
-            margin-bottom: 30px;
+        .video-btn:hover { background: var(--aj-gold); }
+
+        @media (max-width: 991px) {
+            .video-grid {
+                display: flex;
+                overflow-x: auto;
+                scroll-snap-type: x mandatory;
+                padding-bottom: 20px;
+                gap: 15px;
+            }
+            .video-card {
+                min-width: 250px;
+                scroll-snap-align: start;
+            }
+        }
+
+        .aj-tabs { display: flex; gap: 30px; align-items: center; }
+        .aj-tabs button {
+            background: none;
+            border: none;
+            font-weight: 700;
+            font-size: 12px;
+            color: #999;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+        .aj-tabs button.active { color: #000; position: relative; }
+        .aj-tabs button.active::after {
+            content: '';
+            position: absolute;
+            bottom: -17px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--aj-gold);
+        }
+        .view-all {
+            text-decoration: none;
+            color: #000;
             font-weight: 800;
+            font-size: 12px;
+            border: 1px solid #000;
+            padding: 8px 20px;
         }
 
-        .a-hero-desc {
-            font-size: 18px;
-            color: var(--text-muted);
-            max-width: 500px;
-            margin-bottom: 40px;
-        }
-
-        .a-hero-actions {
-            display: flex;
+        /* Category Layout */
+        .aj-cat-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
             gap: 20px;
         }
-
-        .a-hero-image-box {
-            position: relative;
-            background: #f0f0f0;
-        }
-
-        .a-hero-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        /* Buttons */
-        .a-btn-primary {
-            background: var(--primary);
+        .aj-cat-big {
+            grid-column: 1;
+            grid-row: 1;
+            height: 620px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 4px;
+            display: flex;
+            align-items: flex-end;
+            padding: 40px;
             color: #fff;
-            padding: 18px 40px;
             text-decoration: none;
-            font-weight: 800;
-            text-transform: uppercase;
-            font-size: 13px;
-            letter-spacing: 1px;
-            border-radius: 8px;
-            transition: 0.3s;
         }
-
-        .a-btn-primary:hover {
-            background: var(--accent);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(197, 160, 89, 0.2);
+        .aj-cat-right {
+            grid-column: 2;
+            grid-row: 1;
+            display: grid;
+            grid-template-rows: 1fr 1fr;
+            gap: 20px;
         }
-
-        .a-btn-outline {
-            border: 2px solid var(--primary);
-            color: var(--primary);
-            padding: 16px 40px;
-            text-decoration: none;
-            font-weight: 800;
-            text-transform: uppercase;
-            font-size: 13px;
-            letter-spacing: 1px;
-            border-radius: 8px;
-            transition: 0.3s;
-        }
-
-        .a-btn-outline:hover {
-            background: var(--primary);
+        .aj-cat-small {
+            background-size: cover;
+            background-position: center;
+            border-radius: 4px;
+            display: flex;
+            align-items: flex-end;
+            padding: 30px;
             color: #fff;
+            text-decoration: none;
+        }
+        .aj-cat-wide {
+            grid-column: span 2;
+            height: 300px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 4px;
+            display: flex;
+            align-items: flex-end;
+            padding: 40px;
+            color: #fff;
+            text-decoration: none;
+        }
+        .aj-cat-info h3 { font-size: 28px; margin-bottom: 5px; }
+        .aj-cat-info p { font-size: 14px; opacity: 0.8; }
+
+        /* USP */
+        .aj-usp-section { padding: 60px 0; border-top: 1px solid #eee; border-bottom: 1px solid #eee; }
+        .aj-usp-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+        .aj-usp-item { text-align: center; }
+        .aj-usp-icon img { height: 60px; margin-bottom: 20px; }
+        .aj-usp-item h3 { font-size: 18px; margin-bottom: 5px; }
+        .aj-usp-item p { color: #777; font-size: 14px; }
+
+        /* Occasions Tabs */
+        .aj-tabs-center {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 30px;
+        }
+        .aj-tabs-center button {
+            background: none;
+            border: none;
+            font-weight: 800;
+            font-size: 11px;
+            color: #999;
+            cursor: pointer;
+            letter-spacing: 1px;
+        }
+        .aj-tabs-center button.active { color: #B08D57; border-bottom: 2px solid #B08D57; padding-bottom: 10px; }
+
+        /* Manufacturing */
+        .aj-manufacturing {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+        .aj-man-media { position: relative; }
+        .aj-man-media img { width: 100%; border-radius: 4px; }
+        .play-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: 80px;
+            background: rgba(255,255,255,0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            color: #B08D57;
         }
 
-        /* Family Grid */
-        .a-family-grid {
+        .aj-product-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 30px;
         }
 
-        .a-family-card {
-            position: relative;
-            aspect-ratio: 0.8;
-            overflow: hidden;
-            border-radius: 12px;
-            text-decoration: none;
-        }
-
-        .a-family-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
-        }
-
-        .a-family-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
-            display: flex;
-            align-items: flex-end;
-            padding: 30px;
-            transition: 0.3s;
-        }
-
-        .a-family-info h3 {
-            color: #fff;
-            font-size: 24px;
-            margin-bottom: 5px;
-        }
-
-        .a-family-info span {
-            color: var(--accent);
-            font-size: 12px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .a-family-card:hover .a-family-img { transform: scale(1.1); }
-        .a-family-card:hover .a-family-overlay { background: linear-gradient(to top, var(--accent), transparent); }
-
-        /* Product Grid */
-        .a-product-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 40px 30px;
-        }
-
-        /* Editorial */
-        .a-editorial-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            min-height: 600px;
-        }
-
-        .a-editorial-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .a-editorial-content {
-            padding: 10%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            background: #fff;
-        }
-
-        @media (max-width: 1024px) {
-            .a-hero-title { font-size: 48px; }
-            .a-product-grid, .a-family-grid { grid-template-columns: 1fr 1fr; }
-            .a-hero-slide, .a-editorial-grid { grid-template-columns: 1fr; }
-            .a-hero-content, .a-editorial-content { padding: 60px 20px; text-align: center; }
-            .a-hero-actions { justify-content: center; }
-        }
-
-        @media (max-width: 768px) {
-            .a-hero-title { font-size: 36px; }
-            .a-section { padding: 60px 0; }
+        @media (max-width: 991px) {
+            .aj-hero-split, .aj-cat-layout, .aj-usp-grid, .aj-manufacturing, .aj-product-grid { grid-template-columns: 1fr; }
+            .aj-cat-layout { grid-template-rows: auto; }
+            .aj-cat-big, .aj-cat-wide, .aj-cat-small { height: 300px; }
+            .aj-hero-box h2 { font-size: 42px; }
         }
     </style>
 @endsection

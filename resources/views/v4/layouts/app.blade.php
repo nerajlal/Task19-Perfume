@@ -3,111 +3,115 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Ajmal Perfumes | Crafting Memories')</title>
+    <title>@yield('title', 'Task19 Perfumes | Luxury Fragrance House')</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
     <style>
         :root {
-            --primary: #1A1A1A;
-            --accent: #B08D57; /* Tan/Gold from screenshot */
-            --accent-soft: #fcf8f0;
-            --bg: #FFFFFF;
-            --bg-soft: #FBFBFB;
-            --border: #EEEEEE;
-            --text-main: #1A1A1A;
-            --text-muted: #777777;
-            --gold-gradient: linear-gradient(135deg, #B08D57 0%, #D4AF37 100%);
-            --shadow: 0 5px 20px rgba(0,0,0,0.05);
-        }
-
-        @font-face {
-            font-family: 'CursiveSerif';
-            src: url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
+            --aj-gold: #B08D57;
+            --aj-dark: #1A1A1A;
+            --aj-gray: #777777;
+            --aj-border: #EEEEEE;
+            --aj-bg: #FFFFFF;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
-            font-family: 'Outfit', sans-serif; 
-            color: var(--text-main); 
-            background: var(--bg);
+            font-family: 'Montserrat', sans-serif; 
+            color: var(--aj-dark); 
+            background: var(--aj-bg);
             line-height: 1.6;
             overflow-x: hidden;
         }
 
-        h1, h2, h3, .serif { font-family: 'Playfair Display', serif; }
+        .serif { font-family: 'Playfair Display', serif; }
+        .cursive { font-family: 'Dancing Script', cursive; text-transform: none !important; }
 
         .container {
-            max-width: 1400px;
+            max-width: 1300px;
             margin: 0 auto;
             padding: 0 20px;
         }
 
-        /* Header Refinement */
-        header {
-            background: #fff;
-            padding: 15px 0;
-            border-bottom: 1px solid var(--border);
+        /* Top Bar */
+        .top-bar {
+            background: #F4F4F4;
+            text-align: center;
+            padding: 10px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
         }
 
-        .header-top {
+        /* Header */
+        header {
+            background: #fff;
+            padding: 20px 0;
+            border-bottom: 1px solid var(--aj-border);
+        }
+
+        .header-main {
             display: grid;
             grid-template-columns: 1fr 2fr 1fr;
             align-items: center;
-            gap: 30px;
-            margin-bottom: 20px;
         }
 
-        .logo img { height: 50px; }
+        .logo { 
+            text-decoration: none; 
+            color: var(--aj-dark); 
+            font-size: 24px; 
+            font-weight: 900; 
+            letter-spacing: -1px;
+            text-transform: uppercase;
+        }
+        .logo span { color: var(--aj-gold); }
 
-        .search-container {
+        .search-bar {
             position: relative;
-            max-width: 600px;
+            max-width: 550px;
             width: 100%;
             margin: 0 auto;
         }
 
-        .search-container input {
+        .search-bar input {
             width: 100%;
             padding: 12px 20px 12px 45px;
-            border: 1.5px solid var(--border);
-            border-radius: 30px;
-            background: #F9F9F9;
-            font-size: 14px;
+            border: 1.5px solid var(--aj-border);
+            border-radius: 4px;
+            background: #fff;
+            font-size: 13px;
             outline: none;
-            transition: 0.3s;
         }
 
-        .search-container input:focus { border-color: var(--accent); background: #fff; }
-
-        .search-container i {
+        .search-bar i {
             position: absolute;
-            left: 18px;
+            left: 15px;
             top: 50%;
             transform: translateY(-50%);
-            color: var(--text-muted);
+            color: #999;
         }
 
-        .nav-actions {
+        .header-actions {
             display: flex;
             justify-content: flex-end;
             gap: 25px;
         }
 
-        .action-link {
+        .action-item {
             text-decoration: none;
-            color: var(--primary);
-            font-size: 20px;
+            color: var(--aj-dark);
+            font-size: 22px;
             position: relative;
         }
 
-        .action-link span {
+        .action-item span {
             position: absolute;
-            top: -8px;
-            right: -10px;
-            background: var(--accent);
+            top: -5px;
+            right: -8px;
+            background: var(--aj-gold);
             color: #fff;
             font-size: 10px;
             width: 18px;
@@ -119,161 +123,122 @@
             font-weight: 700;
         }
 
-        .nav-bottom {
+        /* Navigation */
+        .nav-row {
             display: flex;
             justify-content: center;
-            gap: 40px;
-            border-top: 1px solid var(--border);
-            padding-top: 15px;
+            gap: 35px;
+            padding: 20px 0 10px;
         }
 
-        .nav-link {
+        .nav-item {
             text-decoration: none;
-            color: var(--primary);
-            font-weight: 600;
-            font-size: 13px;
+            color: var(--aj-dark);
+            font-weight: 700;
+            font-size: 12px;
             text-transform: uppercase;
             letter-spacing: 1px;
             transition: 0.3s;
         }
 
-        .nav-link:hover { color: var(--accent); }
+        .nav-item:hover { color: var(--aj-gold); }
 
         /* Footer */
         footer {
-            background: var(--primary);
+            background: #8B6B3F; /* Brown/Gold background from screenshot */
             color: #fff;
             padding: 80px 0 40px;
-            margin-top: 100px;
+            margin-top: 50px;
         }
 
         .footer-grid {
             display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            grid-template-columns: 1.5fr 1fr 1fr 1.5fr;
             gap: 50px;
         }
 
         .footer-logo {
-            font-size: 28px;
+            font-size: 24px;
+            font-weight: 900;
             color: #fff;
-            margin-bottom: 20px;
+            text-decoration: none;
+            margin-bottom: 25px;
             display: block;
+            text-transform: uppercase;
         }
-
-        .footer-text {
-            color: #999;
-            font-size: 14px;
-            max-width: 300px;
-        }
+        .footer-logo span { color: var(--aj-gold); }
 
         .footer-col h4 {
             text-transform: uppercase;
-            font-size: 13px;
-            letter-spacing: 2px;
-            margin-bottom: 25px;
-            color: var(--accent);
+            font-size: 14px;
+            margin-bottom: 30px;
+            font-weight: 900;
+            letter-spacing: 1px;
         }
 
-        .footer-links {
-            list-style: none;
-        }
-
+        .footer-links { list-style: none; }
         .footer-links li { margin-bottom: 12px; }
-
         .footer-links a {
-            color: #999;
+            color: rgba(255,255,255,0.8);
             text-decoration: none;
             font-size: 14px;
             transition: 0.3s;
         }
-
-        .footer-links a:hover { color: #fff; }
-
-        .newsletter-form {
-            display: flex;
-            gap: 10px;
-            margin-top: 20px;
-        }
-
-        .newsletter-input {
-            background: #2A2A2A;
-            border: 1px solid #333;
-            padding: 12px 15px;
-            border-radius: 8px;
-            color: #fff;
-            flex-grow: 1;
-            outline: none;
-        }
-
-        .newsletter-btn {
-            background: var(--accent);
-            color: #fff;
-            border: none;
-            padding: 0 20px;
-            border-radius: 8px;
-            font-weight: 700;
-            cursor: pointer;
-        }
+        .footer-links a:hover { color: #fff; padding-left: 5px; }
 
         .footer-bottom {
             margin-top: 60px;
             padding-top: 30px;
-            border-top: 1px solid #333;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
             font-size: 12px;
-            color: #666;
+            color: rgba(255,255,255,0.6);
         }
 
-        /* Responsive */
-        @media (max-width: 1024px) {
-            .nav-links { display: none; }
+        @media (max-width: 991px) {
+            .header-main { grid-template-columns: 1fr 1fr; }
+            .search-bar { display: none; }
+            .nav-row { display: none; }
             .footer-grid { grid-template-columns: 1fr 1fr; }
-        }
-
-        @media (max-width: 768px) {
-            .footer-grid { grid-template-columns: 1fr; }
-            .footer-bottom { flex-direction: column; gap: 20px; text-align: center; }
         }
     </style>
     @stack('styles')
 </head>
 <body>
     <div class="top-bar">
-        Free Shipping on Orders Above ₹399 • Crafting Memories Since 1951
+        Free Shipping on Orders Above ₹500 • COD Available • Crafting Memories Since 1951
     </div>
 
     <header>
         <div class="container">
-            <div class="header-top">
+            <div class="header-main">
                 <a href="{{ route('v4.home') }}" class="logo">
-                    <img src="https://ajmalperfume.com/cdn/shop/files/Ajmal_Logo_1.png?v=1614298135" alt="Ajmal Logo">
+                    TASK19 <span>PERFUMES</span>
                 </a>
-                
-                <div class="search-container">
+
+                <div class="search-bar">
                     <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" placeholder="Search for Perfumes, Attars, Dakhoon...">
+                    <input type="text" placeholder="Search for Perfumes, Attars, Gift Sets...">
                 </div>
 
-                <div class="nav-actions">
-                    <a href="#" class="action-link"><i class="fa-regular fa-user"></i></a>
-                    <a href="#" class="action-link"><i class="fa-regular fa-heart"></i></a>
-                    <a href="#" class="action-link">
+                <div class="header-actions">
+                    <a href="#" class="action-item"><i class="fa-regular fa-user"></i></a>
+                    <a href="#" class="action-item"><i class="fa-regular fa-heart"></i></a>
+                    <a href="#" class="action-item">
                         <i class="fa-solid fa-bag-shopping"></i>
                         <span>0</span>
                     </a>
                 </div>
             </div>
 
-            <nav class="nav-bottom">
-                <a href="{{ route('v4.home') }}" class="nav-link">Home</a>
-                <a href="{{ route('v4.all-products') }}" class="nav-link">Shop All</a>
-                <a href="#" class="nav-link">Best Sellers</a>
-                <a href="#" class="nav-link">New Arrivals</a>
-                <a href="#" class="nav-link">Attars</a>
-                <a href="#" class="nav-link">Gifting</a>
-                <a href="#" class="nav-link">Our Heritage</a>
+            <nav class="nav-row">
+                <a href="{{ route('v4.home') }}" class="nav-item">Home</a>
+                <a href="#" class="nav-item">Bestsellers</a>
+                <a href="#" class="nav-item">EDP</a>
+                <a href="#" class="nav-item">Attar</a>
+                <a href="#" class="nav-item">Gifting</a>
+                <a href="#" class="nav-item">New Arrivals</a>
+                <a href="#" class="nav-item">Dakhoon</a>
             </nav>
         </div>
     </header>
@@ -286,15 +251,17 @@
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-col">
-                    <a href="#" class="logo footer-logo">AJMAL</a>
-                    <p class="footer-text">A world-class fragrance house with a legacy of over seven decades in the art of perfumery.</p>
-                    <div style="margin-top: 25px; display: flex; gap: 15px;">
-                        <a href="#" style="color: #fff; font-size: 18px;"><i class="fa-brands fa-instagram"></i></a>
-                        <a href="#" style="color: #fff; font-size: 18px;"><i class="fa-brands fa-facebook"></i></a>
-                        <a href="#" style="color: #fff; font-size: 18px;"><i class="fa-brands fa-youtube"></i></a>
+                    <a href="{{ route('v4.home') }}" class="footer-logo">
+                        TASK19 <span>PERFUMES</span>
+                    </a>
+                    <p style="opacity: 0.8; font-size: 14px;">A world-class fragrance house with a legacy of excellence in the art of perfumery.</p>
+                    <div style="margin-top: 30px; display: flex; gap: 20px;">
+                        <a href="#" style="color: #fff; font-size: 20px;"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" style="color: #fff; font-size: 20px;"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#" style="color: #fff; font-size: 20px;"><i class="fa-brands fa-youtube"></i></a>
                     </div>
                 </div>
-                
+
                 <div class="footer-col">
                     <h4>Collections</h4>
                     <ul class="footer-links">
@@ -316,22 +283,17 @@
                 </div>
 
                 <div class="footer-col">
-                    <h4>Stay Inspired</h4>
-                    <p class="footer-text" style="color: #666;">Subscribe to receive updates, access to exclusive deals, and more.</p>
-                    <form class="newsletter-form">
-                        <input type="email" class="newsletter-input" placeholder="Enter your email">
-                        <button class="newsletter-btn">JOIN</button>
-                    </form>
+                    <h4>Contact Us</h4>
+                    <p style="font-size: 14px; opacity: 0.8; line-height: 2;">
+                        Customercare@ajmalperfume.com<br>
+                        +91 123 456 7890<br>
+                        10:00 AM - 7:00 PM (Mon-Sat)
+                    </p>
                 </div>
             </div>
 
             <div class="footer-bottom">
-                <p>&copy; {{ date('Y') }} Ajmal Perfumes India. All Rights Reserved.</p>
-                <div style="display: flex; gap: 20px;">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" height="15" style="filter: grayscale(1) opacity(0.5);">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" height="20" style="filter: grayscale(1) opacity(0.5);">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" height="15" style="filter: grayscale(1) opacity(0.5);">
-                </div>
+                &copy; {{ date('Y') }} TASK19 PERFUMES INDIA. ALL RIGHTS RESERVED.
             </div>
         </div>
     </footer>
