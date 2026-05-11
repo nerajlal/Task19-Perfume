@@ -1,0 +1,174 @@
+@php 
+    $stock = $product->variants->sum('stock') > 0;
+    $hasDiscount = $product->compare_at_price > $product->starting_price;
+    $discountPercent = $hasDiscount ? round((($product->compare_at_price - $product->starting_price) / $product->compare_at_price) * 100) : 0;
+@endphp
+
+<div class="a-product-card">
+    <div class="a-image-wrapper">
+        <a href="{{ route('v4.product', ['id' => $product->id]) }}">
+            <img src="{{ $product->main_image_url ?? asset('images/g-load.webp') }}" 
+                 onerror="this.src='{{ asset('images/g-load.webp') }}'"
+                 alt="{{ $product->title }}" 
+                 class="a-product-image">
+        </a>
+        
+        @if($hasDiscount)
+            <div class="a-badge-discount">{{ $discountPercent }}% OFF</div>
+        @endif
+
+        <button class="a-wishlist-btn"><i class="fa-regular fa-heart"></i></button>
+    </div>
+
+    <div class="a-product-info">
+        <h3 class="a-product-title">
+            <a href="{{ route('v4.product', ['id' => $product->id]) }}">{{ $product->title }}</a>
+        </h3>
+        
+        <div class="a-rating">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star-half-stroke"></i>
+            <span>(12)</span>
+        </div>
+
+        <div class="a-product-price">
+            <span class="a-price-current">₹{{ number_format($product->starting_price, 0) }}</span>
+            @if($hasDiscount)
+                <span class="a-price-original">₹{{ number_format($product->compare_at_price, 0) }}</span>
+            @endif
+        </div>
+        
+        <div class="a-tags">
+            <span class="a-tag">Best Seller</span>
+            <span class="a-tag">Long Lasting</span>
+        </div>
+    </div>
+
+    <button class="a-add-btn" onclick="quickAdd({{ $product->id }})">
+        ADD TO CART
+    </button>
+</div>
+
+<style>
+    .a-product-card {
+        background: #fff;
+        border: 1px solid #f0f0f0;
+        transition: all 0.3s ease;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+
+    .a-product-card:hover {
+        box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    }
+
+    .a-image-wrapper {
+        position: relative;
+        aspect-ratio: 1;
+        background: #fff;
+        padding: 20px;
+    }
+
+    .a-product-image {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+
+    .a-badge-discount {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        background: var(--accent);
+        color: #fff;
+        font-size: 10px;
+        font-weight: 800;
+        padding: 4px 8px;
+        border-radius: 2px;
+    }
+
+    .a-wishlist-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: none;
+        border: none;
+        font-size: 18px;
+        color: #ccc;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .a-wishlist-btn:hover { color: var(--accent); }
+
+    .a-product-info {
+        padding: 15px;
+        flex-grow: 1;
+        text-align: left;
+    }
+
+    .a-product-title {
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 8px;
+        height: 40px;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+    }
+
+    .a-product-title a { text-decoration: none; color: #333; }
+
+    .a-rating {
+        color: #FFD700;
+        font-size: 10px;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        gap: 3px;
+    }
+
+    .a-rating span { color: #999; margin-left: 5px; font-size: 11px; }
+
+    .a-product-price {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 15px;
+    }
+
+    .a-price-current { font-weight: 700; font-size: 16px; color: #000; }
+    .a-price-original { color: #999; text-decoration: line-through; font-size: 13px; }
+
+    .a-tags { display: flex; gap: 5px; margin-bottom: 10px; }
+    .a-tag {
+        font-size: 9px;
+        text-transform: uppercase;
+        font-weight: 700;
+        color: var(--accent);
+        border: 1px solid var(--accent);
+        padding: 2px 6px;
+        border-radius: 2px;
+    }
+
+    .a-add-btn {
+        width: 100%;
+        background: #000;
+        color: #fff;
+        border: none;
+        padding: 12px;
+        font-weight: 700;
+        font-size: 12px;
+        letter-spacing: 1px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .a-add-btn:hover { background: var(--accent); }
+</style>

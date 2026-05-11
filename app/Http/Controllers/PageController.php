@@ -24,6 +24,13 @@ class PageController extends Controller
         return view('v3.home', compact('sliders', 'bestsellers', 'collections', 'bundles'));
     }
 
+    public function ajmalHome()
+    {
+        $products = \App\Models\Product::where('status', 'active')->with(['variants', 'images'])->latest()->get();
+        $collections = \App\Models\Collection::where('status', true)->get();
+        return view('v4.home', compact('products', 'collections'));
+    }
+
     public function collection(Request $request)
     {
         return $this->handleCollection($request, 'nurah.collection');
@@ -32,6 +39,11 @@ class PageController extends Controller
     public function v3Collection(Request $request)
     {
         return $this->handleCollection($request, 'v3.collection');
+    }
+
+    public function ajmalCollection(Request $request)
+    {
+        return $this->handleCollection($request, 'v4.collection');
     }
 
     private function handleCollection(Request $request, $view)
@@ -76,6 +88,11 @@ class PageController extends Controller
     public function v3AllProducts()
     {
         return $this->handleAllProducts('v3.all-products');
+    }
+
+    public function ajmalAllProducts()
+    {
+        return $this->handleAllProducts('v4.all-products');
     }
 
     private function handleAllProducts($view)
@@ -148,6 +165,11 @@ class PageController extends Controller
     public function v3Product(Request $request)
     {
         return $this->handleProduct($request, 'v3.product-main');
+    }
+
+    public function ajmalProduct(Request $request)
+    {
+        return $this->handleProduct($request, 'v4.product-main');
     }
 
     private function handleProduct(Request $request, $view)

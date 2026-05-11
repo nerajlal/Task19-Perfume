@@ -217,6 +217,14 @@ Route::prefix('v3')->name('v3.')->group(function () {
     Route::view('/terms-of-service', 'v3.terms-of-service')->name('terms-of-service');
 });
 
+// v4 Ajmal Theme Routes
+Route::prefix('v4')->name('v4.')->group(function () {
+    Route::get('/', [PageController::class, 'ajmalHome'])->name('home');
+    Route::get('/collections', [PageController::class, 'ajmalCollection'])->name('collection');
+    Route::get('/all-products', [PageController::class, 'ajmalAllProducts'])->name('all-products');
+    Route::get('/product', [PageController::class, 'ajmalProduct'])->name('product');
+});
+
 // Super Admin Routes (Public for Verification)
 Route::prefix('su-admin')->name('super_admin.')->group(function () {
     Route::get('/', [App\Http\Controllers\SuperAdmin\DashboardController::class, 'index'])->name('dashboard');
