@@ -92,6 +92,7 @@
     </div>
 
     @include('nurah.partials.footer')
+    @include('nurah.partials.cart_drawer')
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
@@ -119,17 +120,84 @@
             });
         });
 
+        // Cart Drawer Logic
+        function toggleNCart(open = true) {
+            if(open) {
+                $('#cart-drawer-n').addClass('open');
+                $('#cart-drawer-overlay-n').fadeIn(300);
+                $('body').css('overflow', 'hidden');
+                refreshNCart();
+            } else {
+                $('#cart-drawer-n').removeClass('open');
+                $('#cart-drawer-overlay-n').fadeOut(300);
+                $('body').css('overflow', '');
+            }
+        }
+
+        function refreshNCart() {
+            $('#cart-drawer-body-n').html('<div class="cart-loader-n"><i class="fa-solid fa-spinner fa-spin"></i></div>');
+            $.get("{{ route('cart.fetch') }}", { theme: 'nurah' }, function(html) {
+                $('#cart-drawer-body-n').html(html);
+            });
+        }
+
+        function updateNCartQty(key, delta) {
+            $.post("{{ route('cart.update') }}", {
+                _token: "{{ csrf_token() }}",
+                id: key,
+                quantity: 'increment', // I'll check controller if it supports increment, but I'll use actual math
+            }, function(response) {
+                // Actually controller needs exact qty, I'll fetch it from UI first
+            });
+            // Re-implementing with exact qty
+        }
+
+        // Improved JS for Nurah
+        window.updateNCartQty = function(key, delta) {
+            const $item = $(`.n-cart-item:has(button[onclick*="${key}"])`);
+            const currentQty = parseInt($item.find('.n-qty-wrap span').text());
+            const newQty = currentQty + delta;
+            if(newQty < 1) return;
+
+            $.post("{{ route('cart.update') }}", {
+                _token: "{{ csrf_token() }}",
+                id: key,
+                quantity: newQty
+            }, function(response) {
+                if(response.success) {
+                    $('#cart-count').text(response.cartCount);
+                    refreshNCart();
+                }
+            });
+        }
+
+        window.removeNCartItem = function(key) {
+            $.post("{{ route('cart.remove') }}", {
+                _token: "{{ csrf_token() }}",
+                id: key
+            }, function(response) {
+                if(response.success) {
+                    $('#cart-count').text(response.cartCount);
+                    refreshNCart();
+                }
+            });
+        }
+
+        $(document).on('click', '#cart-trigger-n, #close-cart-n, #cart-drawer-overlay-n', function() {
+            const isOpen = $('#cart-drawer-n').hasClass('open');
+            toggleNCart(!isOpen);
+        });
+
         // Use a more specific unbind/bind or check to prevent double-firing
         $(document).off('click', '.cart-add-btn').on('click', '.cart-add-btn', function(e) {
             e.preventDefault();
-            e.stopImmediatePropagation(); // Prevent other listeners if any
+            e.stopImmediatePropagation(); 
             
             const productId = $(this).data('product-id');
             const defaultSize = $(this).data('default-size');
             const type = $(this).data('type') || 'product';
             const btn = $(this);
             
-            // Prevent multiple clicks while processing
             if(btn.hasClass('processing')) return;
             btn.addClass('processing');
             
@@ -149,6 +217,10 @@
                         $('#cart-count').text(response.cartCount);
                         btn.html('<i class="fa-solid fa-check"></i>');
                         btn.css('background', '#10B981');
+                        
+                        // Open Drawer
+                        toggleNCart(true);
+
                         setTimeout(() => {
                             btn.html('<i class="fa-solid fa-plus"></i>');
                             btn.css('background', '');

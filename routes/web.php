@@ -17,6 +17,7 @@ Route::get('/cart', [App\Http\Controllers\CartController::class, 'index'])->name
 Route::post('/cart/add', [App\Http\Controllers\CartController::class, 'add'])->name('cart.add');
 Route::post('/cart/update', [App\Http\Controllers\CartController::class, 'update'])->name('cart.update');
 Route::post('/cart/remove', [App\Http\Controllers\CartController::class, 'remove'])->name('cart.remove');
+Route::get('/cart/fetch', [App\Http\Controllers\CartController::class, 'fetch'])->name('cart.fetch');
 Route::get('/checkout', [PageController::class, 'checkout'])->name('checkout');
 Route::get('/shipping-policy', [PageController::class, 'shippingPolicy'])->name('shipping-policy');
 Route::get('/return-policy', [PageController::class, 'returnPolicy'])->name('return-policy');

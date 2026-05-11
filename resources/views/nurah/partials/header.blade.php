@@ -25,7 +25,7 @@
                 </button>
             @endauth
 
-            <a href="{{ route('cart') }}" class="action-btn cart-btn">
+            <a href="javascript:void(0)" class="action-btn cart-btn" id="cart-trigger-n">
                 <i class="fa-solid fa-cart-shopping"></i>
                 <span id="cart-count">{{ \App\Models\Cart::where('user_id', auth()->id())->count() }}</span>
             </a>

@@ -20,7 +20,7 @@
 
             <div class="header-actions-v">
                 <button class="action-btn-v"><i class="fa-solid fa-user"></i></button>
-                <button class="action-btn-v" style="position: relative;">
+                <button class="action-btn-v" id="cart-trigger-v" style="position: relative;">
                     <i class="fa-solid fa-bag-shopping"></i>
                     <span class="cart-count-v">0</span>
                 </button>
@@ -69,12 +69,70 @@
         </main>
     </div>
 
+    @include('velvet.partials.cart_drawer')
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
+        function toggleDrawer(open = true) {
+            if(open) {
+                $('#cart-drawer-v').addClass('open');
+                $('#cart-drawer-overlay').fadeIn(300);
+                $('body').css('overflow', 'hidden');
+                refreshDrawer();
+            } else {
+                $('#cart-drawer-v').removeClass('open');
+                $('#cart-drawer-overlay').fadeOut(300);
+                $('body').css('overflow', '');
+            }
+        }
+
+        function refreshDrawer() {
+            $('#cart-drawer-body').html('<div class="cart-loader-v"><i class="fa-solid fa-spinner fa-spin"></i></div>');
+            $.get("{{ route('cart.fetch') }}", function(html) {
+                $('#cart-drawer-body').html(html);
+            });
+        }
+
+        function updateDrawerQty(key, delta) {
+            const currentQty = parseInt($(`.cart-item-v[data-key="${key}"] .qty-val-v`).text());
+            const newQty = currentQty + delta;
+            if(newQty < 1) return;
+
+            $.post("{{ route('cart.update') }}", {
+                _token: "{{ csrf_token() }}",
+                id: key,
+                quantity: newQty
+            }, function(response) {
+                if(response.success) {
+                    $('.cart-count-v').text(response.cartCount);
+                    refreshDrawer();
+                }
+            });
+        }
+
+        function removeDrawerItem(key) {
+            $.post("{{ route('cart.remove') }}", {
+                _token: "{{ csrf_token() }}",
+                id: key
+            }, function(response) {
+                if(response.success) {
+                    $('.cart-count-v').text(response.cartCount);
+                    refreshDrawer();
+                }
+            });
+        }
+
+        $(document).ready(function() {
+            $('#cart-trigger-v, #cart-drawer-overlay, #close-cart-v').on('click', function() {
+                const isOpen = $('#cart-drawer-v').hasClass('open');
+                toggleDrawer(!isOpen);
+            });
+        });
+
         function quickAdd(productId, size, variantId) {
             const btn = event.currentTarget;
             const originalHtml = btn.innerHTML;
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Adding...';
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
             btn.disabled = true;
 
             $.ajax({
@@ -90,10 +148,13 @@
                 success: function(response) {
                     if(response.success) {
                         $('.cart-count-v').text(response.cartCount);
-                        btn.innerHTML = '<i class="fa-solid fa-check"></i> Added!';
+                        btn.innerHTML = '<i class="fa-solid fa-check"></i>';
                         btn.style.background = '#10B981';
                         btn.style.color = '#fff';
                         
+                        // Open Drawer
+                        toggleDrawer(true);
+
                         setTimeout(() => {
                             btn.innerHTML = originalHtml;
                             btn.style.background = '';

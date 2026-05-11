@@ -449,6 +449,25 @@ class CartController extends Controller
         return $cart;
     }
 
+    public function fetch(Request $request)
+    {
+        if (Auth::check()) {
+            $cart = $this->getCartFromDb();
+        } else {
+            $cart = session()->get('cart', []);
+        }
+
+        $cartData = $this->calculateTotal($cart);
+        $total = $cartData['total'];
+        $subtotal = $cartData['subtotal'];
+        $savings = $cartData['savings'];
+
+        $theme = $request->theme ?? 'nurah';
+        $view = ($theme == 'velvet') ? 'velvet.partials.cart_drawer_items' : 'nurah.partials.cart_drawer_items';
+
+        return view($view, compact('cart', 'total', 'subtotal', 'savings'))->render();
+    }
+
     private function getActiveCoupon($product)
     {
         return \App\Services\CartService::getActiveCoupon($product);

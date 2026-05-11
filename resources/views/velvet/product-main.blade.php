@@ -484,6 +484,9 @@
                     btn.innerHTML = '<i class="fa-solid fa-check"></i> Added!';
                     btn.classList.add('success-btn');
                     
+                    // Open Drawer
+                    if(typeof toggleDrawer === 'function') toggleDrawer(true);
+                    
                     setTimeout(() => {
                         btn.innerHTML = originalText;
                         btn.classList.remove('success-btn');
@@ -526,6 +529,9 @@
                     btn.innerHTML = '<i class="fa-solid fa-check"></i> Added!';
                     btn.style.background = '#10B981';
                     
+                    // Open Drawer
+                    if(typeof toggleDrawer === 'function') toggleDrawer(true);
+                    
                     setTimeout(() => {
                         btn.innerHTML = originalHtml;
                         btn.style.background = '';
@@ -560,6 +566,9 @@
                     $('.cart-count-v').text(response.cartCount);
                     btn.innerHTML = '<i class="fa-solid fa-check"></i>';
                     btn.style.background = '#10B981';
+                    
+                    // Open Drawer
+                    if(typeof toggleDrawer === 'function') toggleDrawer(true);
                     
                     setTimeout(() => {
                         btn.innerHTML = originalHtml;
