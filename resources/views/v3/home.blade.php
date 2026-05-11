@@ -399,6 +399,43 @@
         .store-count { font-size: 160px; margin-bottom: -55px; }
         .store-title { font-size: 48px; }
     }
+
+    /* Social Proof Tag */
+    .social-proof-tag {
+        position: absolute;
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(4px);
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 9px;
+        font-weight: 700;
+        color: var(--black);
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        white-space: nowrap;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        z-index: 2;
+        border: 1px solid rgba(197, 160, 89, 0.2);
+        transition: all 0.4s ease;
+    }
+    .product-card:hover .social-proof-tag, .collection-card:hover .social-proof-tag {
+        transform: translateX(-50%) translateY(-3px);
+        box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    }
+    .social-proof-tag i { color: var(--dark-gold); font-size: 10px; }
+    .social-proof-tag.collection-tag {
+        bottom: auto;
+        top: 15px;
+        left: 15px;
+        transform: none;
+    }
+    .collection-card:hover .social-proof-tag.collection-tag {
+        transform: translateY(-2px);
+    }
 </style>
 @endpush
 
@@ -453,6 +490,11 @@
                                 <i class="fas fa-image fa-2x opacity-25"></i>
                             </div>
                         @endif
+
+                        <div class="social-proof-tag">
+                            <i class="fas fa-fire"></i>
+                            <span>{{ rand(45, 180) }} bought this last week</span>
+                        </div>
                     </div>
                     <div class="product-info">
                         <h3 class="product-name">{{ $item->product->title }}</h3>
@@ -514,6 +556,10 @@
             @forelse($collections as $collection)
             <a href="{{ route('v3.collection', ['category' => $collection->slug]) }}" class="collection-card">
                 <img src="{{ \Illuminate\Support\Facades\Storage::url($collection->image) }}" alt="{{ $collection->name }}" onerror="handleImageError(this)">
+                <div class="social-proof-tag collection-tag">
+                    <i class="fas fa-heart"></i>
+                    <span>{{ rand(1, 5) }}.{{ rand(1, 9) }}k people like this</span>
+                </div>
                 <div class="collection-overlay">
                     <h3 class="collection-name">{{ $collection->name }}</h3>
                     <p class="collection-desc">{{ $collection->description }}</p>
@@ -523,6 +569,10 @@
             <!-- Fallback if empty -->
             <a href="{{ route('v3.collection', ['category' => 'fresh']) }}" class="collection-card">
                 <img src="{{ asset('Images/category-fresh.webp') }}" alt="Fresh" onerror="handleImageError(this)">
+                <div class="social-proof-tag collection-tag">
+                    <i class="fas fa-heart"></i>
+                    <span>{{ rand(1, 5) }}.{{ rand(1, 9) }}k people like this</span>
+                </div>
                 <div class="collection-overlay">
                     <h3 class="collection-name">FRESH</h3>
                     <p class="collection-desc">Crisp & Invigorating</p>
@@ -530,6 +580,10 @@
             </a>
             <a href="{{ route('v3.collection', ['category' => 'oriental-woody']) }}" class="collection-card">
                 <img src="{{ asset('Images/category-oriental-woody.webp') }}" alt="Oriental" onerror="handleImageError(this)">
+                <div class="social-proof-tag collection-tag">
+                    <i class="fas fa-heart"></i>
+                    <span>{{ rand(1, 5) }}.{{ rand(1, 9) }}k people like this</span>
+                </div>
                 <div class="collection-overlay">
                     <h3 class="collection-name">ORIENTAL</h3>
                     <p class="collection-desc">Warm & Spicy</p>
@@ -537,6 +591,10 @@
             </a>
             <a href="{{ route('v3.collection', ['category' => 'floral']) }}" class="collection-card">
                 <img src="{{ asset('Images/category-floral.webp') }}" alt="Floral" onerror="handleImageError(this)">
+                <div class="social-proof-tag collection-tag">
+                    <i class="fas fa-heart"></i>
+                    <span>{{ rand(1, 5) }}.{{ rand(1, 9) }}k people like this</span>
+                </div>
                 <div class="collection-overlay">
                     <h3 class="collection-name">FLORAL</h3>
                     <p class="collection-desc">Soft & Romantic</p>
@@ -544,6 +602,10 @@
             </a>
             <a href="{{ route('v3.collection', ['category' => 'citrus']) }}" class="collection-card">
                 <img src="{{ asset('Images/category-citrus.webp') }}" alt="Citrus" onerror="handleImageError(this)">
+                <div class="social-proof-tag collection-tag">
+                    <i class="fas fa-heart"></i>
+                    <span>{{ rand(1, 5) }}.{{ rand(1, 9) }}k people like this</span>
+                </div>
                 <div class="collection-overlay">
                     <h3 class="collection-name">CITRUS</h3>
                     <p class="collection-desc">Zesty & Bright</p>
@@ -569,6 +631,11 @@
                         {{ $bundle->discount_type == 'percentage' ? ' ' . number_format($bundle->discount_value) . '%' : 'SAVE ₹' . number_format($bundle->discount_value) }}
                     </span>
                     @endif
+
+                    <div class="social-proof-tag">
+                        <i class="fas fa-shopping-bag"></i>
+                        <span>{{ rand(20, 80) }} people joined the squad</span>
+                    </div>
                 </div>
                 <div class="product-info">
                     <h3 class="product-name">{{ $bundle->title }}</h3>

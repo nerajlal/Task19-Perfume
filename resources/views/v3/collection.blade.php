@@ -753,9 +753,16 @@
             gap: 20px;
         }
 
-        .products-container {
+        .products-container, .filter-bar, .results-bar, .page-header {
             max-width: 1200px;
             margin: 0 auto;
+        }
+        
+        .filter-bar {
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-top: 20px;
+            margin-bottom: 10px;
         }
     }
 
@@ -788,6 +795,33 @@
         z-index: 10;
         white-space: nowrap;
     }
+
+    /* Social Proof Tag */
+    .social-proof-tag {
+        position: absolute;
+        bottom: 8px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(4px);
+        padding: 4px 10px;
+        border-radius: 20px;
+        font-size: 8px;
+        font-weight: 700;
+        color: #000;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        white-space: nowrap;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        z-index: 2;
+        border: 1px solid rgba(197, 160, 89, 0.2);
+        transition: all 0.3s ease;
+    }
+    .product-card:hover .social-proof-tag {
+        transform: translateX(-50%) translateY(-2px);
+    }
+    .social-proof-tag i { color: var(--gold); font-size: 9px; }
 </style>
 @endpush
 
@@ -853,6 +887,11 @@
                             <i class="fas fa-image fa-2x opacity-25"></i>
                         </div>
                     @endif
+
+                    <div class="social-proof-tag">
+                        <i class="fas fa-fire"></i>
+                        <span>{{ rand(20, 150) }} bought this week</span>
+                    </div>
                 </div>
                 <div class="product-info">
                     <div class="product-details-row">

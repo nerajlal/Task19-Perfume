@@ -131,6 +131,13 @@
             grid-template-columns: repeat(3, 1fr);
             gap: 20px;
         }
+
+        .page-header {
+            max-width: 1200px;
+            margin: 0 auto 20px;
+            border-radius: 20px;
+            margin-top: 20px;
+        }
     }
 
     @media (min-width: 1024px) {
@@ -160,6 +167,33 @@
         opacity: 1;
         transform: translateX(-50%) translateY(0);
     }
+
+    /* Social Proof Tag */
+    .social-proof-tag {
+        position: absolute;
+        bottom: 8px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(4px);
+        padding: 4px 10px;
+        border-radius: 20px;
+        font-size: 8px;
+        font-weight: 700;
+        color: #000;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        white-space: nowrap;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        z-index: 2;
+        border: 1px solid rgba(197, 160, 89, 0.2);
+        transition: all 0.3s ease;
+    }
+    .product-card:hover .social-proof-tag {
+        transform: translateX(-50%) translateY(-2px);
+    }
+    .social-proof-tag i { color: var(--gold); font-size: 9px; }
 </style>
 @endpush
 
@@ -181,6 +215,10 @@
                     </span>
                     @endif
                     <img src="{{ \Illuminate\Support\Facades\Storage::url($bundle->image) }}" alt="{{ $bundle->title }}" class="product-image" onerror="handleImageError(this)">
+                    <div class="social-proof-tag">
+                        <i class="fas fa-shopping-bag"></i>
+                        <span>{{ rand(15, 60) }} bundles grabbed recently</span>
+                    </div>
                 </div>
                 <div class="product-info">
                     <h3 class="product-name">{{ $bundle->title }}</h3>
