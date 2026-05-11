@@ -815,6 +815,11 @@
         background: #ccc;
         cursor: not-allowed;
     }
+
+    @keyframes poolFade {
+        0%, 100% { opacity: 0; }
+        5%, 35% { opacity: 1; }
+    }
 </style>
 @endpush
 
@@ -1059,9 +1064,12 @@
                             @endphp
                             @if($pb_prod)
                             <div style="display: flex; align-items: center; justify-content: space-between; background: #fff; border: 1.5px dashed #e5e5e5; padding: 12px 15px; border-radius: 12px; transition: 0.3s;">
-                                <div style="display: flex; flex-direction: column; gap: 2px;">
-                                    <span style="font-weight: 700; font-size: 15px; color: #000;">Buy {{ $pb_prod->pivot->quantity }} @if($pb_variant) ({{ $pb_variant->size }}) @endif</span>
-                                    <span style="font-size: 12px; font-weight: 700; color: #C5A059;">Save ₹{{ number_format($savings, 0) }} instantly</span>
+                                <div style="display: flex; align-items: center; gap: 15px;">
+                                    <img src="{{ $product->main_image_url }}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 8px;" onerror="handleImageError(this)">
+                                    <div style="display: flex; flex-direction: column; gap: 2px;">
+                                        <span style="font-weight: 700; font-size: 15px; color: #000;">Buy {{ $pb_prod->pivot->quantity }} @if($pb_variant) ({{ $pb_variant->size }}) @endif</span>
+                                        <span style="font-size: 12px; font-weight: 700; color: #C5A059;">Save ₹{{ number_format($savings, 0) }} instantly</span>
+                                    </div>
                                 </div>
                                 <button onclick="addBundleToCart({{ $pack->id }}, '{{ addslashes($pack->title) }}', this, {{ $pb_prod->id }}, {{ $pb_prod->pivot->quantity }}, '{{ $pb_variant ? $pb_variant->size : "" }}')" 
                                         style="background: #000; color: #fff; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 700; font-size: 13px; cursor: pointer; transition: 0.3s;">
@@ -1080,10 +1088,18 @@
                     <div style="display: flex; flex-direction: column; gap: 12px;">
                         @foreach($poolBundles as $pool)
                         <div style="display: flex; align-items: center; gap: 15px; background: #fdf8ef; padding: 12px; border-radius: 8px; border: 1px solid #C5A059;">
-                            <img src="{{ \Illuminate\Support\Facades\Storage::url($pool->image) }}" style="width: 60px; height: 60px; object-fit: cover; border-radius: 4px;" onerror="handleImageError(this)">
+                            <div style="width: 60px; height: 60px; position: relative; border-radius: 4px; overflow: hidden; flex-shrink: 0; background: #fff;">
+                                @foreach($pool->products as $index => $pp)
+                                    <img src="{{ $pp->main_image_url }}" 
+                                         style="width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; 
+                                                animation: poolFade {{ $pool->products->count() * 3 }}s infinite {{ $index * 3 }}s; 
+                                                opacity: 0;" 
+                                         onerror="handleImageError(this)">
+                                @endforeach
+                            </div>
                             <div style="flex: 1;">
                                 <h4 style="font-size: 14px; margin: 0 0 4px 0; font-weight: 600;">{{ $pool->title }}</h4>
-                                <p style="font-size: 13px; color: var(--color-gold); font-weight: 700; margin: 0;">Starts ₹{{ number_format($pool->total_price, 0) }}</p>
+                                <p style="font-size: 13px; color: var(--color-gold); font-weight: 700; margin: 0;">Save ₹{{ number_format($pool->discount_value, 0) }}</p>
                             </div>
                             <button onclick="openQuickBuild({{ $pool->id }}, '{{ addslashes($pool->title) }}', {{ $pool->min_quantity }}, {{ json_encode($pool->products->map(fn($p) => ['id' => $p->id, 'title' => $p->title, 'image' => $p->main_image_url, 'price' => $p->starting_price])) }})" 
                                style="padding: 8px 12px; background: var(--color-gold); color: #fff; border: none; border-radius: 4px; font-size: 11px; font-weight: 700; text-transform: uppercase; cursor: pointer;">
@@ -1184,15 +1200,27 @@
     
     <div class="related-grid">
         @foreach($relatedProducts as $related)
-        <a href="{{ route('v3.product', ['id' => $related->id]) }}" style="text-decoration: none;">
-            <div style="background: #f9f9f9; aspect-ratio: 1; margin-bottom: 15px; border-radius: 10px; overflow: hidden;">
-                <img src="{{ $related->main_image_url }}" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'" onerror="handleImageError(this)">
-            </div>
-            <div style="display: flex; justify-content: space-between; align-items: start;">
-                <h4 style="font-family: var(--font-display); font-size: 15px; margin: 0; font-weight: 500; line-height: 1.3; color: var(--color-text);">{{ $related->title }}</h4>
-                <span style="font-size: 14px; font-weight: 600; color: var(--color-text); white-space: nowrap; margin-left: 10px;">₹{{ number_format($related->starting_price) }}</span>
-            </div>
-        </a>
+        <div style="text-decoration: none; display: block; margin-bottom: 20px;">
+            <a href="{{ route('v3.product', ['id' => $related->id]) }}" style="text-decoration: none; display: block;">
+                <div style="background: #f9f9f9; aspect-ratio: 1; margin-bottom: 12px; border-radius: 10px; overflow: hidden;">
+                    <img src="{{ $related->main_image_url }}" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'" onerror="handleImageError(this)">
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 12px; min-height: 40px;">
+                    <h4 style="font-family: var(--font-display); font-size: 14px; margin: 0; font-weight: 500; line-height: 1.3; color: var(--color-text);">{{ $related->title }}</h4>
+                    <div style="text-align: right;">
+                        @if(isset($related->compare_at_price) && $related->compare_at_price > $related->starting_price)
+                            <span style="font-size: 10px; text-decoration: line-through; color: #999; display: block; margin-bottom: 2px;">₹{{ number_format($related->compare_at_price) }}</span>
+                        @endif
+                        <span style="font-size: 14px; font-weight: 600; color: var(--color-text); white-space: nowrap;">₹{{ number_format($related->starting_price) }}</span>
+                    </div>
+                </div>
+            </a>
+            <button onclick="quickAddToCart(event, {{ $related->id }}, '{{ $related->variants->first()->size ?? '' }}')" 
+                    style="width: 100%; padding: 10px; background: #000; color: #fff; border: none; border-radius: 8px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: all 0.3s;"
+                    onmouseover="this.style.background='#333'" onmouseout="this.style.background='#000'">
+                Add to Bag
+            </button>
+        </div>
         @endforeach
     </div>
 </div>
@@ -1465,6 +1493,50 @@
         .finally(() => {
             btn.disabled = false;
             btn.innerHTML = "Add Collection to Bag";
+        });
+    }
+
+    function quickAddToCart(e, id, size) {
+        const btn = e.currentTarget;
+        const originalText = btn.innerHTML;
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+
+        fetch('{{ route("cart.add") }}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            body: JSON.stringify({
+                id: id,
+                quantity: 1,
+                size: size
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if(data.success) {
+                const toast = document.getElementById('toast');
+                toast.innerText = 'Added to Bag';
+                toast.style.opacity = '1';
+                setTimeout(() => toast.style.opacity = '0', 2500);
+                
+                const cartBadge = document.querySelector('.cart-count'); 
+                if(cartBadge) {
+                    cartBadge.innerText = data.cartCount;
+                    cartBadge.style.display = 'flex';
+                }
+            } else {
+                alert(data.message || 'Error adding to cart');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        })
+        .finally(() => {
+            btn.disabled = false;
+            btn.innerHTML = originalText;
         });
     }
 </script>
