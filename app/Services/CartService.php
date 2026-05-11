@@ -22,9 +22,9 @@ class CartService
             $item['line_subtotal'] = $item['price'] * $item['quantity'];
             $item['line_savings'] = 0;
             $item['pack_offer_applied'] = false;
+            $item['consumed_qty_for_pack'] = 0; 
             
             // Check for Pack (Volume) Deals first as they take priority
-            $packApplied = false;
             if (isset($item['type']) && $item['type'] == 'product') {
                 $product = Product::find($item['product_id']);
                 if ($product) {
@@ -54,18 +54,19 @@ class CartService
                             $item['line_savings'] += $lineSavings;
                             $item['pack_offer_applied'] = true;
                             $item['pack_offer_text'] = "Volume Deal Applied: {$packQty} for ₹" . number_format($packPrice, 0);
-                            $packApplied = true;
+                            $item['consumed_qty_for_pack'] = $numPacks * $packQty;
                         }
                     }
                 }
             }
 
-            // Apply individual product coupons ONLY if no pack deal is applied
-            if (!$packApplied && isset($item['coupon']) && $item['coupon']) {
+            // Apply individual product coupons ONLY to the quantity NOT covered by a pack deal
+            $remainingQty = $item['quantity'] - ($item['consumed_qty_for_pack'] ?? 0);
+            if ($remainingQty > 0 && isset($item['coupon']) && $item['coupon']) {
                 $discountVal = $item['coupon']['type'] == 'percentage' 
                     ? $item['price'] * ($item['coupon']['value'] / 100) 
                     : $item['coupon']['value'];
-                $item['line_savings'] += $discountVal * $item['quantity'];
+                $item['line_savings'] += $discountVal * $remainingQty;
             }
 
             $subtotal += $item['line_subtotal'];
@@ -73,7 +74,7 @@ class CartService
         }
         unset($item);
 
-        // 2. Calculate Pool savings
+        // 2. Calculate Pool savings - using only unconsumed quantity
         $activePools = Bundle::where('status', 'active')->where('type', 'pool')->with('products')->get();
         foreach ($activePools as $pool) {
             $poolProductIds = $pool->products->pluck('id')->toArray();
@@ -81,7 +82,7 @@ class CartService
 
             foreach ($cart as $item) {
                 if (isset($item['type']) && $item['type'] == 'product' && in_array($item['product_id'], $poolProductIds)) {
-                    $qualifyingQty += $item['quantity'];
+                    $qualifyingQty += ($item['quantity'] - ($item['consumed_qty_for_pack'] ?? 0));
                 }
             }
 

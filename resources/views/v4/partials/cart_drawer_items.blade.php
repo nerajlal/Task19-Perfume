@@ -15,6 +15,14 @@
                         @if(isset($item['pack_offer_applied']) && $item['pack_offer_applied'])
                             <span class="v4-drawer-offer-badge">{{ $item['pack_offer_text'] }}</span>
                         @endif
+                        
+                        @if(isset($item['coupon']) && $item['coupon'])
+                            <div class="v4-drawer-coupon-notice">
+                                <i class="fa-solid fa-tag"></i> 
+                                <strong>{{ $item['coupon']->code }}</strong>: 
+                                {{ $item['coupon']->type == 'percentage' ? number_format($item['coupon']->value) . '%' : '₹' . number_format($item['coupon']->value) }} OFF
+                            </div>
+                        @endif
                     </div>
                     
                     <div class="v4-drawer-item-footer">
@@ -80,7 +88,23 @@
     .v4-drawer-meta { display: flex; flex-direction: column; gap: 4px; }
     .v4-drawer-item-variant { font-size: 10px; color: var(--aj-gray); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
     
-    .v4-drawer-offer-badge { font-size: 9px; font-weight: 800; color: #10B981; background: #e6f7f0; padding: 2px 8px; border-radius: 4px; align-self: flex-start; text-transform: uppercase; }
+    .v4-drawer-offer-badge { font-size: 9px; font-weight: 800; color: #10B981; background: #e6f7f0; padding: 2px 8px; border-radius: 4px; align-self: flex-start; text-transform: uppercase; margin-bottom: 2px; }
+    
+    .v4-drawer-coupon-notice { 
+        font-size: 9px; 
+        font-weight: 700; 
+        color: #8a6d3b; 
+        background: #fdf8ef; 
+        border: 1px dashed var(--aj-gold); 
+        padding: 4px 8px; 
+        border-radius: 4px; 
+        display: flex; 
+        align-items: center; 
+        gap: 6px; 
+        margin-top: 5px;
+    }
+    .v4-drawer-coupon-notice i { font-size: 10px; color: var(--aj-gold); }
+    .v4-drawer-coupon-notice strong { color: var(--aj-dark); }
     
     .v4-drawer-item-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 15px; }
     
