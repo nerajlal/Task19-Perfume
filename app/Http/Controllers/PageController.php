@@ -159,6 +159,16 @@ class PageController extends Controller
         return view($view, compact('bundle', 'relatedBundles'));
     }
 
+    public function ajmalCombos()
+    {
+        return $this->handleCombos('v4.combos');
+    }
+
+    public function ajmalCombo(Request $request)
+    {
+        return $this->handleCombo($request, 'v4.bundle-main');
+    }
+
     public function product(Request $request)
     {
         return $this->handleProduct($request, 'nurah.product-main');
@@ -216,6 +226,11 @@ class PageController extends Controller
     public function v3Checkout()
     {
         return $this->handleCheckout('v3.checkout');
+    }
+
+    public function ajmalCheckout()
+    {
+        return $this->handleCheckout('v4.checkout');
     }
 
     private function handleCheckout($view)

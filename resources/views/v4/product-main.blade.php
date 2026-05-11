@@ -3,8 +3,16 @@
 @section('title', $product->title . ' | Task19 Luxury Fragrance')
 
 @section('content')
-    <div class="container" style="margin-top: 50px;">
-        <div class="a-product-detail-layout">
+    <div class="container" style="margin-top: 30px;">
+        <nav class="v4-breadcrumb">
+            <a href="{{ route('v4.home') }}">Home</a>
+            <i class="fa-solid fa-chevron-right"></i>
+            <a href="{{ route('v4.all-products') }}">Shop</a>
+            <i class="fa-solid fa-chevron-right"></i>
+            <span>{{ $product->title }}</span>
+        </nav>
+
+        <div class="a-product-detail-layout" style="margin-top: 30px;">
             <!-- Left: Images -->
             <div class="a-product-media">
                 <div class="a-main-image-container">
@@ -23,7 +31,10 @@
                     @endif
                     @foreach($product->images as $img)
                         @php $imgUrl = (strpos($img->path, 'http') === 0) ? $img->path : Storage::url($img->path); @endphp
-                        <img src="{{ $imgUrl }}" class="a-thumb" onclick="setMainImage(this.src, this)" onerror="this.src='{{ asset('images/g-load.webp') }}'">
+                        {{-- Only show if it's not the main image to avoid duplicates --}}
+                        @if($imgUrl != $product->main_image_url)
+                            <img src="{{ $imgUrl }}" class="a-thumb" onclick="setMainImage(this.src, this)" onerror="this.src='{{ asset('images/g-load.webp') }}'">
+                        @endif
                     @endforeach
                 </div>
             </div>
@@ -41,15 +52,35 @@
                     </div>
                 </div>
 
+                <div class="v4-delivery-urgency">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                    <span>Get it by <strong>{{ now()->addDays(2)->format('l, M jS') }}</strong> if you order within 4 hours.</span>
+                </div>
+
                 <div class="a-detail-description">
                     <p>{{ $product->description ?? 'Experience the essence of luxury with this exquisite fragrance. Designed for long-lasting appeal and perfect for any occasion.' }}</p>
                 </div>
+
+                <!-- Combo Promo Box -->
+                @if(isset($bundle))
+                <div class="v4-deal-promo">
+                    <div class="v4-deal-content">
+                        <i class="fa-solid fa-layer-group"></i>
+                        <span>Save more with the <strong>{{ $bundle->title }}</strong> combo</span>
+                    </div>
+                    <a href="{{ route('v4.combo', ['id' => $bundle->id]) }}" class="v4-deal-link">
+                        View Combo <i class="fa-solid fa-chevron-right"></i>
+                    </a>
+                </div>
+                @endif
 
                 <div class="a-detail-variants">
                     <h3>Select Size</h3>
                     <div class="a-variant-options">
                         @foreach($product->variants as $variant)
                             <button class="a-variant-btn {{ $loop->first ? 'active' : '' }}" 
+                                    data-size="{{ $variant->size }}"
+                                    data-variant-id="{{ $variant->id }}"
                                     onclick="selectVariant(this, {{ $variant->price }}, '{{ $variant->size }}')">
                                 {{ $variant->size }}
                             </button>
@@ -67,6 +98,52 @@
                         <i class="fa-solid fa-bag-shopping"></i> Add to Bag
                     </button>
                 </div>
+
+                <div class="v4-payment-promo">
+                    or 4 interest-free payments of <strong>₹{{ number_format($product->starting_price / 4, 0) }}</strong> with <img src="https://cdn.tabby.ai/assets/logo.svg" alt="tabby" style="height: 14px; vertical-align: middle; margin-left: 5px;">
+                </div>
+
+                <!-- Concentration Guide -->
+                <div class="v4-conc-guide">
+                    <div class="conc-step {{ str_contains(strtolower($product->type), 'toilette') ? 'active' : '' }}">
+                        <span class="c-name">EDT</span>
+                        <span class="c-desc">5-15% Oil</span>
+                    </div>
+                    <div class="conc-step {{ (str_contains(strtolower($product->type), 'parfum') && !str_contains(strtolower($product->type), 'extrait')) || str_contains(strtolower($product->olfactory_family), 'edp') ? 'active' : '' }}">
+                        <span class="c-name">EDP</span>
+                        <span class="c-desc">15-20% Oil</span>
+                    </div>
+                    <div class="conc-step {{ str_contains(strtolower($product->type), 'extrait') || str_contains(strtolower($product->type), 'oil') || str_contains(strtolower($product->type), 'attar') ? 'active' : '' }}">
+                        <span class="c-name">Extrait</span>
+                        <span class="c-desc">20-40% Oil</span>
+                    </div>
+                </div>
+
+                <!-- Special Volume Deals (Pack Of) -->
+                @if(isset($packBundles) && $packBundles->count() > 0)
+                <div class="v4-volume-deals">
+                    <h3>Special Volume Deals</h3>
+                    <div class="v4-deals-grid">
+                        @foreach($packBundles as $pb)
+                            @php 
+                                $pb_prod = $pb->products->first();
+                                $pb_variant = $pb_prod ? $pb_prod->variants->firstWhere('id', $pb_prod->pivot->product_variant_id) : null;
+                            @endphp
+                            @if($pb_prod)
+                            <div class="v4-deal-card">
+                                <div class="v4-deal-info">
+                                    <span class="v4-deal-title">Buy {{ $pb_prod->pivot->quantity }} @if($pb_variant) ({{ $pb_variant->size }}) @endif</span>
+                                    <span class="v4-deal-save">Save ₹{{ number_format(($pb_variant ? $pb_variant->price : $pb_prod->starting_price) * $pb_prod->pivot->quantity - $pb->total_price, 0) }}</span>
+                                </div>
+                                <button onclick="addPackToCart({{ $pb->id }}, event)" class="v4-deal-add-btn">
+                                    Add ₹{{ number_format($pb->total_price, 0) }}
+                                </button>
+                            </div>
+                            @endif
+                        @endforeach
+                    </div>
+                </div>
+                @endif
 
                 <div class="a-scent-profile">
                     <h3>Fragrance Pyramid</h3>
@@ -95,18 +172,27 @@
                     </div>
                 </div>
 
-                <div class="a-detail-features">
-                    <div class="a-feature-item">
-                        <i class="fa-solid fa-truck-fast"></i>
-                        <span>Free Express Delivery</span>
+                <div class="v4-trust-badges">
+                    <div class="v4-trust-item">
+                        <div class="v4-trust-icon"><i class="fa-solid fa-truck-fast"></i></div>
+                        <div class="v4-trust-text">
+                            <strong>FREE EXPRESS SHIPPING</strong>
+                            <span>Delivery within 2-3 business days</span>
+                        </div>
                     </div>
-                    <div class="a-feature-item">
-                        <i class="fa-solid fa-rotate-left"></i>
-                        <span>Easy 7-Day Returns</span>
+                    <div class="v4-trust-item">
+                        <div class="v4-trust-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                        <div class="v4-trust-text">
+                            <strong>100% AUTHENTIC</strong>
+                            <span>Directly from Task19 Fragrance House</span>
+                        </div>
                     </div>
-                    <div class="a-feature-item">
-                        <i class="fa-solid fa-shield-check"></i>
-                        <span>100% Authentic Product</span>
+                    <div class="v4-trust-item">
+                        <div class="v4-trust-icon"><i class="fa-solid fa-arrows-rotate"></i></div>
+                        <div class="v4-trust-text">
+                            <strong>7-DAY RETURNS</strong>
+                            <span>Easy & hassle-free return policy</span>
+                        </div>
                     </div>
                 </div>
 
@@ -114,6 +200,31 @@
                     <i class="fa-solid fa-eye"></i>
                     <span>{{ rand(100, 500) }} people are viewing this right now</span>
                 </div>
+
+                <!-- Pool Deal Box -->
+                @if(isset($poolBundles) && $poolBundles->count() > 0)
+                    @php $pool = $poolBundles->first(); @endphp
+                    <div class="v4-pool-box">
+                        <div class="v4-pool-header">
+                            <span class="v4-pool-label">MIX & MATCH OFFER</span>
+                            <h4>Buy any {{ $pool->min_quantity }} & get ₹{{ number_format($pool->discount_value, 0) }} off</h4>
+                        </div>
+                        <div class="v4-pool-grid">
+                            @foreach($pool->products->take(4) as $poolProd)
+                                @php $p_variant = $poolProd->variants->first(); @endphp
+                                <div class="v4-pool-item {{ $poolProd->id == $product->id ? 'current' : '' }}">
+                                    <div class="v4-pool-img">
+                                        <img src="{{ $poolProd->main_image_url }}" alt="{{ $poolProd->title }}" onerror="this.src='{{ asset('images/g-load.webp') }}'">
+                                        <button class="v4-pool-quick-add" onclick="quickAddPoolProduct(event, {{ $poolProd->id }}, {{ $p_variant->id ?? 'null' }}, '{{ $p_variant->size ?? '' }}')">
+                                            <i class="fa-solid fa-plus"></i>
+                                        </button>
+                                    </div>
+                                    <span class="v4-pool-name">{{ $poolProd->title }}</span>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                @endif
 
                 <div class="a-product-tabs" style="margin-top: 40px;">
                     <div class="a-tab-item active" onclick="toggleTab(this, 'desc')">Description</div>
@@ -156,6 +267,9 @@
             display: flex;
             flex-direction: column;
             gap: 20px;
+            position: sticky;
+            top: 120px;
+            align-self: start;
         }
 
         .a-main-image-container {
@@ -232,15 +346,35 @@
         .a-variant-options { display: flex; gap: 12px; }
         .a-variant-btn {
             padding: 12px 25px;
-            border: 1.5px solid var(--border);
+            border: 2px solid #eee;
             background: #fff;
             border-radius: 8px;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
             transition: 0.3s;
+            color: var(--aj-gray);
+            position: relative;
         }
 
-        .a-variant-btn.active { border-color: var(--primary); background: var(--primary); color: #fff; }
+        .a-variant-btn.active { 
+            border-color: var(--aj-gold); 
+            background: #fffaf0; 
+            color: var(--aj-gold); 
+            box-shadow: 0 5px 15px rgba(176, 141, 87, 0.1);
+        }
+        
+        .a-variant-btn.active::after {
+            content: '\f058';
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #fff;
+            color: var(--aj-gold);
+            font-size: 14px;
+            border-radius: 50%;
+        }
 
         .a-detail-actions {
             display: flex;
@@ -302,15 +436,45 @@
             border-top: 1px solid var(--border);
         }
 
-        .a-feature-item {
-            display: flex;
-            align-items: center;
+        .v4-trust-badges {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
             gap: 15px;
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--text-main);
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid var(--aj-border);
         }
-        .a-feature-item i { color: var(--aj-gold); font-size: 18px; }
+
+        .v4-trust-item {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            padding: 15px;
+            background: #fcfcfc;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+
+        .v4-trust-item:hover { background: #fffaf0; }
+
+        .v4-trust-icon { font-size: 20px; color: var(--aj-gold); }
+        
+        .v4-trust-text strong { 
+            display: block; 
+            font-size: 10px; 
+            font-weight: 900; 
+            color: var(--aj-dark); 
+            letter-spacing: 1px; 
+            margin-bottom: 4px; 
+        }
+        
+        .v4-trust-text span { 
+            font-size: 10px; 
+            color: var(--aj-gray); 
+            font-weight: 600; 
+            line-height: 1.4; 
+            display: block;
+        }
 
         /* Scent Profile */
         .a-scent-profile {
@@ -389,6 +553,55 @@
         .a-sticky-info h4 { font-size: 14px; font-weight: 700; margin-bottom: 2px; }
         .a-sticky-info p { font-size: 16px; font-weight: 800; color: var(--aj-gold); margin: 0; }
         .a-sticky-btn { background: #000; color: #fff; border: none; padding: 12px 25px; border-radius: 4px; font-weight: 700; text-transform: uppercase; font-size: 12px; }
+
+        /* V4 Deal Styles */
+        .v4-deal-promo { background: #fdfaf5; border: 1px solid #eee; border-radius: 8px; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        .v4-deal-content { display: flex; align-items: center; gap: 15px; font-size: 14px; }
+        .v4-deal-content i { color: var(--aj-gold); font-size: 18px; }
+        .v4-deal-link { font-size: 11px; font-weight: 800; text-transform: uppercase; color: var(--aj-gold); text-decoration: none; display: flex; align-items: center; gap: 8px; }
+
+        .v4-volume-deals { margin-top: 40px; margin-bottom: 40px; }
+        .v4-volume-deals h3 { font-size: 14px; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 20px; font-weight: 800; }
+        .v4-deals-grid { display: flex; flex-direction: column; gap: 12px; }
+        .v4-deal-card { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; border: 1.5px dashed var(--aj-border); border-radius: 8px; }
+        .v4-deal-info { display: flex; flex-direction: column; gap: 4px; }
+        .v4-deal-title { font-size: 14px; font-weight: 700; color: var(--aj-dark); }
+        .v4-deal-save { font-size: 12px; font-weight: 800; color: #10B981; }
+        .v4-deal-add-btn { background: #000; color: #fff; border: none; padding: 10px 20px; border-radius: 4px; font-weight: 700; font-size: 12px; cursor: pointer; transition: 0.3s; }
+        .v4-deal-add-btn:hover { background: var(--aj-gold); }
+
+        .v4-pool-box { margin-top: 40px; background: #fff; border: 2px solid var(--aj-gold); border-radius: 12px; padding: 20px; }
+        .v4-pool-header { text-align: center; margin-bottom: 20px; }
+        .v4-pool-label { font-size: 10px; font-weight: 800; color: var(--aj-gold); letter-spacing: 2px; text-transform: uppercase; }
+        .v4-pool-header h4 { font-size: 16px; font-weight: 800; color: var(--aj-dark); margin-top: 5px; }
+        .v4-pool-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; }
+        .v4-pool-item { text-align: center; }
+        .v4-pool-img { aspect-ratio: 1; background: #f9f9f9; border-radius: 8px; overflow: hidden; position: relative; margin-bottom: 8px; border: 1px solid #eee; }
+        .v4-pool-item.current .v4-pool-img { border: 2px solid var(--aj-gold); }
+        .v4-pool-img img { width: 100%; height: 100%; object-fit: cover; }
+        .v4-pool-quick-add { position: absolute; bottom: 5px; right: 5px; width: 24px; height: 24px; border-radius: 50%; background: #000; color: #fff; border: none; display: flex; align-items: center; justify-content: center; font-size: 10px; cursor: pointer; transition: 0.3s; }
+        .v4-pool-quick-add:hover { background: var(--aj-gold); }
+        .v4-pool-name { font-size: 10px; font-weight: 600; color: var(--aj-gray); display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+        /* Final Polish Styles */
+        .v4-breadcrumb { display: flex; align-items: center; gap: 10px; font-size: 11px; text-transform: uppercase; font-weight: 700; letter-spacing: 1px; color: var(--aj-gray); }
+        .v4-breadcrumb a { text-decoration: none; color: inherit; transition: 0.3s; }
+        .v4-breadcrumb a:hover { color: var(--aj-gold); }
+        .v4-breadcrumb i { font-size: 8px; opacity: 0.5; }
+
+        .v4-delivery-urgency { display: flex; align-items: center; gap: 12px; font-size: 13px; color: #E67E22; margin-bottom: 25px; font-weight: 600; }
+        .v4-delivery-urgency i { font-size: 16px; }
+
+        .v4-payment-promo { font-size: 13px; color: var(--aj-gray); margin-bottom: 30px; padding: 10px 0; border-top: 1px solid #f9f9f9; }
+
+        .v4-conc-guide { display: flex; border: 1px solid #eee; border-radius: 8px; overflow: hidden; margin-top: 30px; margin-bottom: 30px; }
+        .conc-step { flex: 1; padding: 12px; text-align: center; display: flex; flex-direction: column; gap: 4px; position: relative; background: #fff; transition: 0.3s; }
+        .conc-step:not(:last-child) { border-right: 1px solid #eee; }
+        .conc-step.active { background: #fffaf0; }
+        .conc-step.active::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 3px; background: var(--aj-gold); }
+        .c-name { font-weight: 900; font-size: 13px; color: var(--aj-dark); }
+        .c-desc { font-size: 10px; color: var(--aj-gray); font-weight: 600; }
+        .conc-step.active .c-name { color: var(--aj-gold); }
     </style>
 
     <script>
@@ -422,19 +635,107 @@
 
         function handleAddToCart() {
             const btns = [document.getElementById('addToCartBtn'), document.querySelector('.a-sticky-btn')];
+            const size = document.querySelector('.a-variant-btn.active')?.dataset.size || '';
+            const qty = document.getElementById('productQty').value;
+            
             btns.forEach(btn => {
+                if(!btn) return;
                 const originalHtml = btn.innerHTML;
                 btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
                 btn.disabled = true;
-                setTimeout(() => {
-                    btn.innerHTML = '<i class="fa-solid fa-check"></i>';
-                    btn.style.background = '#10B981';
-                    setTimeout(() => {
-                        btn.innerHTML = originalHtml;
-                        btn.style.background = '';
-                        btn.disabled = false;
-                    }, 2000);
-                }, 1000);
+
+                $.ajax({
+                    url: "{{ route('cart.add') }}",
+                    method: "POST",
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        id: "{{ $product->id }}",
+                        quantity: qty,
+                        size: size
+                    },
+                    success: function(response) {
+                        if(response.success) {
+                            $('#cart-count').text(response.cartCount);
+                            btn.innerHTML = '<i class="fa-solid fa-check"></i>';
+                            btn.style.background = '#10B981';
+                            
+                            // Open Cart Drawer
+                            if(typeof toggleCart === 'function') {
+                                setTimeout(() => {
+                                    toggleCart();
+                                }, 500);
+                            }
+
+                            setTimeout(() => {
+                                btn.innerHTML = originalHtml;
+                                btn.style.background = '';
+                                btn.disabled = false;
+                            }, 2000);
+                        }
+                    }
+                });
+            });
+        }
+
+        function addPackToCart(bundleId, event) {
+            const btn = event.currentTarget;
+            const originalHtml = btn.innerHTML;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
+            btn.disabled = true;
+
+            $.ajax({
+                url: "{{ route('cart.add') }}",
+                method: "POST",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    id: bundleId,
+                    quantity: 1,
+                    type: 'bundle'
+                },
+                success: function(response) {
+                    if(response.success) {
+                        $('#cart-count').text(response.cartCount);
+                        btn.innerHTML = '<i class="fa-solid fa-check"></i>';
+                        btn.style.background = '#10B981';
+                        setTimeout(() => {
+                            btn.innerHTML = originalHtml;
+                            btn.style.background = '';
+                            btn.disabled = false;
+                        }, 2000);
+                    }
+                }
+            });
+        }
+
+        function quickAddPoolProduct(event, productId, variantId, size) {
+            event.preventDefault();
+            const btn = event.currentTarget;
+            const originalHtml = btn.innerHTML;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
+            btn.disabled = true;
+
+            $.ajax({
+                url: "{{ route('cart.add') }}",
+                method: "POST",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    id: productId,
+                    quantity: 1,
+                    size: size,
+                    variant_id: variantId
+                },
+                success: function(response) {
+                    if(response.success) {
+                        $('#cart-count').text(response.cartCount);
+                        btn.innerHTML = '<i class="fa-solid fa-check"></i>';
+                        btn.style.background = '#10B981';
+                        setTimeout(() => {
+                            btn.innerHTML = originalHtml;
+                            btn.style.background = '';
+                            btn.disabled = false;
+                        }, 2000);
+                    }
+                }
             });
         }
     </script>

@@ -119,4 +119,21 @@ class CartService
             ->orderByDesc('value')
             ->first();
     }
+
+    /**
+     * Get total item count in cart
+     */
+    public static function getCount()
+    {
+        $count = 0;
+        if (Auth::check()) {
+            $count = \App\Models\Cart::where('user_id', Auth::id())->sum('quantity');
+        } else {
+            $cart = session()->get('cart', []);
+            foreach ($cart as $item) {
+                $count += $item['quantity'] ?? 0;
+            }
+        }
+        return $count;
+    }
 }

@@ -11,6 +11,7 @@
         href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Dancing+Script:wght@700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
         :root {
             --aj-gold: #B08D57;
@@ -134,6 +135,24 @@
             text-decoration: none;
             color: var(--aj-dark);
             font-size: 18px;
+            position: relative;
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -8px;
+            right: -10px;
+            background: var(--aj-gold);
+            color: #fff;
+            font-size: 10px;
+            font-weight: 800;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #fff;
         }
 
         .menu-toggle {
@@ -332,8 +351,9 @@
                 <div class="header-right">
                     <a href="#" class="action-item"><i class="fa-regular fa-user"></i></a>
                     <a href="#" class="action-item"><i class="fa-regular fa-heart"></i></a>
-                    <a href="#" class="action-item">
+                    <a href="javascript:void(0)" onclick="toggleCart()" class="action-item">
                         <i class="fa-solid fa-bag-shopping"></i>
+                        <span class="cart-badge" id="cart-count">{{ \App\Services\CartService::getCount() }}</span>
                     </a>
                 </div>
             </div>
@@ -415,19 +435,38 @@
             text-transform: uppercase;
         }
 
-        .drawer-overlay {
+    <div class="drawer-overlay" id="drawerOverlay" onclick="toggleMenu()"></div>
+
+    <!-- Cart Drawer -->
+    <div class="cart-drawer" id="cartDrawer">
+        <div class="drawer-header">
+            <div class="logo">YOUR <span>BAG</span></div>
+            <button onclick="toggleCart()" style="background:none; border:none; font-size:24px;"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div id="cartDrawerContent">
+            <!-- Loaded via AJAX -->
+        </div>
+    </div>
+    <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+
+    <style>
+        .cart-drawer {
             position: fixed;
             top: 0;
-            left: 0;
-            width: 100%;
+            right: -400px;
+            width: 400px;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 1999;
-            display: none;
+            background: #fff;
+            z-index: 2005;
+            transition: 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
         }
-
-        .drawer-overlay.open {
-            display: block;
+        .cart-drawer.open { right: 0; }
+        .cart-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 2004; display: none; }
+        .cart-overlay.open { display: block; }
+        @media (max-width: 450px) { .cart-drawer { width: 100%; right: -100%; } }
         }
     </style>
 
@@ -435,6 +474,29 @@
         function toggleMenu() {
             document.getElementById('mobileDrawer').classList.toggle('open');
             document.getElementById('drawerOverlay').classList.toggle('open');
+        }
+
+        function toggleCart() {
+            const drawer = document.getElementById('cartDrawer');
+            const overlay = document.getElementById('cartOverlay');
+            
+            if(!drawer.classList.contains('open')) {
+                fetchCartDrawer();
+            }
+            
+            drawer.classList.toggle('open');
+            overlay.classList.toggle('open');
+        }
+
+        function fetchCartDrawer() {
+            $.ajax({
+                url: "{{ route('cart.fetch') }}",
+                method: "GET",
+                data: { theme: 'v4' },
+                success: function(html) {
+                    $('#cartDrawerContent').html(html);
+                }
+            });
         }
     </script>
 

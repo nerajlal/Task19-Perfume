@@ -223,6 +223,10 @@ Route::prefix('v4')->name('v4.')->group(function () {
     Route::get('/collections', [PageController::class, 'ajmalCollection'])->name('collection');
     Route::get('/all-products', [PageController::class, 'ajmalAllProducts'])->name('all-products');
     Route::get('/product', [PageController::class, 'ajmalProduct'])->name('product');
+    Route::get('/combos', [PageController::class, 'ajmalCombos'])->name('combos');
+    Route::get('/combo', [PageController::class, 'ajmalCombo'])->name('combo');
+    Route::get('/cart', [App\Http\Controllers\CartController::class, 'ajmalCart'])->name('cart');
+    Route::get('/checkout', [PageController::class, 'ajmalCheckout'])->name('checkout');
 });
 
 // Super Admin Routes (Public for Verification)
