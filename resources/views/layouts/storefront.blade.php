@@ -8,6 +8,34 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <style>
+        .social-proof-tag {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(4px);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 9px;
+            font-weight: 700;
+            color: #000;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            z-index: 2;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            transition: all 0.4s ease;
+        }
+        .product-card:hover .social-proof-tag, .v-combo-card:hover .social-proof-tag {
+            transform: translateX(-50%) translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+        .social-proof-tag i { color: #f59e0b; font-size: 10px; }
+    </style>
 </head>
 <body>
     <div class="sidebar-overlay"></div>

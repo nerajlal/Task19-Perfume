@@ -7,6 +7,10 @@
             <img src="{{ $product->main_image_url ?? asset('images/g-load.webp') }}" 
                  onerror="this.src='{{ asset('images/g-load.webp') }}'"
                  alt="{{ $product->title }}">
+            <div class="social-proof-tag">
+                <i class="fa-solid fa-crown"></i>
+                <span>{{ rand(30, 120) }} sold this month</span>
+            </div>
         </a>
         <button class="v-quick-add-overlay" onclick="quickAdd({{ $product->id }}, '{{ $product->variants->first()->size ?? '' }}', {{ $product->variants->first()->id ?? 'null' }})">
             <i class="fa-solid fa-cart-plus"></i> QUICK ADD

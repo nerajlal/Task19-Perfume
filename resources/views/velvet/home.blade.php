@@ -70,6 +70,10 @@
             <img src="{{ $bundle->image ? asset('storage/' . $bundle->image) : asset('images/g-load.webp') }}" 
                  onerror="this.src='{{ asset('images/g-load.webp') }}'"
                  alt="{{ $bundle->title }}">
+            <div class="social-proof-tag">
+                <i class="fa-solid fa-gift"></i>
+                <span>{{ rand(10, 45) }} gifted recently</span>
+            </div>
         </div>
         <div class="v-combo-info">
             <span class="v-family" style="color: var(--accent-color);">Hand-Picked Set</span>

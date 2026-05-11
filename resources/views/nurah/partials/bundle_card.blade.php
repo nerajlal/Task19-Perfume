@@ -10,6 +10,10 @@
             }
         @endphp
         <img src="{{ $imagePath }}" alt="{{ $bundle->title }}" onerror="this.src='{{ asset('images/g-load.webp') }}'">
+        <div class="social-proof-tag">
+            <i class="fa-solid fa-shopping-bag"></i>
+            <span>{{ rand(20, 60) }} bundles grabbed recently</span>
+        </div>
         <div style="position: absolute; top: 0.5rem; right: 0.5rem; background: var(--accent-color); color: var(--primary-color); padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 700;">
             {{ $bundle->type == 'pack' ? 'VOLUME DEAL' : 'COMBO SAVINGS' }}
         </div>

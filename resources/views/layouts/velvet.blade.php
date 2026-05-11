@@ -7,6 +7,37 @@
     <link rel="stylesheet" href="{{ asset('css/velvet.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <style>
+        .social-proof-tag {
+            position: absolute;
+            bottom: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(4px);
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 9px;
+            font-weight: 700;
+            color: #1a1a1a;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            z-index: 5;
+            border: 1px solid rgba(0, 0, 0, 0.03);
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+        }
+        .v-card:hover .social-proof-tag, .v-combo-card:hover .social-proof-tag {
+            transform: translateX(-50%) translateY(-4px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+            background: #fff;
+        }
+        .social-proof-tag i { color: #c5a059; font-size: 10px; }
+    </style>
 </head>
 <body>
     <header class="velvet-header">
