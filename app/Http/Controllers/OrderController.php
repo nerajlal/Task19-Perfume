@@ -183,12 +183,12 @@ class OrderController extends Controller
                 'bundle_id' => $details['bundle_id'] ?? null,
                 'name' => $details['name'],
                 'quantity' => $details['quantity'],
-                'price' => $details['price'], // This is now the Discounted Price
+                'price' => $details['price'], 
                 'total' => $details['price'] * $details['quantity'],
                 'size' => $details['size'] ?? null,
                 'type' => $details['type'] ?? 'product',
                 'options' => [
-                    'coupon_code' => $details['coupon_code'] ?? null,
+                    'coupon_code' => isset($details['coupon']) ? $details['coupon']->code : (isset($details['coupon_code']) ? $details['coupon_code'] : null),
                     'saved_amount' => $details['saved_amount'] ?? 0,
                     'original_price' => $details['original_price'] ?? null
                 ]
@@ -236,12 +236,9 @@ class OrderController extends Controller
         // Check for applied coupons in the cart items we just processed
         $usedDiscountIds = [];
         foreach($cart as $item) {
-            if(isset($item['coupon_code']) && $item['coupon_code']) {
-                 // We need to find the ID. Since we didn't store ID in cart options, we can re-fetch or rely on the code.
-                 // Better to finding by code to be safe, or if we had stored ID. 
-                 // Since getActiveCoupon returns a Discount model, let's ideally store the ID in step 2.
-                 // But for now, let's look up by code since code is unique.
-                 $usedDiscountIds[$item['coupon_code']] = true; 
+            $code = isset($item['coupon']) ? $item['coupon']->code : (isset($item['coupon_code']) ? $item['coupon_code'] : null);
+            if($code) {
+                 $usedDiscountIds[$code] = true; 
             }
         }
 

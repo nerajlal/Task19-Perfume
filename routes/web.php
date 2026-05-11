@@ -200,6 +200,23 @@ Route::prefix('v2')->name('velvet.')->group(function () {
     Route::get('/product/{id}', [PageController::class, 'velvetProduct'])->name('product');
 });
 
+// v3 Backup Theme Routes
+Route::prefix('v3')->name('v3.')->group(function () {
+    Route::get('/', [PageController::class, 'v3Home'])->name('home');
+    Route::get('/collections', [PageController::class, 'v3Collection'])->name('collection');
+    Route::get('/all-products', [PageController::class, 'v3AllProducts'])->name('all-products');
+    Route::get('/combos', [PageController::class, 'v3Combos'])->name('combos');
+    Route::get('/combo', [PageController::class, 'v3Combo'])->name('combo');
+    Route::get('/product', [PageController::class, 'v3Product'])->name('product');
+    Route::get('/cart', [App\Http\Controllers\CartController::class, 'v3Index'])->name('cart');
+    Route::get('/checkout', [PageController::class, 'v3Checkout'])->name('checkout');
+    Route::view('/about', 'v3.about')->name('about');
+    Route::view('/contact', 'v3.contact')->name('contact');
+    Route::view('/shipping-policy', 'v3.shipping-policy')->name('shipping-policy');
+    Route::view('/return-policy', 'v3.return-policy')->name('return-policy');
+    Route::view('/terms-of-service', 'v3.terms-of-service')->name('terms-of-service');
+});
+
 // Super Admin Routes (Public for Verification)
 Route::prefix('su-admin')->name('super_admin.')->group(function () {
     Route::get('/', [App\Http\Controllers\SuperAdmin\DashboardController::class, 'index'])->name('dashboard');

@@ -1,6 +1,6 @@
-@extends('nurah.layouts.app')
+@extends('v3.layouts.app')
 
-@section('title', 'Contact Us - xxxx Perfumes')
+@section('title', 'Contact Us - Task19 Perfumes')
 
 @push('styles')
 <style>

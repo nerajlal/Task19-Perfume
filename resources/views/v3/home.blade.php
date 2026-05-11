@@ -1,4 +1,4 @@
-@extends('nurah.layouts.app')
+@extends('v3.layouts.app')
 
 @section('title', 'India\'s First Perfume Bar')
 
@@ -33,6 +33,13 @@
     .product-price span { font-weight: 500; color: var(--text-light); font-size: 12px; margin-right: 5px; text-transform: uppercase; letter-spacing: 1px; }
     .view-all-btn { display: block; width: max-content; margin: 50px auto 0; padding: 14px 40px; background: transparent; color: var(--black); text-decoration: none; border-radius: 40px; font-weight: 700; font-size: 13px; transition: all 0.3s; border: 2px solid var(--black); text-transform: uppercase; letter-spacing: 1px; }
     .view-all-btn:hover { background: var(--black); color: var(--white); transform: translateY(-2px); }
+    
+    .add-btn { width: 100%; padding: 12px; background: var(--black); color: var(--white); border: none; border-radius: 12px; font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: all 0.3s; margin-top: 15px; }
+    .add-btn:hover { background: var(--gold); transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+    
+    /* Toast Notification */
+    .toast { position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--black); color: var(--white); padding: 12px 24px; border-radius: 25px; font-weight: 600; font-size: 14px; z-index: 2000; opacity: 0; transition: all 0.3s; pointer-events: none; }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
     /* Store Section */
     .store-section { 
@@ -402,7 +409,7 @@
         <div class="slide {{ $key == 0 ? 'active' : '' }}">
             <picture>
                 <source media="(max-width: 768px)" srcset="{{ Storage::url($slider->image_mobile) }}">
-                <img src="{{ Storage::url($slider->image_desktop) }}" alt="{{ $slider->title ?? 'xxxx Perfumes' }}">
+                <img src="{{ Storage::url($slider->image_desktop) }}" alt="{{ $slider->title ?? 'Task19 Perfumes' }}">
             </picture>
         </div>
         @empty
@@ -431,7 +438,7 @@
         <div class="product-grid">
             @forelse($bestsellers as $item)
                 @if($item->product)
-                <a href="{{ route('product', ['id' => $item->product->id]) }}" class="product-card">
+                <a href="{{ route('v3.product', ['id' => $item->product->id]) }}" class="product-card">
                     <div class="product-image-wrapper">
                         <!-- Create a fresh/new badge logic for 7 days -->
                         @if($item->product->created_at->diffInDays(now()) < 7)
@@ -449,12 +456,13 @@
                     <div class="product-info">
                         <h3 class="product-name">{{ $item->product->title }}</h3>
                         <p class="product-price"><span>From</span> ₹{{ number_format($item->product->starting_price, 0) }}</p>
+                        <button class="add-btn" onclick="event.preventDefault(); addToCart({{ $item->product->id }}, '{{ $item->product->title }}', this, 'product')">Add to Cart</button>
                     </div>
                 </a>
                 @endif
             @empty
                 <!-- Fallback Static Content if DB is empty -->
-                <a href="{{ route('product') }}" class="product-card">
+                <a href="{{ route('v3.product') }}" class="product-card">
                     <div class="product-image-wrapper">
                         <span class="product-badge">New</span>
                         <img src="{{ asset('Images/product-sandal-veer.webp') }}" alt="Sandal Veer" class="product-image">
@@ -465,7 +473,7 @@
                     </div>
                 </a>
                 <!-- ... (keep one or two static items as fallback if desired, or just show nothing) ... -->
-                 <a href="{{ route('product') }}" class="product-card">
+                 <a href="{{ route('v3.product') }}" class="product-card">
                     <div class="product-image-wrapper">
                         <span class="product-badge">New</span>
                          <img src="{{ asset('Images/product-marshmallow-fluff.webp') }}" alt="Sandal Veer" class="product-image">
@@ -477,7 +485,7 @@
                 </a>
             @endforelse
         </div>
-        <a href="/all-products" class="view-all-btn">View All Perfumes</a>
+        <a href="{{ route('v3.all-products') }}" class="view-all-btn">View All Perfumes</a>
     </section>
 
     <!-- Store Section -->
@@ -487,7 +495,7 @@
         <p class="store-subtitle">Find a store near you</p>
         <a href="#" class="store-btn">Locate Stores</a>
         <p class="store-description">
-            xxxx Perfumes is India's pioneering perfume brand offering top-notch, value for money fragrances with exceptional expertise in the art & science of perfumery.
+            Task19 Perfumes is India's pioneering perfume brand offering top-notch, value for money fragrances with exceptional expertise in the art & science of perfumery.
         </p>
     </div>
 
@@ -498,7 +506,7 @@
         </div>
         <div class="collection-grid">
             @forelse($collections as $collection)
-            <a href="{{ route('collection', ['category' => $collection->slug]) }}" class="collection-card">
+            <a href="{{ route('v3.collection', ['category' => $collection->slug]) }}" class="collection-card">
                 <img src="{{ \Illuminate\Support\Facades\Storage::url($collection->image) }}" alt="{{ $collection->name }}" onerror="handleImageError(this)">
                 <div class="collection-overlay">
                     <h3 class="collection-name">{{ $collection->name }}</h3>
@@ -507,28 +515,28 @@
             </a>
             @empty
             <!-- Fallback if empty -->
-            <a href="/collections?category=fresh" class="collection-card">
+            <a href="{{ route('v3.collection', ['category' => 'fresh']) }}" class="collection-card">
                 <img src="{{ asset('Images/category-fresh.webp') }}" alt="Fresh" onerror="handleImageError(this)">
                 <div class="collection-overlay">
                     <h3 class="collection-name">FRESH</h3>
                     <p class="collection-desc">Crisp & Invigorating</p>
                 </div>
             </a>
-            <a href="/collections?category=oriental-woody" class="collection-card">
+            <a href="{{ route('v3.collection', ['category' => 'oriental-woody']) }}" class="collection-card">
                 <img src="{{ asset('Images/category-oriental-woody.webp') }}" alt="Oriental" onerror="handleImageError(this)">
                 <div class="collection-overlay">
                     <h3 class="collection-name">ORIENTAL</h3>
                     <p class="collection-desc">Warm & Spicy</p>
                 </div>
             </a>
-            <a href="/collections?category=floral" class="collection-card">
+            <a href="{{ route('v3.collection', ['category' => 'floral']) }}" class="collection-card">
                 <img src="{{ asset('Images/category-floral.webp') }}" alt="Floral" onerror="handleImageError(this)">
                 <div class="collection-overlay">
                     <h3 class="collection-name">FLORAL</h3>
                     <p class="collection-desc">Soft & Romantic</p>
                 </div>
             </a>
-            <a href="/collections?category=citrus" class="collection-card">
+            <a href="{{ route('v3.collection', ['category' => 'citrus']) }}" class="collection-card">
                 <img src="{{ asset('Images/category-citrus.webp') }}" alt="Citrus" onerror="handleImageError(this)">
                 <div class="collection-overlay">
                     <h3 class="collection-name">CITRUS</h3>
@@ -547,7 +555,7 @@
         </div>
         <div class="product-grid">
             @forelse($bundles as $bundle)
-            <a href="{{ route('combo', ['id' => $bundle->id]) }}" class="product-card">
+            <a href="{{ route('v3.combo', ['id' => $bundle->id]) }}" class="product-card">
                 <div class="product-image-wrapper">
                     <img src="{{ \Illuminate\Support\Facades\Storage::url($bundle->image) }}" alt="{{ $bundle->title }}" class="product-image" onerror="handleImageError(this)">
                     @if($bundle->discount_value > 0)
@@ -559,11 +567,12 @@
                 <div class="product-info">
                     <h3 class="product-name">{{ $bundle->title }}</h3>
                     <p class="product-price">₹{{ number_format($bundle->total_price, 0) }}</p>
+                    <button class="add-btn" onclick="event.preventDefault(); addToCart({{ $bundle->id }}, '{{ $bundle->title }}', this, 'bundle')">Add to Cart</button>
                 </div>
             </a>
             @empty
             <!-- Static Fallback if no bundles -->
-            <a href="{{ route('combos') }}" class="product-card">
+            <a href="{{ route('v3.combos') }}" class="product-card">
                 <div class="product-image-wrapper">
                      <div class="d-flex align-items-center justify-content-center h-100" style="background:#333; color:#fff;">No Bundles Yet</div>
                 </div>
@@ -573,7 +582,7 @@
             </a>
             @endforelse
         </div>
-        <a href="{{ route('combos') }}" class="view-all-btn" style="background: var(--gold);">View All Combos</a>
+        <a href="{{ route('v3.combos') }}" class="view-all-btn" style="background: var(--gold);">View All Combos</a>
     </div>
 
     <!-- Video Section -->
@@ -592,21 +601,21 @@
             <h2 class="section-title">Shop By <em>Gender</em></h2>
         </div>
         <div class="gender-grid">
-            <a href="/collections?gender=for-him" class="gender-card">
+            <a href="{{ route('v3.collection', ['gender' => 'for-him']) }}" class="gender-card">
                 <img src="{{ asset('Images/gender-him.webp') }}" alt="For Him">
                 <div class="gender-overlay">
                     <h3 class="gender-title">For Him</h3>
                 </div>
             </a>
 
-            <a href="/collections?gender=for-her" class="gender-card">
+            <a href="{{ route('v3.collection', ['gender' => 'for-her']) }}" class="gender-card">
                 <img src="{{ asset('Images/gender-her.webp') }}" alt="For Her">
                 <div class="gender-overlay">
                     <h3 class="gender-title">For Her</h3>
                 </div>
             </a>
 
-            <a href="/collections?gender=unisex" class="gender-card">
+            <a href="{{ route('v3.collection', ['gender' => 'unisex']) }}" class="gender-card">
                 <img src="{{ asset('Images/gender-unisex.webp') }}" alt="Unisex">
                 <div class="gender-overlay">
                     <h3 class="gender-title">Unisex</h3>
@@ -665,9 +674,9 @@
         </div>
         <div>
             <h2 class="about-title"><em>Why We Do,</em> What We Do</h2>
-            <p class="about-text">xxxx Perfumes is India's first perfume brand known for <strong>high-quality, long-lasting</strong> fragrances with unparalleled expertise in the art and science of perfumery.</p>
+            <p class="about-text">Task19 Perfumes is India's first perfume brand known for <strong>high-quality, long-lasting</strong> fragrances with unparalleled expertise in the art and science of perfumery.</p>
             <p class="about-text">xxxx perfumes, reformulated with <strong>50% fragrance oil concentration</strong> last longer in tropical weather conditions.</p>
-            <a href="/about" class="about-btn">Learn More</a>
+            <a href="{{ route('v3.about') }}" class="about-btn">Learn More</a>
         </div>
     </div>
 
@@ -738,11 +747,11 @@
             <p class="popup-code-text">USE CODE:</p>
             <p class="popup-code-value">FIRSTSCENT20</p>
         </div>
-        <form class="newsletter-form">
-            <input type="email" placeholder="Enter your email" class="newsletter-input">
-            <button type="submit" class="newsletter-btn">JOIN</button>
         </form>
     </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">Added to cart! 🎉</div>
 
 @endsection
 
@@ -804,7 +813,53 @@
     const alertOverlay = document.getElementById('popupOverlay');
     if(alertOverlay) alertOverlay.addEventListener('click', closePopup);
 
-    const alertOverlay = document.getElementById('popupOverlay');
-    if(alertOverlay) alertOverlay.addEventListener('click', closePopup);
+    function addToCart(id, title, btn, type = 'product') {
+        const originalText = btn.innerHTML;
+        btn.disabled = true;
+        btn.innerHTML = '...';
+
+        fetch('{{ route("cart.add") }}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            body: JSON.stringify({
+                id: id,
+                quantity: 1,
+                type: type
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if(data.success) {
+                const toast = document.getElementById('toast');
+                if(toast) {
+                    toast.textContent = (title || 'Item') + ' added to cart!';
+                    toast.classList.add('show');
+                    setTimeout(() => {
+                        toast.classList.remove('show');
+                    }, 2500);
+                }
+                
+                if(navigator.vibrate) navigator.vibrate(50);
+                
+                const cartBadge = document.querySelector('.cart-count'); 
+                if(cartBadge) {
+                    cartBadge.innerText = data.cartCount;
+                    cartBadge.style.display = 'flex';
+                }
+            } else {
+                alert(data.message || 'Error adding to cart');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        })
+        .finally(() => {
+            btn.disabled = false;
+            btn.innerHTML = originalText;
+        });
+    }
 </script>
 @endpush

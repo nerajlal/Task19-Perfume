@@ -1,4 +1,4 @@
-@extends('nurah.layouts.app')
+@extends('v3.layouts.app')
 
 @section('title', ($title ?? 'Combos & Bundles') . ' - Nurah Perfumes')
 
@@ -173,7 +173,7 @@
         @if($bundles->count() > 0)
         <div class="product-grid">
             @foreach($bundles as $bundle)
-            <a href="{{ route('combo', ['id' => $bundle->id]) }}" class="product-card">
+            <a href="{{ route('v3.combo', ['id' => $bundle->id]) }}" class="product-card">
                 <div class="product-image-wrapper">
                     @if($bundle->discount_value > 0)
                     <span class="product-badge">

@@ -1,6 +1,6 @@
-@extends('nurah.layouts.app')
+@extends('v3.layouts.app')
 
-@section('title', 'About Us - xxxx Perfumes')
+@section('title', 'About Us - Task19 Perfumes')
 <!-- {{ asset('Images/about-store.webp') }} -->
 @push('styles')
 <style>
@@ -145,7 +145,7 @@
             <div class="story-content">
                 <h2>Why We Do, What We Do</h2>
                 <p class="story-text">
-                    xxxx Perfumes was born from a simple yet profound desire: to bring the art of high-quality perfumery to everyone. We believe that a fragrance is more than just a scent; it's a memory, an emotion, and a personal statement.
+                    Task19 Perfumes was born from a simple yet profound desire: to bring the art of high-quality perfumery to everyone. We believe that a fragrance is more than just a scent; it's a memory, an emotion, and a personal statement.
                 </p>
                 <p class="story-text">
                     As India's pioneering perfume bar, we combine traditional expertise with modern science. Our fragrances are crafted with a remarkable <strong>50% fragrance oil concentration</strong>, ensuring they linger on your skin and in the air, perfectly adapted to tropical climates.

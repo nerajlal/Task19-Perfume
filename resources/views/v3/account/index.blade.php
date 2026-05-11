@@ -1,6 +1,6 @@
 
 
-@extends('nurah.layouts.app')
+@extends('v3.layouts.app')
 
 @push('styles')
 <style>

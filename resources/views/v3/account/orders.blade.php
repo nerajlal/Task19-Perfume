@@ -1,4 +1,4 @@
-@extends('nurah.layouts.app')
+@extends('v3.layouts.app')
 
 @section('content')
 <div class="container" style="max-width: 1000px; margin: 40px auto; padding: 0 20px;">
@@ -62,9 +62,9 @@
                                                 
                                                 $link = '#';
                                                 if($item->product_id) {
-                                                    $link = route('product', ['id' => $item->product_id]);
+                                                    $link = route('v3.product', ['id' => $item->product_id]);
                                                 } elseif($item->bundle_id) {
-                                                    $link = route('combo', ['id' => $item->bundle_id]);
+                                                    $link = route('v3.combo', ['id' => $item->bundle_id]);
                                                 }
                                             @endphp
                                             <a href="{{ $link }}" style="display: block; width: 100%; height: 100%;">
@@ -76,9 +76,9 @@
                                         <div>
                                             <div style="font-weight: 500; margin-bottom: 2px;">
                                                 @if($item->product_id)
-                                                    <a href="{{ route('product', ['id' => $item->product_id]) }}" style="color: inherit; text-decoration: none;">{{ $item->name }}</a>
+                                                    <a href="{{ route('v3.product', ['id' => $item->product_id]) }}" style="color: inherit; text-decoration: none;">{{ $item->name }}</a>
                                                 @elseif($item->bundle_id)
-                                                    <a href="{{ route('combo', ['id' => $item->bundle_id]) }}" style="color: inherit; text-decoration: none;">{{ $item->name }}</a>
+                                                    <a href="{{ route('v3.combo', ['id' => $item->bundle_id]) }}" style="color: inherit; text-decoration: none;">{{ $item->name }}</a>
                                                 @else
                                                     {{ $item->name }}
                                                 @endif
@@ -103,7 +103,7 @@
             <i class="fas fa-shopping-bag" style="font-size: 48px; color: #ddd; margin-bottom: 20px;"></i>
             <h3 style="font-family: 'Playfair Display', serif; font-size: 22px; margin-bottom: 10px;">No orders yet</h3>
             <p style="color: #666; margin-bottom: 20px;">Looks like you haven't placed any orders yet.</p>
-            <a href="{{ route('all-products') }}" style="display: inline-block; background: #000; color: #fff; padding: 10px 25px; text-decoration: none; border-radius: 4px; font-weight: 600;">Start Shopping</a>
+            <a href="{{ route('v3.all-products') }}" style="display: inline-block; background: #000; color: #fff; padding: 10px 25px; text-decoration: none; border-radius: 4px; font-weight: 600;">Start Shopping</a>
         </div>
     @endif
 </div>

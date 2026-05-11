@@ -3,7 +3,7 @@
     <div class="footer-content">
         <!-- Brand Column -->
         <div class="footer-col">
-            <div class="footer-logo">xxxx Perfumes</div>
+            <div class="footer-logo">Task19 Perfumes</div>
             <p class="footer-tagline">Crafting memories through scents. India's first perfume bar offering exceptional, long-lasting fragrances.</p>
             <div class="footer-social">
                 <a href="#" class="social-link"><i class="fab fa-whatsapp"></i></a>
@@ -17,11 +17,11 @@
         <div class="footer-col">
             <h3 class="footer-heading">Shop</h3>
             <ul class="footer-links">
-                <li><a href="{{ route('collection', ['category' => 'fresh']) }}">Fresh Collection</a></li>
-                <li><a href="{{ route('collection', ['category' => 'oriental-woody']) }}">Oriental & Woody</a></li>
-                <li><a href="{{ route('collection', ['category' => 'floral']) }}">Floral Collection</a></li>
-                <li><a href="{{ route('all-products') }}">All Perfumes</a></li>
-                <li><a href="{{ route('combos') }}">Combo Offers</a></li>
+                <li><a href="{{ route('v3.collection', ['category' => 'fresh']) }}">Fresh Collection</a></li>
+                <li><a href="{{ route('v3.collection', ['category' => 'oriental-woody']) }}">Oriental & Woody</a></li>
+                <li><a href="{{ route('v3.collection', ['category' => 'floral']) }}">Floral Collection</a></li>
+                <li><a href="{{ route('v3.all-products') }}">All Perfumes</a></li>
+                <li><a href="{{ route('v3.combos') }}">Combo Offers</a></li>
             </ul>
         </div>
 
@@ -29,12 +29,12 @@
         <div class="footer-col">
             <h3 class="footer-heading">Support</h3>
             <ul class="footer-links">
-                <li><a href="{{ route('about') }}">About Us</a></li>
-                <li><a href="{{ route('contact') }}">Contact Us</a></li>
+                <li><a href="{{ route('v3.about') }}">About Us</a></li>
+                <li><a href="{{ route('v3.contact') }}">Contact Us</a></li>
                 <!-- <li><a href="#">Store Locator</a></li> -->
-                <li><a href="{{ route('shipping-policy') }}">Shipping Policy</a></li>
-                <li><a href="{{ route('return-policy') }}">Returns & Exchanges</a></li>
-                <li><a href="{{ route('terms-of-service') }}">Terms of Service</a></li>
+                <li><a href="{{ route('v3.shipping-policy') }}">Shipping Policy</a></li>
+                <li><a href="{{ route('v3.return-policy') }}">Returns & Exchanges</a></li>
+                <li><a href="{{ route('v3.terms-of-service') }}">Terms of Service</a></li>
             </ul>
         </div>
 
@@ -47,7 +47,7 @@
 
     <div class="footer-bottom">
         <div class="copyright">
-            © 2025 xxxx Perfumes. All rights reserved. 
+            © 2025 Task19 Perfumes. All rights reserved. 
             <span style="opacity: 0.7; margin-left: 5px;">Developed by <a href="https://metora.in/" target="_blank" style="color: var(--gold); text-decoration: none; font-weight: bold;">Metora</a></span>
         </div>
         <div class="payment-icons">

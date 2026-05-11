@@ -1,4 +1,4 @@
-@extends('nurah.layouts.app')
+@extends('v3.layouts.app')
 
 @section('title', ($title ?? 'Fresh Perfumes') . ' - Nurah Perfumes')
 
@@ -831,7 +831,7 @@
                 if($gender == 'men' || $gender == 'man') $gender = 'him';
                 if($gender == 'women' || $gender == 'woman') $gender = 'her';
             @endphp
-            <a href="{{ route('product', ['id' => $product->id]) }}" class="product-card" 
+            <a href="{{ route('v3.product', ['id' => $product->id]) }}" class="product-card" 
                data-name="{{ $product->title }}" 
                data-price="{{ $product->starting_price }}" 
                data-date="{{ $product->created_at->timestamp }}" 

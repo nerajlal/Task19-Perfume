@@ -1,4 +1,4 @@
-@extends('nurah.layouts.app')
+@extends('v3.layouts.app')
 
 @section('title', 'Checkout - Nurah Perfumes')
 
@@ -355,7 +355,7 @@
                 </div>
                 
                 <p style="font-size: 12px; color: #666; margin-bottom: 20px; line-height: 1.6;">
-                    Your personal data will be used to process your order, support your experience throughout this website, and for other purposes described in our <a href="{{ route("terms-of-service") }}" style="color: var(--black); text-decoration: underline;">privacy policy</a>.
+                    Your personal data will be used to process your order, support your experience throughout this website, and for other purposes described in our <a href="{{ route('v3.terms-of-service') }}" style="color: var(--black); text-decoration: underline;">privacy policy</a>.
                 </p>
                 
                 <button type="button" class="place-order-btn" onclick="placeOrder()">Place Order</button>

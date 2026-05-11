@@ -1,4 +1,4 @@
-@extends('nurah.layouts.app')
+@extends('v3.layouts.app')
 
 @section('title', $product->title)
 
@@ -485,7 +485,7 @@
 
             <!-- Bundle Link -->
             @if(isset($bundle))
-            <a href="{{ route('combo', ['id' => $bundle->id]) }}" class="bundle-tease">
+            <a href="{{ route('v3.combo', ['id' => $bundle->id]) }}" class="bundle-tease">
                 <div class="bundle-info">
                     <h4>Perfect Combo</h4>
                     <p>Upgrade to the <strong>{{ $bundle->title }}</strong> combo to save {{ $bundle->discount_type == 'percentage' ? number_format($bundle->discount_value) . '%' : '₹' . number_format($bundle->discount_value) }}.</p>
@@ -531,7 +531,7 @@
                         <button class="qty-control" onclick="updateQty(1)">+</button>
                     </div>
                     <button class="btn-main" onclick="addToCart()">Add to Bag</button>
-                    <button class="btn-secondary" onclick="location.href='/checkout'">But It Now</button>
+                    <button class="btn-secondary" onclick="location.href='{{ route('v3.checkout') }}'">But It Now</button>
                 @else
                     <div style="filter: blur(4px); pointer-events: none; opacity: 0.5; display: flex; gap: 20px; width: 100%;">
                         <div class="qty-counter">
@@ -561,7 +561,7 @@
     
     <div class="related-grid">
         @foreach($relatedProducts as $related)
-        <a href="{{ route('product', ['id' => $related->id]) }}" style="text-decoration: none;">
+        <a href="{{ route('v3.product', ['id' => $related->id]) }}" style="text-decoration: none;">
             <div style="background: #f9f9f9; aspect-ratio: 1; margin-bottom: 15px; border-radius: 10px; overflow: hidden;">
                 <img src="{{ $related->main_image_url }}" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'" onerror="handleImageError(this)">
             </div>

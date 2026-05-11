@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>xxxx Perfumes - @yield('title', 'India\'s First Perfume Bar')</title>
+    <title>Task19 Perfumes - @yield('title', 'India\'s First Perfume Bar')</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700;800;900&display=swap" rel="stylesheet">
@@ -111,13 +111,13 @@
     @stack('styles')
 </head>
 <body>
-    @include('nurah.partials.header')
+    @include('v3.partials.header')
 
     <main>
         @yield('content')
     </main>
 
-    @include('nurah.partials.footer')
+    @include('v3.partials.footer')
 
     <script>
         // Smooth Scroll
@@ -144,6 +144,14 @@
         document.querySelectorAll('.section, .product-card, .category-card, .feature').forEach(el => {
             observer.observe(el);
         });
+
+        function handleImageError(img) {
+            if (!img.getAttribute('data-error-handled')) {
+                img.setAttribute('data-error-handled', 'true');
+                img.onerror = null;
+                img.src = '{{ asset("images/g-load.webp") }}';
+            }
+        }
     </script>
     @stack('scripts')
 </body>

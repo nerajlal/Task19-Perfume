@@ -1,4 +1,4 @@
-@extends('nurah.layouts.app')
+@extends('v3.layouts.app')
 
 @section('title', 'Shopping Cart - Nurah Perfumes')
 
@@ -323,8 +323,8 @@
                     <div class="item-info">
                         @php
                             $itemUrl = isset($details['bundle_id']) 
-                                ? route('combo', ['id' => $details['bundle_id']]) 
-                                : route('product', ['id' => $details['product_id']]);
+                                ? route('v3.combo', ['id' => $details['bundle_id']]) 
+                                : route('v3.product', ['id' => $details['product_id']]);
                         @endphp
                         
                         <a href="{{ $itemUrl }}" class="{{ $isOOS ? 'pointer-none' : '' }}">
@@ -385,12 +385,12 @@
                 <div style="margin-top: 20px; color: #ff3b30; font-size: 13px; font-weight: 600; text-align: center; border: 1px solid #ff3b30; padding: 10px; border-radius: 6px; background: #fff0f0;">
                     <i class="fas fa-exclamation-circle"></i> Note: Out of stock items will be excluded from checkout.
                 </div>
-                <a href="{{ route('checkout') }}" class="checkout-btn" style="text-decoration: none; display: block; text-align: center;">Proceed to Checkout</a>
+                <a href="{{ route('v3.checkout') }}" class="checkout-btn" style="text-decoration: none; display: block; text-align: center;">Proceed to Checkout</a>
             @else
-                <a href="{{ route('checkout') }}" class="checkout-btn" style="text-decoration: none; display: block; text-align: center;">Proceed to Checkout</a>
+                <a href="{{ route('v3.checkout') }}" class="checkout-btn" style="text-decoration: none; display: block; text-align: center;">Proceed to Checkout</a>
             @endif
             
-            <a href="{{ route('collection') }}" class="continue-shopping">Continue Shopping</a>
+            <a href="{{ route('v3.collection') }}" class="continue-shopping">Continue Shopping</a>
         </div>
     </div>
     @else
@@ -398,7 +398,7 @@
             <div class="empty-icon"><i class="fas fa-shopping-bag"></i></div>
             <h2>Your cart is empty</h2>
             <p class="mb-20">Looks like you haven't added any perfumes yet.</p>
-            <a href="{{ route('collection') }}" class="checkout-btn" style="display: inline-block; width: auto; padding: 12px 30px;">Start Shopping</a>
+            <a href="{{ route('v3.collection') }}" class="checkout-btn" style="display: inline-block; width: auto; padding: 12px 30px;">Start Shopping</a>
         </div>
     @endif
     
@@ -407,7 +407,7 @@
         <div class="empty-icon"><i class="fas fa-shopping-bag"></i></div>
         <h2>Your cart is empty</h2>
         <p class="mb-20">Looks like you haven't added any perfumes yet.</p>
-        <a href="{{ route('collection') }}" class="checkout-btn" style="display: inline-block; width: auto; padding: 12px 30px;">Start Shopping</a>
+        <a href="{{ route('v3.collection') }}" class="checkout-btn" style="display: inline-block; width: auto; padding: 12px 30px;">Start Shopping</a>
     </div>
 
 </div>

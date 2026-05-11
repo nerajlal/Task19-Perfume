@@ -1,4 +1,4 @@
-@extends('nurah.layouts.app')
+@extends('v3.layouts.app')
 
 @section('title', $product->title . ' - Nurah Perfumes')
 
@@ -955,7 +955,7 @@
                 @endif
 
                 @if(isset($bundle))
-                <a href="{{ route('combo', ['id' => $bundle->id]) }}" style="text-decoration: none; display: block; transition: opacity 0.3s;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">
+                <a href="{{ route('v3.combo', ['id' => $bundle->id]) }}" style="text-decoration: none; display: block; transition: opacity 0.3s;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">
                     <div class="promo-banner" style="background: linear-gradient(135deg, #1a1a1a 0%, #4a4a4a 100%); margin-top: 10px; color: white; display: flex; justify-content: space-between; align-items: center; padding-right: 15px;">
                         <span>Combo Offer: Buy as combo and save {{ $bundle->discount_type == 'percentage' ? number_format($bundle->discount_value) . '%' : '₹' . number_format($bundle->discount_value) }} !</span>
                         <i class="fas fa-arrow-right"></i>
@@ -1035,7 +1035,7 @@
                     <button class="add-to-cart-btn" onclick="addToCart()">
                         Add to Cart
                     </button>
-                    <button class="buy-now-btn" onclick="window.location.href='/checkout'">
+                    <button class="buy-now-btn" onclick="window.location.href='{{ route('v3.checkout') }}'">
                         Buy Now
                     </button>
                 </div>
@@ -1160,7 +1160,7 @@
         <h2 class="reviews-title" style="margin: 0 0 20px 20px; font-size: 20px;">Recently Viewed</h2>
         <div class="related-scroll-container">
             @forelse($relatedProducts as $related)
-            <div class="product-card" onclick="window.location.href='{{ route('product', ['id' => $related->id]) }}'">
+            <div class="product-card" onclick="window.location.href='{{ route('v3.product', ['id' => $related->id]) }}'">
                 <div class="product-image-wrapper">
                     <button class="favorite-btn" onclick="event.stopPropagation(); toggleFavorite(this)">♡</button>
                     @if($related->created_at->diffInDays(now()) < 7)

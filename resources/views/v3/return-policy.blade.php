@@ -1,6 +1,6 @@
-@extends('nurah.layouts.app')
+@extends('v3.layouts.app')
 
-@section('title', 'Return & Refund Policy - xxxx Perfumes')
+@section('title', 'Return & Refund Policy - Task19 Perfumes')
 
 @push('styles')
 <style>

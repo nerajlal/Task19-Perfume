@@ -1,6 +1,6 @@
-@extends('nurah.layouts.app')
+@extends('v3.layouts.app')
 
-@section('title', 'Server Error')
+@section('title', 'Page Expired')
 
 @push('styles')
 <style>
@@ -61,9 +61,9 @@
 @section('content')
     <div class="error-section">
         <div class="error-content">
-            <div class="error-code">500</div>
-            <h1 class="error-title">Server Error</h1>
-            <p class="error-text">Something went wrong on our servers. Please try again later.</p>
+            <div class="error-code">419</div>
+            <h1 class="error-title">Page Expired</h1>
+            <p class="error-text">The page has expired due to inactivity. Please refresh and try again.</p>
             <a href="{{ url('/') }}" class="error-btn">Return to Home</a>
         </div>
     </div>

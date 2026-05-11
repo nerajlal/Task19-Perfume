@@ -7,7 +7,7 @@
 <div class="mobile-header">
     <div class="header-top">
         <button class="menu-btn" onclick="toggleMenu()"><i class="fas fa-bars"></i></button>
-        <a href="{{ route('home') }}" class="logo">xxxx Perfumes</a>
+        <a href="{{ route('v3.home') }}" class="logo">Task19 Perfumes</a>
         <div class="header-icons">
             <button class="icon-btn" onclick="openSearch()"><i class="fas fa-search"></i></button>
             @auth
@@ -15,7 +15,7 @@
             @else
                 <a href="javascript:void(0)" onclick="openLogin()" class="icon-btn" style="color: inherit;"><i class="fas fa-user"></i></a>
             @endauth
-            <a href="{{ route('cart') }}" class="icon-btn" style="color: inherit;">
+            <a href="{{ route('v3.cart') }}" class="icon-btn" style="color: inherit;">
                 <i class="fas fa-shopping-cart"></i>
                 @php
                     if(auth()->check()) {
@@ -29,7 +29,7 @@
         </div>
     </div>
     <div class="header-search-inline" id="inlineSearch">
-        <form action="{{ route('collection') }}" method="GET" class="inline-search-form">
+        <form action="{{ route('v3.collection') }}" method="GET" class="inline-search-form">
             <button type="submit" class="inline-search-icon"><i class="fas fa-search"></i></button>
             <input type="text" name="q" placeholder="Search..." class="inline-search-input" id="inlineSearchInput">
             <button type="button" class="inline-search-close" onclick="closeSearch()"><i class="fas fa-times"></i></button>
@@ -44,13 +44,13 @@
         <button class="menu-close" onclick="toggleMenu()"><i class="fas fa-times"></i></button>
     </div>
     <ul class="menu-list">
-        <li class="menu-item"><a href="{{ route('home') }}" class="menu-link">Home</a></li>
-        <!-- <li class="menu-item"><a href="{{ route('collection') }}" class="menu-link">Shop All</a></li> -->
-        <li class="menu-item"><a href="{{ route('all-products') }}" class="menu-link">All Products</a></li>
-        <!-- <li class="menu-item"><a href="{{ route('collection') }}" class="menu-link">Categories</a></li> -->
-        <li class="menu-item"><a href="{{ route('combos') }}" class="menu-link">Combo Offers</a></li>
-        <li class="menu-item"><a href="{{ route('about') }}" class="menu-link">About Us</a></li>
-        <li class="menu-item"><a href="{{ route('contact') }}" class="menu-link">Contact</a></li>
+        <li class="menu-item"><a href="{{ route('v3.home') }}" class="menu-link">Home</a></li>
+        <!-- <li class="menu-item"><a href="{{ route('v3.collection') }}" class="menu-link">Shop All</a></li> -->
+        <li class="menu-item"><a href="{{ route('v3.all-products') }}" class="menu-link">All Products</a></li>
+        <!-- <li class="menu-item"><a href="{{ route('v3.collection') }}" class="menu-link">Categories</a></li> -->
+        <li class="menu-item"><a href="{{ route('v3.combos') }}" class="menu-link">Combo Offers</a></li>
+        <li class="menu-item"><a href="{{ route('v3.about') }}" class="menu-link">About Us</a></li>
+        <li class="menu-item"><a href="{{ route('v3.contact') }}" class="menu-link">Contact</a></li>
     </ul>
 </div>
 <div class="menu-overlay" id="menuOverlay" onclick="toggleMenu()"></div>

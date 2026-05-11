@@ -1,4 +1,4 @@
-@extends('nurah.layouts.app')
+@extends('v3.layouts.app')
 
 @section('title', $bundle->title)
 
@@ -416,7 +416,7 @@
                         <button class="qty-control" onclick="updateQty(1)">+</button>
                     </div>
                     <button class="btn-main" onclick="addToCart('{{ $bundle->title }}')">Add to Bag</button>
-                    <button class="btn-secondary" onclick="location.href='/checkout'">Buy It Now</button>
+                    <button class="btn-secondary" onclick="location.href='{{ route('v3.checkout') }}'">Buy It Now</button>
                 @else
                      <div class="qty-counter" style="opacity: 0.5; pointer-events: none;">
                         <button class="qty-control" disabled>−</button>
@@ -441,7 +441,7 @@
     
     <div class="related-grid">
         @foreach($relatedBundles as $related)
-        <a href="{{ route('combo', ['id' => $related->id]) }}" style="text-decoration: none;">
+        <a href="{{ route('v3.combo', ['id' => $related->id]) }}" style="text-decoration: none;">
             <div style="background: #f9f9f9; aspect-ratio: 1; margin-bottom: 15px; border-radius: 10px; overflow: hidden;">
                 <img src="{{ \Illuminate\Support\Facades\Storage::url($related->image) }}" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'" onerror="handleImageError(this)">
             </div>
