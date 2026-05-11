@@ -18,9 +18,12 @@
                     @endif
                 </div>
                 <div class="a-thumbnail-grid">
-                    <img src="{{ $product->main_image_url ?? asset('images/g-load.webp') }}" class="a-thumb active" onclick="setMainImage(this.src, this)">
+                    @if($product->main_image_url)
+                        <img src="{{ $product->main_image_url }}" class="a-thumb active" onclick="setMainImage(this.src, this)" onerror="this.src='{{ asset('images/g-load.webp') }}'">
+                    @endif
                     @foreach($product->images as $img)
-                        <img src="{{ asset('storage/' . $img->image_path) }}" class="a-thumb" onclick="setMainImage(this.src, this)">
+                        @php $imgUrl = (strpos($img->path, 'http') === 0) ? $img->path : Storage::url($img->path); @endphp
+                        <img src="{{ $imgUrl }}" class="a-thumb" onclick="setMainImage(this.src, this)" onerror="this.src='{{ asset('images/g-load.webp') }}'">
                     @endforeach
                 </div>
             </div>
@@ -65,6 +68,33 @@
                     </button>
                 </div>
 
+                <div class="a-scent-profile">
+                    <h3>Fragrance Pyramid</h3>
+                    <div class="a-notes-grid">
+                        <div class="a-note-item">
+                            <div class="a-note-icon">TOP</div>
+                            <div class="a-note-text">
+                                <strong>Top Notes</strong>
+                                <p>Bergamot, Lemon, Pink Pepper</p>
+                            </div>
+                        </div>
+                        <div class="a-note-item">
+                            <div class="a-note-icon">HEART</div>
+                            <div class="a-note-text">
+                                <strong>Heart Notes</strong>
+                                <p>Rose, Jasmine, Patchouli</p>
+                            </div>
+                        </div>
+                        <div class="a-note-item">
+                            <div class="a-note-icon">BASE</div>
+                            <div class="a-note-text">
+                                <strong>Base Notes</strong>
+                                <p>Oud, Amber, Musk, Vanilla</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="a-detail-features">
                     <div class="a-feature-item">
                         <i class="fa-solid fa-truck-fast"></i>
@@ -84,15 +114,30 @@
                     <i class="fa-solid fa-eye"></i>
                     <span>{{ rand(100, 500) }} people are viewing this right now</span>
                 </div>
+
+                <div class="a-product-tabs" style="margin-top: 40px;">
+                    <div class="a-tab-item active" onclick="toggleTab(this, 'desc')">Description</div>
+                    <div class="a-tab-item" onclick="toggleTab(this, 'usage')">How to Use</div>
+                    <div class="a-tab-item" onclick="toggleTab(this, 'ingredients')">Ingredients</div>
+                </div>
+                <div class="a-tab-content active" id="desc">
+                    <p>{{ $product->description ?? 'Experience the essence of luxury with this exquisite fragrance. Designed for long-lasting appeal and perfect for any occasion.' }}</p>
+                </div>
+                <div class="a-tab-content" id="usage">
+                    <p>Spray on pulse points: neck, chest, and wrists for a long-lasting fragrance experience. Avoid rubbing the skin after application as it breaks down the scent molecules.</p>
+                </div>
+                <div class="a-tab-content" id="ingredients">
+                    <p>Alcohol Denat, Aqua (Water), Fragrance, Linalool, Limonene, Citronellol, Geraniol, Coumarin, Citral.</p>
+                </div>
             </div>
         </div>
 
         <!-- Related Products -->
         @if($relatedProducts->count() > 0)
         <div class="a-related-section">
-            <h2 class="serif">You May Also Like</h2>
+            <h2 class="aj-title cursive text-center">YOU MAY ALSO <span class="sketch-under">LIKE</span></h2>
             <div class="a-product-grid">
-                @foreach($relatedProducts as $related)
+                @foreach($relatedProducts->take(4) as $related)
                     @include('v4.partials.product_card', ['product' => $related])
                 @endforeach
             </div>
@@ -231,11 +276,11 @@
 
         .a-add-to-cart {
             flex-grow: 1;
-            background: var(--gold-gradient);
+            background: #000;
             color: #fff;
             border: none;
             padding: 18px;
-            border-radius: 8px;
+            border-radius: 4px;
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -247,7 +292,7 @@
             gap: 12px;
         }
 
-        .a-add-to-cart:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(197, 160, 89, 0.3); }
+        .a-add-to-cart:hover { background: var(--aj-gold); }
 
         .a-detail-features {
             display: grid;
@@ -265,15 +310,85 @@
             font-weight: 600;
             color: var(--text-main);
         }
-        .a-feature-item i { color: var(--accent); font-size: 18px; }
+        .a-feature-item i { color: var(--aj-gold); font-size: 18px; }
 
-        .a-related-section { margin-top: 100px; }
-        .a-related-section h2 { font-size: 32px; margin-bottom: 40px; text-align: center; }
+        /* Scent Profile */
+        .a-scent-profile {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid var(--aj-border);
+        }
+        .a-scent-profile h3 { font-size: 14px; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 20px; font-weight: 800; }
+        
+        .a-notes-grid { display: flex; flex-direction: column; gap: 20px; }
+        .a-note-item { display: flex; align-items: center; gap: 20px; }
+        .a-note-icon {
+            width: 60px;
+            height: 60px;
+            border: 1px solid var(--aj-gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 9px;
+            font-weight: 900;
+            color: var(--aj-gold);
+            flex-shrink: 0;
+        }
+        .a-note-text strong { display: block; font-size: 14px; color: var(--aj-dark); margin-bottom: 4px; }
+        .a-note-text p { font-size: 13px; color: var(--aj-gray); margin: 0; }
+
+        .a-related-section { 
+            margin-top: 100px; 
+            padding-top: 80px;
+            border-top: 1px solid #f0f0f0;
+        }
+        .a-related-section .aj-title { margin-bottom: 50px; }
+        
+        .a-product-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+        }
+
+        @media (max-width: 991px) {
+            .a-product-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; }
+        }
 
         @media (max-width: 1024px) {
             .a-product-detail-layout { grid-template-columns: 1fr; gap: 40px; }
-            .a-product-details { max-width: 600px; margin: 0 auto; }
+            .a-product-details { max-width: 100%; }
+            .a-detail-header h1 { font-size: 36px; }
+            .a-main-image-container { border-radius: 0; margin: 0 -20px; }
+            .a-sticky-mobile-bar { display: flex; }
+            .container { padding-bottom: 100px; }
         }
+
+        /* Tabs */
+        .a-product-tabs { display: flex; gap: 30px; border-bottom: 1px solid var(--aj-border); margin-bottom: 20px; }
+        .a-tab-item { font-size: 13px; font-weight: 700; text-transform: uppercase; padding-bottom: 15px; cursor: pointer; color: var(--aj-gray); transition: 0.3s; position: relative; }
+        .a-tab-item.active { color: var(--aj-dark); }
+        .a-tab-item.active::after { content: ''; position: absolute; bottom: -1px; left: 0; width: 100%; height: 2px; background: var(--aj-gold); }
+        .a-tab-content { display: none; font-size: 14px; line-height: 1.8; color: var(--aj-gray); }
+        .a-tab-content.active { display: block; }
+
+        /* Sticky Mobile Bar */
+        .a-sticky-mobile-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: #fff;
+            padding: 15px 20px;
+            box-shadow: 0 -10px 30px rgba(0,0,0,0.1);
+            display: none;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 2000;
+        }
+        .a-sticky-info h4 { font-size: 14px; font-weight: 700; margin-bottom: 2px; }
+        .a-sticky-info p { font-size: 16px; font-weight: 800; color: var(--aj-gold); margin: 0; }
+        .a-sticky-btn { background: #000; color: #fff; border: none; padding: 12px 25px; border-radius: 4px; font-weight: 700; text-transform: uppercase; font-size: 12px; }
     </style>
 
     <script>
@@ -293,24 +408,43 @@
         function selectVariant(btn, price, size) {
             document.querySelectorAll('.a-variant-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-            document.querySelector('.a-price-new').innerText = '₹' + price.toLocaleString();
+            const priceText = '₹' + price.toLocaleString();
+            document.querySelector('.a-price-new').innerText = priceText;
+            document.querySelector('.a-sticky-info p').innerText = priceText;
+        }
+
+        function toggleTab(btn, tabId) {
+            document.querySelectorAll('.a-tab-item').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.a-tab-content').forEach(c => c.classList.remove('active'));
+            btn.classList.add('active');
+            document.getElementById(tabId).classList.add('active');
         }
 
         function handleAddToCart() {
-            const btn = document.getElementById('addToCartBtn');
-            const originalHtml = btn.innerHTML;
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> PROCESSING...';
-            btn.disabled = true;
-
-            setTimeout(() => {
-                btn.innerHTML = '<i class="fa-solid fa-check"></i> ADDED TO BAG';
-                btn.style.background = '#10B981';
+            const btns = [document.getElementById('addToCartBtn'), document.querySelector('.a-sticky-btn')];
+            btns.forEach(btn => {
+                const originalHtml = btn.innerHTML;
+                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
+                btn.disabled = true;
                 setTimeout(() => {
-                    btn.innerHTML = originalHtml;
-                    btn.style.background = '';
-                    btn.disabled = false;
-                }, 2000);
-            }, 1000);
+                    btn.innerHTML = '<i class="fa-solid fa-check"></i>';
+                    btn.style.background = '#10B981';
+                    setTimeout(() => {
+                        btn.innerHTML = originalHtml;
+                        btn.style.background = '';
+                        btn.disabled = false;
+                    }, 2000);
+                }, 1000);
+            });
         }
     </script>
+
+    <!-- Sticky Mobile Bar -->
+    <div class="a-sticky-mobile-bar">
+        <div class="a-sticky-info">
+            <h4>{{ $product->title }}</h4>
+            <p>₹{{ number_format($product->starting_price, 0) }}</p>
+        </div>
+        <button class="a-sticky-btn" onclick="handleAddToCart()">Add to Bag</button>
+    </div>
 @endsection

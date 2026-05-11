@@ -69,10 +69,10 @@
 
     <style>
         .a-page-header {
-            padding: 80px 0;
+            padding: 40px 0;
             text-align: center;
-            background: var(--bg-soft);
-            margin-bottom: 60px;
+            background: #fff;
+            margin-bottom: 20px;
         }
 
         .a-page-header h1 { font-size: 42px; margin-bottom: 10px; }
@@ -81,7 +81,7 @@
         .a-listing-layout {
             display: grid;
             grid-template-columns: 280px 1fr;
-            gap: 50px;
+            gap: 30px;
         }
 
         .a-listing-sidebar {
@@ -158,11 +158,17 @@
         @media (max-width: 991px) {
             .a-listing-layout { grid-template-columns: 1fr; }
             .a-listing-sidebar { display: none; }
-            .a-product-grid-listing { grid-template-columns: repeat(2, 1fr); }
+            .a-product-grid-listing { 
+                grid-template-columns: repeat(2, 1fr); 
+                gap: 15px;
+            }
+            .a-page-header { padding: 30px 15px; }
+            .a-page-header h1 { font-size: 28px; }
+            .a-listing-toolbar { flex-direction: column; gap: 15px; align-items: flex-start; }
         }
 
-        @media (max-width: 576px) {
-            .a-product-grid-listing { grid-template-columns: 1fr; }
+        @media (max-width: 480px) {
+            .a-product-grid-listing { grid-template-columns: repeat(2, 1fr); }
         }
     </style>
 @endsection

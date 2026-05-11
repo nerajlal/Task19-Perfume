@@ -10,7 +10,8 @@
             <img src="{{ $product->main_image_url ?? asset('images/g-load.webp') }}" 
                  onerror="this.src='{{ asset('images/g-load.webp') }}'"
                  alt="{{ $product->title }}" 
-                 class="a-product-image">
+                 class="a-product-image"
+                 loading="lazy">
         </a>
         
         @if($hasDiscount)

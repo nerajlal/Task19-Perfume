@@ -11,7 +11,7 @@
                     <div class="aj-slide {{ $index == 0 ? 'active' : '' }}">
                         <picture>
                             <source media="(max-width: 768px)" srcset="{{ Storage::url($slide->image_mobile) }}">
-                            <img src="{{ Storage::url($slide->image_desktop) }}" alt="{{ $slide->title ?? 'Task19 Perfumes' }}" class="hero-img">
+                            <img src="{{ Storage::url($slide->image_desktop) }}" alt="{{ $slide->title ?? 'Task19 Perfumes' }}" class="hero-img" {{ $index == 0 ? '' : 'loading=lazy' }}>
                         </picture>
                         {{-- Text removed as per request --}}
                     </div>
@@ -112,7 +112,7 @@
                 </div>
                 <div class="video-card">
                     <div class="video-container">
-                        <iframe src="https://www.youtube.com/embed/WamyeDrjaVA?autoplay=1&mute=1&loop=1&playlist=WamyeDrjaVA&controls=0&modestbranding=1&rel=0&playsinline=1" title="Fragrance Story 5" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        <iframe src="https://www.youtube.com/embed/WamyeDrjaVA?autoplay=1&mute=1&loop=1&playlist=WamyeDrjaVA&controls=0&modestbranding=1&rel=0&playsinline=1" title="Fragrance Story 5" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
                     </div>
                     <div class="video-info">
                         <a href="{{ route('v4.all-products') }}" class="video-btn">Shop Collection</a>
@@ -256,7 +256,7 @@
             <div class="aj-manufacturing">
                 <div class="aj-man-media">
                     <div class="video-container" style="padding-bottom: 56.25%; border-radius: 4px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
-                        <iframe src="https://www.youtube.com/embed/QM18rD-zrCs?autoplay=0&mute=1&rel=0&modestbranding=1" title="Manufacturing Process" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe>
+                        <iframe src="https://www.youtube.com/embed/QM18rD-zrCs?autoplay=0&mute=1&rel=0&modestbranding=1" title="Manufacturing Process" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" loading="lazy"></iframe>
                     </div>
                 </div>
                 <div class="aj-man-text">

@@ -27,8 +27,9 @@ class PageController extends Controller
     public function ajmalHome()
     {
         $sliders = \App\Models\Slider::where('status', true)->orderBy('order', 'asc')->get();
-        $products = \App\Models\Product::where('status', 'active')->with(['variants', 'images'])->latest()->get();
-        $collections = \App\Models\Collection::where('status', true)->get();
+        // Fetching only a limited set for home page sections to improve performance
+        $products = \App\Models\Product::where('status', 'active')->with(['variants', 'images'])->latest()->take(20)->get();
+        $collections = \App\Models\Collection::where('status', true)->take(8)->get();
         return view('v4.home', compact('products', 'collections', 'sliders'));
     }
 
