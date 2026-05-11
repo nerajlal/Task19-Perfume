@@ -3,36 +3,52 @@
 @section('title', 'Task19 Perfumes | Luxury Fragrance House Since 1951')
 
 @section('content')
-    <!-- Hero Split Banner -->
-    <div class="aj-hero-split {{ $sliders->count() < 2 ? 'single' : '' }}">
-        @if($sliders->count() > 0)
-            @foreach($sliders->take(2) as $index => $slide)
-                <div class="aj-hero-item" style="background-image: url('{{ asset('storage/' . $slide->image) }}');">
+    <!-- Hero Slider -->
+    <div class="aj-hero-slider">
+        <div class="aj-slides-container">
+            @if($sliders->count() > 0)
+                @foreach($sliders as $index => $slide)
+                    <div class="aj-slide {{ $index == 0 ? 'active' : '' }}" style="background-image: url('{{ Storage::url($slide->image_desktop) }}');">
+                        <div class="aj-hero-box">
+                            <h2 class="serif">{{ $slide->title ?? 'New Collection' }}</h2>
+                            <p>{{ $slide->sub_title ?? 'EXCLUSIVE OFFERS' }}</p>
+                            @if($slide->link)
+                                <a href="{{ $slide->link }}" class="aj-btn-white">Shop Now</a>
+                            @endif
+                        </div>
+                    </div>
+                @endforeach
+            @else
+                <!-- Fallback Slider -->
+                <div class="aj-slide active" style="background-image: url('https://ajmalperfume.com/cdn/shop/files/Mother_s_Day_Banner_Desktop.jpg');">
                     <div class="aj-hero-box">
-                        <h2 class="serif">{{ $slide->title ?? 'New Collection' }}</h2>
-                        <p>{{ $slide->sub_title ?? 'EXCLUSIVE OFFERS' }}</p>
-                        @if($slide->link)
-                            <a href="{{ $slide->link }}" class="aj-btn-white">Shop Now</a>
-                        @endif
+                        <h2 class="serif">Mother's Day</h2>
+                        <p>GIFTS STARTING AT ₹999</p>
+                        <a href="#" class="aj-btn-white">Shop Now</a>
                     </div>
                 </div>
-            @endforeach
-        @else
-            <!-- Fallback if no sliders in DB -->
-            <div class="aj-hero-item" style="background-image: url('https://ajmalperfume.com/cdn/shop/files/Mother_s_Day_Banner_Desktop.jpg');">
-                <div class="aj-hero-box">
-                    <h2 class="serif">Mother's Day</h2>
-                    <p>GIFTS STARTING AT ₹999</p>
-                    <a href="#" class="aj-btn-white">Shop Now</a>
+                <div class="aj-slide" style="background-image: url('https://ajmalperfume.com/cdn/shop/files/Aureum_Banner_Desktop.jpg');">
+                    <div class="aj-hero-box">
+                        <h2 class="serif">Signature Oudh</h2>
+                        <p>PURE & AUTHENTIC</p>
+                        <a href="#" class="aj-btn-white">Explore</a>
+                    </div>
                 </div>
-            </div>
-            <div class="aj-hero-item" style="background-image: url('https://ajmalperfume.com/cdn/shop/files/Aureum_Banner_Desktop.jpg');">
-                <div class="aj-hero-box">
-                    <h2 class="serif">Signature Oudh</h2>
-                    <p>PURE & AUTHENTIC</p>
-                    <a href="#" class="aj-btn-white">Explore</a>
-                </div>
-            </div>
+            @endif
+        </div>
+        
+        @if($sliders->count() > 1 || $sliders->count() == 0)
+        <div class="aj-slider-arrows">
+            <button class="aj-arrow prev" onclick="goToSlide(currentSlide - 1)"><i class="fa-solid fa-chevron-left"></i></button>
+            <button class="aj-arrow next" onclick="goToSlide(currentSlide + 1)"><i class="fa-solid fa-chevron-right"></i></button>
+        </div>
+
+        <div class="aj-slider-dots">
+            @php $slideCount = $sliders->count() > 0 ? $sliders->count() : 2; @endphp
+            @for($i = 0; $i < $slideCount; $i++)
+                <div class="aj-dot {{ $i == 0 ? 'active' : '' }}" onclick="goToSlide({{ $i }})"></div>
+            @endfor
+        </div>
         @endif
     </div>
 
@@ -276,27 +292,117 @@
             background-size: contain;
         }
 
-        /* Hero */
-        .aj-hero-split {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            height: 600px;
+        /* Hero Slider */
+        .aj-hero-slider {
+            position: relative;
+            height: 650px;
+            overflow: hidden;
+            background: #000;
         }
-        .aj-hero-split.single { grid-template-columns: 1fr; }
-        .aj-hero-item {
+
+        .aj-slides-container {
+            width: 100%;
+            height: 100%;
+        }
+
+        .aj-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background-size: cover;
             background-position: center;
             display: flex;
             align-items: center;
             justify-content: center;
-            min-height: 400px;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            z-index: 1;
         }
+
+        .aj-slide.active {
+            opacity: 1;
+            z-index: 2;
+        }
+
         .aj-hero-box {
             text-align: center;
             color: #fff;
+            transform: translateY(30px);
+            transition: 0.8s 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+            opacity: 0;
         }
+
+        .aj-slide.active .aj-hero-box {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
         .aj-hero-box h2 { font-size: 64px; margin-bottom: 10px; }
         .aj-hero-box p { font-size: 14px; letter-spacing: 3px; margin-bottom: 30px; }
+
+        .aj-slider-dots {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+            z-index: 10;
+        }
+
+        .aj-dot {
+            width: 10px;
+            height: 10px;
+            background: rgba(255,255,255,0.4);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .aj-dot.active {
+            background: #fff;
+            transform: scale(1.3);
+        }
+
+        .aj-slider-arrows {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            transform: translateY(-50%);
+            display: flex;
+            justify-content: space-between;
+            padding: 0 40px;
+            z-index: 10;
+        }
+
+        .aj-arrow {
+            width: 50px;
+            height: 50px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 18px;
+            transition: 0.3s;
+            backdrop-filter: blur(5px);
+        }
+
+        .aj-arrow:hover {
+            background: #fff;
+            color: #000;
+            transform: scale(1.1);
+        }
+
+        @media (max-width: 768px) {
+            .aj-slider-arrows { display: none; }
+        }
         /* Header Flex */
         .aj-header-flex {
             display: flex;
@@ -525,10 +631,57 @@
         }
 
         @media (max-width: 991px) {
-            .aj-hero-split, .aj-cat-layout, .aj-usp-grid, .aj-manufacturing, .aj-product-grid { grid-template-columns: 1fr; }
-            .aj-cat-layout { grid-template-rows: auto; }
-            .aj-cat-big, .aj-cat-wide, .aj-cat-small { height: 300px; }
-            .aj-hero-box h2 { font-size: 42px; }
+            .aj-hero-slider { height: 450px; }
+            .aj-hero-box h2 { font-size: 36px; }
+            .aj-hero-box p { font-size: 11px; letter-spacing: 1.5px; }
+            .aj-btn-white { padding: 12px 25px; font-size: 10px; }
+
+            .aj-product-grid { 
+                grid-template-columns: repeat(2, 1fr); 
+                gap: 15px; 
+            }
+            .aj-section { padding: 40px 0; }
+            .aj-title { font-size: 20px; }
+
+            .aj-header-flex { flex-direction: column; gap: 15px; align-items: flex-start; }
+            .aj-tabs { width: 100%; overflow-x: auto; padding-bottom: 10px; }
+            .view-all { display: none; }
+
+            .aj-cat-layout { grid-template-columns: 1fr; }
+            .aj-cat-big { height: 400px; grid-column: 1; grid-row: auto; }
+            .aj-cat-right { grid-column: 1; grid-row: auto; }
+            .aj-cat-wide { grid-column: 1; height: 250px; }
+
+            .aj-usp-grid { grid-template-columns: 1fr; gap: 30px; }
+            .aj-manufacturing { grid-template-columns: 1fr; gap: 30px; }
+            .aj-man-text { text-align: center; }
+
+            .aj-tabs-center { gap: 15px; overflow-x: auto; justify-content: flex-start; padding-bottom: 10px; }
+            .aj-tabs-center button { white-space: nowrap; font-size: 10px; }
         }
     </style>
+    @push('scripts')
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.aj-slide');
+        const dots = document.querySelectorAll('.aj-dot');
+        const totalSlides = slides.length;
+
+        function goToSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            dots[currentSlide].classList.remove('active');
+            currentSlide = (n + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('active');
+            dots[currentSlide].classList.add('active');
+        }
+
+        function nextSlide() {
+            goToSlide(currentSlide + 1);
+        }
+
+        if(totalSlides > 1) {
+            setInterval(nextSlide, 5000);
+        }
+    </script>
+    @endpush
 @endsection

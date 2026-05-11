@@ -49,39 +49,43 @@
         /* Header */
         header {
             background: #fff;
-            padding: 20px 0;
+            padding: 15px 0;
             border-bottom: 1px solid var(--aj-border);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
 
         .header-main {
-            display: grid;
-            grid-template-columns: 1fr 2fr 1fr;
+            display: flex;
+            justify-content: space-between;
             align-items: center;
+            gap: 20px;
         }
 
         .logo { 
             text-decoration: none; 
             color: var(--aj-dark); 
-            font-size: 24px; 
+            font-size: 20px; 
             font-weight: 900; 
             letter-spacing: -1px;
             text-transform: uppercase;
+            white-space: nowrap;
         }
         .logo span { color: var(--aj-gold); }
 
         .search-bar {
             position: relative;
-            max-width: 550px;
-            width: 100%;
-            margin: 0 auto;
+            flex-grow: 1;
+            max-width: 600px;
         }
 
         .search-bar input {
             width: 100%;
-            padding: 12px 20px 12px 45px;
+            padding: 10px 15px 10px 40px;
             border: 1.5px solid var(--aj-border);
-            border-radius: 4px;
-            background: #fff;
+            border-radius: 50px;
+            background: #f8f8f8;
             font-size: 13px;
             outline: none;
         }
@@ -96,52 +100,52 @@
 
         .header-actions {
             display: flex;
-            justify-content: flex-end;
-            gap: 25px;
+            gap: 20px;
+            align-items: center;
         }
 
         .action-item {
             text-decoration: none;
             color: var(--aj-dark);
-            font-size: 22px;
+            font-size: 20px;
             position: relative;
         }
 
-        .action-item span {
-            position: absolute;
-            top: -5px;
-            right: -8px;
-            background: var(--aj-gold);
-            color: #fff;
-            font-size: 10px;
-            width: 18px;
-            height: 18px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
+        /* Mobile Menu */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
         }
 
         /* Navigation */
         .nav-row {
             display: flex;
             justify-content: center;
-            gap: 35px;
-            padding: 20px 0 10px;
+            gap: 30px;
+            padding: 15px 0 5px;
         }
 
         .nav-item {
             text-decoration: none;
             color: var(--aj-dark);
             font-weight: 700;
-            font-size: 12px;
+            font-size: 11px;
             text-transform: uppercase;
             letter-spacing: 1px;
-            transition: 0.3s;
         }
 
-        .nav-item:hover { color: var(--aj-gold); }
+        @media (max-width: 991px) {
+            .search-bar { display: none; }
+            .nav-row { display: none; }
+            .menu-toggle { display: block; }
+            
+            .header-main { padding: 5px 0; }
+            .logo { font-size: 18px; }
+            .header-actions { gap: 15px; }
+        }
 
         /* Footer */
         footer {
@@ -212,6 +216,8 @@
     <header>
         <div class="container">
             <div class="header-main">
+                <button class="menu-toggle" onclick="toggleMenu()"><i class="fa-solid fa-bars"></i></button>
+
                 <a href="{{ route('v4.home') }}" class="logo">
                     TASK19 <span>PERFUMES</span>
                 </a>
@@ -226,7 +232,6 @@
                     <a href="#" class="action-item"><i class="fa-regular fa-heart"></i></a>
                     <a href="#" class="action-item">
                         <i class="fa-solid fa-bag-shopping"></i>
-                        <span>0</span>
                     </a>
                 </div>
             </div>
@@ -242,6 +247,60 @@
             </nav>
         </div>
     </header>
+
+    <!-- Mobile Drawer -->
+    <div class="mobile-drawer" id="mobileDrawer">
+        <div class="drawer-header">
+            <div class="logo">TASK19 <span>PERFUMES</span></div>
+            <button onclick="toggleMenu()" style="background:none; border:none; font-size:24px;"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <nav class="drawer-nav">
+            <a href="{{ route('v4.home') }}">Home</a>
+            <a href="#">Bestsellers</a>
+            <a href="#">EDP</a>
+            <a href="#">Attar</a>
+            <a href="#">Gifting</a>
+            <a href="#">New Arrivals</a>
+            <a href="#">Dakhoon</a>
+        </nav>
+    </div>
+    <div class="drawer-overlay" id="drawerOverlay" onclick="toggleMenu()"></div>
+
+    <style>
+        .mobile-drawer {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 300px;
+            height: 100%;
+            background: #fff;
+            z-index: 2000;
+            transition: 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            padding: 30px;
+        }
+        .mobile-drawer.open { left: 0; }
+        .drawer-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
+        .drawer-nav { display: flex; flex-direction: column; gap: 20px; }
+        .drawer-nav a { text-decoration: none; color: #000; font-weight: 700; font-size: 16px; text-transform: uppercase; }
+        .drawer-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1999;
+            display: none;
+        }
+        .drawer-overlay.open { display: block; }
+    </style>
+
+    <script>
+        function toggleMenu() {
+            document.getElementById('mobileDrawer').classList.toggle('open');
+            document.getElementById('drawerOverlay').classList.toggle('open');
+        }
+    </script>
 
     <main>
         @yield('content')
