@@ -10,7 +10,12 @@
                         <h4>{{ $item['name'] }}</h4>
                         <button onclick="drawerRemove('{{ $id }}')" class="v4-drawer-remove"><i class="fa-regular fa-trash-can"></i></button>
                     </div>
-                    <span class="v4-drawer-item-variant">{{ $item['size'] ?? 'Combo' }}</span>
+                    <div class="v4-drawer-meta">
+                        <span class="v4-drawer-item-variant">{{ $item['size'] ?? 'Combo' }}</span>
+                        @if(isset($item['pack_offer_applied']) && $item['pack_offer_applied'])
+                            <span class="v4-drawer-offer-badge">{{ $item['pack_offer_text'] }}</span>
+                        @endif
+                    </div>
                     
                     <div class="v4-drawer-item-footer">
                         <div class="v4-drawer-qty">
@@ -18,7 +23,14 @@
                             <span>{{ $item['quantity'] }}</span>
                             <button onclick="drawerUpdateQty('{{ $id }}', 1)">+</button>
                         </div>
-                        <div class="v4-drawer-item-price">₹{{ number_format($item['price'] * $item['quantity'], 0) }}</div>
+                        <div class="v4-drawer-item-price">
+                            @if(isset($item['line_savings']) && $item['line_savings'] > 0)
+                                <span class="v4-price-old">₹{{ number_format($item['line_subtotal'], 0) }}</span>
+                                <span class="v4-price-new">₹{{ number_format($item['line_subtotal'] - $item['line_savings'], 0) }}</span>
+                            @else
+                                ₹{{ number_format($item['line_subtotal'], 0) }}
+                            @endif
+                        </div>
                     </div>
                 </div>
             </div>
@@ -27,6 +39,16 @@
     <div class="v4-drawer-footer">
         <div class="v4-drawer-subtotal">
             <span>Subtotal</span>
+            <strong>₹{{ number_format($subtotal, 0) }}</strong>
+        </div>
+        @if($savings > 0)
+        <div class="v4-drawer-savings">
+            <span>Total Savings</span>
+            <strong style="color: #10B981;">- ₹{{ number_format($savings, 0) }}</strong>
+        </div>
+        @endif
+        <div class="v4-drawer-total">
+            <span>Estimate Total</span>
             <strong>₹{{ number_format($total, 0) }}</strong>
         </div>
         <a href="{{ route('v4.cart') }}" class="v4-drawer-btn secondary">VIEW BAG</a>
@@ -55,7 +77,10 @@
     .v4-drawer-remove { background: none; border: none; color: #ccc; cursor: pointer; font-size: 14px; transition: 0.3s; padding: 0 0 0 10px; }
     .v4-drawer-remove:hover { color: #ff4d4d; }
     
+    .v4-drawer-meta { display: flex; flex-direction: column; gap: 4px; }
     .v4-drawer-item-variant { font-size: 10px; color: var(--aj-gray); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+    
+    .v4-drawer-offer-badge { font-size: 9px; font-weight: 800; color: #10B981; background: #e6f7f0; padding: 2px 8px; border-radius: 4px; align-self: flex-start; text-transform: uppercase; }
     
     .v4-drawer-item-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 15px; }
     
@@ -64,10 +89,14 @@
     .v4-drawer-qty button:hover { background: #f9f9f9; }
     .v4-drawer-qty span { width: 30px; text-align: center; font-size: 12px; font-weight: 800; }
     
-    .v4-drawer-item-price { font-size: 13px; font-weight: 800; color: var(--aj-gold); }
+    .v4-drawer-item-price { font-size: 13px; font-weight: 800; color: var(--aj-dark); }
+    .v4-price-old { text-decoration: line-through; color: #999; font-size: 11px; margin-right: 5px; }
+    .v4-price-new { color: var(--aj-gold); }
 
     .v4-drawer-footer { padding: 20px 0; border-top: 1px solid #eee; }
-    .v4-drawer-subtotal { display: flex; justify-content: space-between; margin-bottom: 20px; font-weight: 700; }
+    .v4-drawer-subtotal, .v4-drawer-savings, .v4-drawer-total { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 13px; }
+    .v4-drawer-total { margin-top: 15px; margin-bottom: 25px; font-size: 16px; font-weight: 800; border-top: 1px dashed #eee; padding-top: 15px; }
+    
     .v4-drawer-btn { display: block; width: 100%; padding: 15px; text-align: center; text-decoration: none; font-weight: 800; font-size: 12px; border-radius: 4px; margin-bottom: 10px; transition: 0.3s; }
     .v4-drawer-btn { background: #000; color: #fff; }
     .v4-drawer-btn.secondary { background: #fff; color: #000; border: 1px solid #000; }

@@ -24,6 +24,16 @@
                     @if($product->compare_at_price > $product->starting_price)
                         <span class="a-detail-discount">SAVE {{ round((($product->compare_at_price - $product->starting_price) / $product->compare_at_price) * 100) }}%</span>
                     @endif
+
+                    @if(isset($packBundles) && $packBundles->count() > 0)
+                        @php 
+                            $bestPack = $packBundles->sortBy('total_price')->first(); 
+                            $bestQty = $bestPack->products->first()->pivot->quantity;
+                        @endphp
+                        <div class="v4-floating-badge">
+                            <i class="fa-solid fa-tags"></i> Buy {{ $bestQty }} at ₹{{ number_format($bestPack->total_price, 0) }}
+                        </div>
+                    @endif
                 </div>
                 <div class="a-thumbnail-grid">
                     @if($product->main_image_url)
@@ -145,6 +155,31 @@
                 </div>
                 @endif
 
+                <!-- Pool Deal Box -->
+                @if(isset($poolBundles) && $poolBundles->count() > 0)
+                    @php $pool = $poolBundles->first(); @endphp
+                    <div class="v4-pool-box">
+                        <div class="v4-pool-header">
+                            <span class="v4-pool-label">MIX & MATCH OFFER</span>
+                            <h4>Buy any {{ $pool->min_quantity }} & get ₹{{ number_format($pool->discount_value, 0) }} off</h4>
+                        </div>
+                        <div class="v4-pool-grid">
+                            @foreach($pool->products->take(4) as $poolProd)
+                                @php $p_variant = $poolProd->variants->first(); @endphp
+                                <div class="v4-pool-item {{ $poolProd->id == $product->id ? 'current' : '' }}">
+                                    <div class="v4-pool-img">
+                                        <img src="{{ $poolProd->main_image_url }}" alt="{{ $poolProd->title }}" onerror="this.src='{{ asset('images/g-load.webp') }}'">
+                                        <button class="v4-pool-quick-add" onclick="quickAddPoolProduct(event, {{ $poolProd->id }}, {{ $p_variant->id ?? 'null' }}, '{{ $p_variant->size ?? '' }}')">
+                                            <i class="fa-solid fa-plus"></i>
+                                        </button>
+                                    </div>
+                                    <span class="v4-pool-name">{{ $poolProd->title }}</span>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                @endif
+
                 <div class="v4-fragrance-pyramid">
                     <h3 class="serif">Fragrance Pyramid</h3>
                     <div class="pyramid-container">
@@ -201,30 +236,6 @@
                     <span>{{ rand(100, 500) }} people are viewing this right now</span>
                 </div>
 
-                <!-- Pool Deal Box -->
-                @if(isset($poolBundles) && $poolBundles->count() > 0)
-                    @php $pool = $poolBundles->first(); @endphp
-                    <div class="v4-pool-box">
-                        <div class="v4-pool-header">
-                            <span class="v4-pool-label">MIX & MATCH OFFER</span>
-                            <h4>Buy any {{ $pool->min_quantity }} & get ₹{{ number_format($pool->discount_value, 0) }} off</h4>
-                        </div>
-                        <div class="v4-pool-grid">
-                            @foreach($pool->products->take(4) as $poolProd)
-                                @php $p_variant = $poolProd->variants->first(); @endphp
-                                <div class="v4-pool-item {{ $poolProd->id == $product->id ? 'current' : '' }}">
-                                    <div class="v4-pool-img">
-                                        <img src="{{ $poolProd->main_image_url }}" alt="{{ $poolProd->title }}" onerror="this.src='{{ asset('images/g-load.webp') }}'">
-                                        <button class="v4-pool-quick-add" onclick="quickAddPoolProduct(event, {{ $poolProd->id }}, {{ $p_variant->id ?? 'null' }}, '{{ $p_variant->size ?? '' }}')">
-                                            <i class="fa-solid fa-plus"></i>
-                                        </button>
-                                    </div>
-                                    <span class="v4-pool-name">{{ $poolProd->title }}</span>
-                                </div>
-                            @endforeach
-                        </div>
-                    </div>
-                @endif
 
                 <div class="a-product-tabs" style="margin-top: 40px;">
                     <div class="a-tab-item active" onclick="toggleTab(this, 'desc')">Description</div>
@@ -301,6 +312,34 @@
             font-weight: 800;
             font-size: 12px;
             letter-spacing: 1px;
+            z-index: 5;
+        }
+
+        .v4-floating-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--aj-gold);
+            color: #fff;
+            padding: 8px 15px;
+            border-radius: 999px;
+            font-weight: 900;
+            font-size: 11px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            box-shadow: 0 10px 20px rgba(176, 141, 87, 0.3);
+            z-index: 5;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border: 2px solid #fff;
+            animation: v4Float 3s ease-in-out infinite;
+        }
+
+        @keyframes v4Float {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0); }
         }
 
         .a-thumbnail-grid {

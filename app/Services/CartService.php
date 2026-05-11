@@ -18,24 +18,14 @@ class CartService
         $savings = 0;
 
         // 1. Calculate base subtotal and individual Pack (Volume) savings
-        foreach($cart as $key => &$item) {
-            $price = $item['price'];
+        foreach ($cart as $key => &$item) {
+            $item['line_subtotal'] = $item['price'] * $item['quantity'];
+            $item['line_savings'] = 0;
+            $item['pack_offer_applied'] = false;
             
-            // Apply individual product coupons first
-            if(isset($item['coupon']) && $item['coupon']) {
-                $discountVal = $item['coupon']['type'] == 'percentage' 
-                    ? $price * ($item['coupon']['value'] / 100) 
-                    : $item['coupon']['value'];
-                $price = max(0, $price - $discountVal);
-                $item['effective_price'] = $price;
-                $item['saved_amount'] = $discountVal;
-            } else {
-                $item['effective_price'] = $price;
-                $item['saved_amount'] = 0;
-            }
-
-            if(isset($item['type']) && $item['type'] == 'product') {
-                // Find potential pack bundles for this product
+            // Check for Pack (Volume) Deals first as they take priority
+            $packApplied = false;
+            if (isset($item['type']) && $item['type'] == 'product') {
                 $product = Product::find($item['product_id']);
                 if ($product) {
                     $variantId = $item['variant_id'] ?? null;
@@ -46,11 +36,9 @@ class CartService
 
                     $packBundle = Bundle::where('type', 'pack')
                         ->where('status', 'active')
-                        ->whereHas('products', function($q) use ($item, $variantId) {
+                        ->whereHas('products', function ($q) use ($item, $variantId) {
                             $q->where('product_id', $item['product_id']);
-                            if ($variantId) {
-                                $q->where('product_variant_id', $variantId);
-                            }
+                            if ($variantId) $q->where('product_variant_id', $variantId);
                         })->first();
 
                     if ($packBundle) {
@@ -63,15 +51,25 @@ class CartService
                             $packPrice = $packBundle->total_price;
                             
                             $lineSavings = ($regularPrice * $packQty - $packPrice) * $numPacks;
-                            $savings += $lineSavings;
-                            
+                            $item['line_savings'] += $lineSavings;
                             $item['pack_offer_applied'] = true;
-                            $item['pack_offer_text'] = "Volume Discount: {$packQty} units for ₹" . number_format($packPrice, 0);
+                            $item['pack_offer_text'] = "Volume Deal Applied: {$packQty} for ₹" . number_format($packPrice, 0);
+                            $packApplied = true;
                         }
                     }
                 }
             }
-            $subtotal += $item['price'] * $item['quantity'];
+
+            // Apply individual product coupons ONLY if no pack deal is applied
+            if (!$packApplied && isset($item['coupon']) && $item['coupon']) {
+                $discountVal = $item['coupon']['type'] == 'percentage' 
+                    ? $item['price'] * ($item['coupon']['value'] / 100) 
+                    : $item['coupon']['value'];
+                $item['line_savings'] += $discountVal * $item['quantity'];
+            }
+
+            $subtotal += $item['line_subtotal'];
+            $savings += $item['line_savings'];
         }
         unset($item);
 
@@ -80,13 +78,13 @@ class CartService
         foreach ($activePools as $pool) {
             $poolProductIds = $pool->products->pluck('id')->toArray();
             $qualifyingQty = 0;
-            
+
             foreach ($cart as $item) {
                 if (isset($item['type']) && $item['type'] == 'product' && in_array($item['product_id'], $poolProductIds)) {
                     $qualifyingQty += $item['quantity'];
                 }
             }
-            
+
             if ($qualifyingQty >= $pool->min_quantity) {
                 $times = floor($qualifyingQty / $pool->min_quantity);
                 $poolSavings = ($times * $pool->discount_value);
@@ -106,14 +104,15 @@ class CartService
      */
     public static function getActiveCoupon($product)
     {
-        if(!$product) return null;
-        
+        if (!$product)
+            return null;
+
         return $product->discounts()
             ->where('status', 'active')
-            ->where(function($q) {
+            ->where(function ($q) {
                 $q->whereNull('starts_at')->orWhere('starts_at', '<=', now());
             })
-            ->where(function($q) {
+            ->where(function ($q) {
                 $q->whereNull('ends_at')->orWhere('ends_at', '>=', now());
             })
             ->orderByDesc('value')
