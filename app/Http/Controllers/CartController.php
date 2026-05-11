@@ -144,6 +144,50 @@ class CartController extends Controller
         return view('v4.cart', compact('cart', 'total', 'subtotal', 'savings'));
     }
 
+    /**
+     * Display the shopping cart for V5 theme.
+     */
+    public function afnanCart()
+    {
+        if (Auth::check()) {
+            self::syncSession(Auth::id());
+            $cart = $this->getCartFromDb();
+        } else {
+            $cart = session()->get('cart', []);
+            $cart = array_reverse($cart, true); 
+            
+            foreach($cart as $key => &$item) {
+                $item['stock'] = 100; 
+                
+                if(isset($item['type']) && $item['type'] == 'product' && isset($item['product_id'])) {
+                    $product = Product::find($item['product_id']);
+                    if($product) {
+                        $item['coupon'] = $this->getActiveCoupon($product);
+                        
+                        if(isset($item['size']) && $item['size']) {
+                            $variant = $product->variants->where('size', $item['size'])->first();
+                            $item['stock'] = $variant ? $variant->stock : 0;
+                        } else {
+                            $item['stock'] = $product->variants->sum('stock');
+                        }
+                    }
+                } elseif (isset($item['type']) && $item['type'] == 'bundle' && isset($item['bundle_id'])) {
+                    $bundle = Bundle::find($item['bundle_id']);
+                    if ($bundle) {
+                        $item['stock'] = $bundle->is_out_of_stock ? 0 : 100;
+                    }
+                }
+            }
+        }
+
+        $cartData = $this->calculateTotal($cart);
+        $total = $cartData['total'];
+        $subtotal = $cartData['subtotal'];
+        $savings = $cartData['savings'];
+        
+        return view('v5.cart', compact('cart', 'total', 'subtotal', 'savings'));
+    }
+
     private function calculateTotal(&$cart)
     {
         return \App\Services\CartService::calculateTotal($cart);

@@ -229,6 +229,18 @@ Route::prefix('v4')->name('v4.')->group(function () {
     Route::get('/checkout', [PageController::class, 'ajmalCheckout'])->name('checkout');
 });
 
+// v5 Afnan Theme Routes
+Route::prefix('v5')->name('v5.')->group(function () {
+    Route::get('/', [PageController::class, 'afnanHome'])->name('home');
+    Route::get('/collections', [PageController::class, 'afnanCollection'])->name('collection');
+    Route::get('/all-products', [PageController::class, 'afnanAllProducts'])->name('all-products');
+    Route::get('/product', [PageController::class, 'afnanProduct'])->name('product');
+    Route::get('/combos', [PageController::class, 'afnanCombos'])->name('combos');
+    Route::get('/combo', [PageController::class, 'afnanCombo'])->name('combo');
+    Route::get('/cart', [App\Http\Controllers\CartController::class, 'afnanCart'])->name('cart');
+    Route::get('/checkout', [PageController::class, 'afnanCheckout'])->name('checkout');
+});
+
 // Super Admin Routes (Public for Verification)
 Route::prefix('su-admin')->name('super_admin.')->group(function () {
     Route::get('/', [App\Http\Controllers\SuperAdmin\DashboardController::class, 'index'])->name('dashboard');

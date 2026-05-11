@@ -56,6 +56,7 @@ class PageController extends Controller
     {
         $title = 'Collection';
         $query = \App\Models\Product::where('status', 'active')->with(['variants', 'images']);
+        $collection = null;
         if ($request->has('slug')) {
             $collection = \App\Models\Collection::where('slug', $request->query('slug'))->first();
             if ($collection) { $title = $collection->name; $query->where('collection_id', $collection->id); }
@@ -83,7 +84,7 @@ class PageController extends Controller
             if(in_array('50ml', $sizes)) $counts['size_50ml']++;
             if(in_array('100ml', $sizes)) $counts['size_100ml']++;
         }
-        return view($view, compact('title', 'products', 'counts'));
+        return view($view, compact('title', 'products', 'counts', 'collection'));
     }
 
     public function allProducts()
@@ -249,6 +250,48 @@ class PageController extends Controller
     public function ajmalCheckout()
     {
         return $this->handleCheckout('v4.checkout');
+    }
+
+    public function afnanHome()
+    {
+        $sliders = \App\Models\Slider::where('status', true)->orderBy('order', 'asc')->get();
+        $products = \App\Models\Product::where('status', 'active')->with(['variants', 'images'])->latest()->take(20)->get();
+        $collections = \App\Models\Collection::where('status', true)->take(8)->get();
+        return view('v5.home', compact('products', 'collections', 'sliders'));
+    }
+
+    public function afnanCollection(Request $request)
+    {
+        if (!$request->has('slug') && !$request->has('category') && !$request->has('gender')) {
+            $collections = \App\Models\Collection::where('status', true)->get();
+            return view('v5.collections-index', compact('collections'));
+        }
+        return $this->handleCollection($request, 'v5.collection');
+    }
+
+    public function afnanAllProducts(Request $request)
+    {
+        return $this->handleAllProducts('v5.all-products', $request);
+    }
+
+    public function afnanProduct(Request $request)
+    {
+        return $this->handleProduct($request, 'v5.product-main');
+    }
+
+    public function afnanCombos()
+    {
+        return $this->handleCombos('v5.combos');
+    }
+
+    public function afnanCombo(Request $request)
+    {
+        return $this->handleCombo($request, 'v5.bundle-main');
+    }
+
+    public function afnanCheckout()
+    {
+        return $this->handleCheckout('v5.checkout');
     }
 
     private function handleCheckout($view)
