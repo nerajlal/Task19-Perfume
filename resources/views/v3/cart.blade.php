@@ -167,6 +167,11 @@
         font-size: 18px;
         color: var(--black);
     }
+
+    .savings-row {
+        color: var(--color-gold, #C5A059);
+        font-weight: 700;
+    }
     
     .checkout-btn {
         width: 100%;
@@ -370,12 +375,18 @@
             <h2 class="summary-title">Order Summary</h2>
             <div class="summary-row">
                 <span>Subtotal</span>
-                <span id="cart-subtotal">₹{{ number_format($total) }}</span>
+                <span id="cart-subtotal">₹{{ number_format($subtotal) }}</span>
             </div>
             <div class="summary-row">
                 <span>Shipping</span>
                 <span class="text-success">Free</span>
             </div>
+            @if($savings > 0)
+            <div class="summary-row savings-row">
+                <span>Bundle / Volume Discount</span>
+                <span id="cart-savings">-₹{{ number_format($savings) }}</span>
+            </div>
+            @endif
             <div class="summary-total">
                 <span>Total</span>
                 <span id="cart-total">₹{{ number_format($total) }}</span>
@@ -440,7 +451,7 @@
                 document.getElementById(`total-${id}`).innerText = '₹' + new Intl.NumberFormat().format(data.itemTotal);
                 
                 // Update totals
-                updateSummary(data.cartTotal);
+                updateSummary(data.cartTotal, data.savings, data.subtotal);
 
                 // Update Badge
                 const cartBadge = document.querySelector('.cart-count'); 
@@ -469,7 +480,7 @@
                 document.querySelector(`.cart-item[data-id="${id}"]`).remove();
                 
                 // Update totals
-                updateSummary(data.cartTotal);
+                updateSummary(data.cartTotal, data.savings, data.subtotal);
                 
                 // Check if empty
                 if(data.isEmpty) {
@@ -491,10 +502,21 @@
         });
     }
 
-    function updateSummary(total) {
-        const formatted = '₹' + new Intl.NumberFormat().format(total);
-        document.getElementById('cart-subtotal').innerText = formatted;
-        document.getElementById('cart-total').innerText = formatted;
+    function updateSummary(total, savings, subtotal) {
+        document.getElementById('cart-subtotal').innerText = '₹' + new Intl.NumberFormat().format(subtotal);
+        document.getElementById('cart-total').innerText = '₹' + new Intl.NumberFormat().format(total);
+        
+        const savingsEl = document.getElementById('cart-savings');
+        if (savings > 0) {
+            if (savingsEl) {
+                savingsEl.innerText = '-₹' + new Intl.NumberFormat().format(savings);
+            } else {
+                // Reload page if savings row was missing but now needed
+                location.reload();
+            }
+        } else if (savingsEl) {
+            savingsEl.parentElement.remove();
+        }
     }
 </script>
 @endpush

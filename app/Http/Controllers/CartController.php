@@ -50,9 +50,10 @@ class CartController extends Controller
 
         $cartData = $this->calculateTotal($cart);
         $total = $cartData['total'];
+        $subtotal = $cartData['subtotal'];
         $savings = $cartData['savings'];
         
-        return view('nurah.cart', compact('cart', 'total', 'savings'));
+        return view('nurah.cart', compact('cart', 'total', 'subtotal', 'savings'));
     }
 
     /**
@@ -93,9 +94,10 @@ class CartController extends Controller
 
         $cartData = $this->calculateTotal($cart);
         $total = $cartData['total'];
+        $subtotal = $cartData['subtotal'];
         $savings = $cartData['savings'];
         
-        return view('v3.cart', compact('cart', 'total', 'savings'));
+        return view('v3.cart', compact('cart', 'total', 'subtotal', 'savings'));
     }
 
     private function calculateTotal(&$cart)
@@ -304,7 +306,8 @@ class CartController extends Controller
                 'itemTotal' => $itemTotal,
                 'cartTotal' => $cartTotal,
                 'cartCount' => $count,
-                'savings' => $cartData['savings']
+                'savings' => $cartData['savings'],
+                'subtotal' => $cartData['subtotal']
             ]);
         }
         
@@ -358,7 +361,8 @@ class CartController extends Controller
                 'cartTotal' => $cartTotal,
                 'cartCount' => $count,
                 'isEmpty' => empty($cart),
-                'savings' => $cartData['savings']
+                'savings' => $cartData['savings'],
+                'subtotal' => $cartData['subtotal']
             ]);
         }
         

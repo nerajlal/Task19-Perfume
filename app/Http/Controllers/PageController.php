@@ -205,10 +205,31 @@ class PageController extends Controller
              foreach($items as $item) {
                  $stock = 0;
                  if($item->product_id && $item->product) {
-                    if ($item->size) { $variant = $item->product->variants->where('size', $item->size)->first(); $stock = $variant ? $variant->stock : 0; }
+                    $price = $item->product->starting_price;
+                    $variantId = null;
+                    if ($item->size) { 
+                        $variant = $item->product->variants->where('size', $item->size)->first(); 
+                        $stock = $variant ? $variant->stock : 0; 
+                        if ($variant) {
+                            $price = $variant->price;
+                            $variantId = $variant->id;
+                        }
+                    }
                     else { $stock = $item->product->variants->sum('stock'); }
+                    
                     if($stock > 0) {
-                        $cart[$item->product_id . '-' . $item->size] = ["name" => $item->product->title, "quantity" => $item->quantity, "price" => $item->product->starting_price, "image" => $item->product->main_image_url, "product_id" => $item->product_id, "bundle_id" => null, "size" => $item->size, "type" => "product", "coupon" => $this->getActiveCoupon($item->product)];
+                        $cart[$item->product_id . '-' . $item->size] = [
+                            "name" => $item->product->title, 
+                            "quantity" => $item->quantity, 
+                            "price" => $price, 
+                            "image" => $item->product->main_image_url, 
+                            "product_id" => $item->product_id, 
+                            "variant_id" => $variantId,
+                            "bundle_id" => null, 
+                            "size" => $item->size, 
+                            "type" => "product", 
+                            "coupon" => $this->getActiveCoupon($item->product)
+                        ];
                     }
                 } elseif ($item->bundle_id && $item->bundle) {
                     if (!$item->bundle->is_out_of_stock) {

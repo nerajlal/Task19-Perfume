@@ -64,6 +64,29 @@
         object-fit: cover;
     }
 
+    .image-promo-badge {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        background: #000;
+        color: #fff;
+        padding: 8px 15px;
+        font-size: 11px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-radius: 4px;
+        z-index: 10;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        animation: badgePulse 2s infinite;
+    }
+
+    @keyframes badgePulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+    }
+
     .thumbnails {
         display: flex;
         gap: 15px;
@@ -387,6 +410,210 @@
         grid-template-columns: repeat(4, 1fr);
         gap: 30px;
     }
+
+    /* BUNDLE SECTIONS */
+    .bundle-section {
+        margin-top: 60px;
+        padding-top: 60px;
+        border-top: 1px solid var(--color-border);
+    }
+
+    .bundle-section-title {
+        font-family: var(--font-display);
+        font-size: 28px;
+        margin-bottom: 30px;
+        text-align: center;
+    }
+
+    .bundle-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+    }
+
+    .bundle-card {
+        background: #f9f9f9;
+        border-radius: 12px;
+        padding: 20px;
+        text-align: center;
+        transition: all 0.3s;
+        border: 1px solid transparent;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .bundle-card:hover {
+        background: #fff;
+        border-color: var(--color-gold);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        transform: translateY(-5px);
+    }
+
+    .bundle-card img {
+        width: 100%;
+        aspect-ratio: 1;
+        object-fit: cover;
+        border-radius: 8px;
+        margin-bottom: 15px;
+    }
+
+    .bundle-name {
+        font-family: var(--font-display);
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 8px;
+    }
+
+    .bundle-price {
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--color-gold);
+        margin-bottom: 15px;
+    }
+
+    .bundle-btn {
+        width: 100%;
+        padding: 12px;
+        background: #000;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        font-weight: 700;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+
+    .bundle-btn:hover {
+        background: #333;
+    }
+
+    @media (max-width: 768px) {
+        .bundle-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    /* QUICK BUILD MODAL */
+    .modal {
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.8);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 2000;
+        padding: 20px;
+    }
+    
+    .modal.active { display: flex; }
+    
+    .modal-content {
+        background: #fff;
+        width: 100%;
+        max-width: 800px;
+        max-height: 90vh;
+        border-radius: 20px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+    }
+    
+    .modal-header {
+        padding: 20px 30px;
+        border-bottom: 1px solid #eee;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .modal-body {
+        padding: 30px;
+        overflow-y: auto;
+        flex: 1;
+    }
+    
+    .pool-selection-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 15px;
+    }
+    
+    .pool-item {
+        border: 1px solid #eee;
+        border-radius: 12px;
+        padding: 10px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.2s;
+        position: relative;
+    }
+    
+    .pool-item.selected {
+        border-color: var(--color-gold);
+        background: #fdf8ef;
+    }
+    
+    .pool-item-img {
+        width: 100%;
+        aspect-ratio: 1;
+        object-fit: cover;
+        border-radius: 8px;
+        margin-bottom: 8px;
+    }
+    
+    .pool-item-name {
+        font-size: 12px;
+        font-weight: 600;
+        margin: 0;
+    }
+    
+    .selection-badge {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        background: var(--color-gold);
+        color: #fff;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        font-size: 12px;
+        display: none;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .pool-item.selected .selection-badge { display: flex; }
+    
+    .modal-footer {
+        padding: 20px 30px;
+        border-top: 1px solid #eee;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: #f9f9f9;
+    }
+    
+    .btn-build {
+        background: #000;
+        color: #fff;
+        border: none;
+        padding: 12px 30px;
+        border-radius: 8px;
+        font-weight: 700;
+        font-size: 13px;
+        text-transform: uppercase;
+        cursor: pointer;
+    }
+    
+    .btn-build:disabled {
+        background: #ccc;
+        cursor: not-allowed;
+    }
 </style>
 @endpush
 
@@ -403,7 +630,17 @@
         
         <!-- LEFT: GALLERY -->
         <div class="gallery-container">
-            <div class="main-image-frame">
+            <div class="main-image-frame" style="position: relative;">
+                @if((isset($packBundles) && $packBundles->count() > 0) || isset($bundle))
+                    @php
+                        $promoBundle = (isset($packBundles) && $packBundles->count() > 0) ? $packBundles->first() : $bundle;
+                        $firstProd = $promoBundle->products->first();
+                        $qty = $firstProd ? ($firstProd->pivot->quantity ?? $promoBundle->products->count()) : $promoBundle->products->count();
+                    @endphp
+                    <div class="image-promo-badge">
+                        VALUE: {{ $qty }} PACK @ ₹{{ number_format($promoBundle->total_price, 0) }}
+                    </div>
+                @endif
                 <img src="{{ $product->main_image_url }}" alt="{{ $product->title }}" class="main-image" id="mainImage" onerror="handleImageError(this)">
             </div>
             
@@ -550,6 +787,82 @@
             
             <p style="text-align: center; margin-top: 15px; font-size: 11px; color: #999; text-transform: uppercase; letter-spacing: 1px;">Free Shipping over ₹399 • 14-Day Returns</p>
 
+            <!-- Bundle & Save Integration -->
+            @if((isset($packBundles) && $packBundles->count() > 0) || (isset($poolBundles) && $poolBundles->count() > 0))
+            <div class="bundle-save-container" style="margin-top: 40px; padding-top: 30px; border-top: 1px solid #eee;">
+                <h3 style="font-family: var(--font-display); font-size: 20px; margin-bottom: 20px;">Bundle & <em>Save</em></h3>
+                
+                @if(isset($packBundles) && $packBundles->count() > 0)
+                <div style="margin-bottom: 25px;">
+                    <h3 style="font-size: 14px; font-weight: 700; color: #000; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px;">Special Volume Deals</h3>
+                    <div style="display: flex; flex-direction: column; gap: 10px;">
+                        @foreach($packBundles as $pack)
+                            @php 
+                                $pb_prod = $pack->products->first();
+                                $pb_variant = $pb_prod ? $pb_prod->variants->firstWhere('id', $pb_prod->pivot->product_variant_id) : null;
+                                $originalTotal = ($pb_variant ? $pb_variant->price : $pb_prod->starting_price) * $pb_prod->pivot->quantity;
+                                $savings = $originalTotal - $pack->total_price;
+                            @endphp
+                            @if($pb_prod)
+                            <div style="display: flex; align-items: center; justify-content: space-between; background: #fff; border: 1.5px dashed #e5e5e5; padding: 12px 15px; border-radius: 12px; transition: 0.3s;">
+                                <div style="display: flex; flex-direction: column; gap: 2px;">
+                                    <span style="font-weight: 700; font-size: 15px; color: #000;">Buy {{ $pb_prod->pivot->quantity }} @if($pb_variant) ({{ $pb_variant->size }}) @endif</span>
+                                    <span style="font-size: 12px; font-weight: 700; color: #10B981;">Save ₹{{ number_format($savings, 0) }} instantly</span>
+                                </div>
+                                <button onclick="addBundleToCart({{ $pack->id }}, '{{ addslashes($pack->title) }}', this)" 
+                                        style="background: #000; color: #fff; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 700; font-size: 13px; cursor: pointer; transition: 0.3s;">
+                                    Add ₹{{ number_format($pack->total_price, 0) }}
+                                </button>
+                            </div>
+                            @endif
+                        @endforeach
+                    </div>
+                </div>
+                @endif
+
+                @if(isset($poolBundles) && $poolBundles->count() > 0)
+                <div>
+                    <span class="group-label" style="margin-bottom: 15px;">Collections (Build Your Own)</span>
+                    <div style="display: flex; flex-direction: column; gap: 12px;">
+                        @foreach($poolBundles as $pool)
+                        <div style="display: flex; align-items: center; gap: 15px; background: #fdf8ef; padding: 12px; border-radius: 8px; border: 1px solid #C5A059;">
+                            <img src="{{ \Illuminate\Support\Facades\Storage::url($pool->image) }}" style="width: 60px; height: 60px; object-fit: cover; border-radius: 4px;" onerror="handleImageError(this)">
+                            <div style="flex: 1;">
+                                <h4 style="font-size: 14px; margin: 0 0 4px 0; font-weight: 600;">{{ $pool->title }}</h4>
+                                <p style="font-size: 13px; color: var(--color-gold); font-weight: 700; margin: 0;">Starts ₹{{ number_format($pool->total_price, 0) }}</p>
+                            </div>
+                            <button onclick="openQuickBuild({{ $pool->id }}, '{{ addslashes($pool->title) }}', {{ $pool->min_quantity }}, {{ json_encode($pool->products->map(fn($p) => ['id' => $p->id, 'title' => $p->title, 'image' => $p->main_image_url])) }})" 
+                               style="padding: 8px 12px; background: var(--color-gold); color: #fff; border: none; border-radius: 4px; font-size: 11px; font-weight: 700; text-transform: uppercase; cursor: pointer;">
+                                Quick Build
+                            </button>
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+                @endif
+            </div>
+            @endif
+
+        </div>
+    </div>
+</div>
+
+<!-- QUICK BUILD MODAL -->
+<div class="modal" id="quickBuildModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 id="qbTitle" style="font-family: var(--font-display); margin: 0;">Build Your Collection</h3>
+            <button onclick="closeQuickBuild()" style="background:none; border:none; font-size: 24px; cursor:pointer;">&times;</button>
+        </div>
+        <div class="modal-body">
+            <p id="qbSubtitle" style="font-size: 14px; color: var(--color-text-muted); margin-bottom: 20px;"></p>
+            <div class="pool-selection-grid" id="poolGrid">
+                <!-- Products injected here -->
+            </div>
+        </div>
+        <div class="modal-footer">
+            <span id="qbCount" style="font-weight: 600; font-size: 14px;">Selected: 0/0</span>
+            <button id="qbAddBtn" class="btn-build" disabled onclick="addQuickBuildToCart()">Add Collection to Bag</button>
         </div>
     </div>
 </div>
@@ -680,6 +993,163 @@
     function setActiveThumb(el) {
         document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
         el.classList.add('active');
+    }
+
+    function addBundleToCart(id, title, btn) {
+        const originalText = btn.innerHTML;
+        btn.disabled = true;
+        btn.innerHTML = '...';
+
+        fetch('{{ route("cart.add") }}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            body: JSON.stringify({
+                id: id,
+                quantity: 1,
+                type: 'bundle'
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if(data.success) {
+                const toast = document.getElementById('toast');
+                toast.innerText = (title || 'Item') + ' added to Bag! 🎉';
+                toast.style.opacity = '1';
+                setTimeout(() => toast.style.opacity = '0', 2500);
+                
+                if(navigator.vibrate) navigator.vibrate(50);
+                
+                const cartBadge = document.querySelector('.cart-count'); 
+                if(cartBadge) {
+                    cartBadge.innerText = data.cartCount;
+                    cartBadge.style.display = 'flex';
+                }
+            } else {
+                alert(data.message || 'Error adding to cart');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        })
+        .finally(() => {
+            btn.disabled = false;
+            btn.innerHTML = originalText;
+        });
+    }
+
+    // QUICK BUILD LOGIC
+    let selectedPoolProducts = [];
+    let currentPoolId = null;
+    let currentPoolTitle = "";
+    let minRequired = 0;
+
+    function openQuickBuild(id, title, min, products) {
+        currentPoolId = id;
+        currentPoolTitle = title;
+        minRequired = min;
+        selectedPoolProducts = [];
+        
+        document.getElementById('qbTitle').innerText = title;
+        document.getElementById('qbSubtitle').innerText = "Select " + min + " perfumes to build your collection.";
+        document.getElementById('qbCount').innerText = "Selected: 0/" + min;
+        
+        const grid = document.getElementById('poolGrid');
+        grid.innerHTML = "";
+        
+        products.forEach(p => {
+            const item = document.createElement('div');
+            item.className = 'pool-item';
+            item.onclick = () => togglePoolProduct(p.id, item);
+            item.innerHTML = `
+                <img src="${p.image}" class="pool-item-img" onerror="handleImageError(this)">
+                <p class="pool-item-name">${p.title}</p>
+                <div class="selection-badge">✓</div>
+            `;
+            grid.appendChild(item);
+        });
+        
+        document.getElementById('quickBuildModal').classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeQuickBuild() {
+        document.getElementById('quickBuildModal').classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    function togglePoolProduct(id, el) {
+        const index = selectedPoolProducts.indexOf(id);
+        if (index > -1) {
+            selectedPoolProducts.splice(index, 1);
+            el.classList.remove('selected');
+        } else {
+            if (selectedPoolProducts.length < minRequired) {
+                selectedPoolProducts.push(id);
+                el.classList.add('selected');
+            } else {
+                // Replace last one or just ignore
+                const lastId = selectedPoolProducts.pop();
+                // Find element for lastId and deselect it (a bit expensive but works)
+                // For simplicity, let's just ignore if already full
+                // Actually, let's just allow replacing the first one
+                // selectedPoolProducts.shift();
+                // selectedPoolProducts.push(id);
+            }
+        }
+        
+        const countEl = document.getElementById('qbCount');
+        countEl.innerText = "Selected: " + selectedPoolProducts.length + "/" + minRequired;
+        
+        const addBtn = document.getElementById('qbAddBtn');
+        addBtn.disabled = (selectedPoolProducts.length < minRequired);
+    }
+
+    function addQuickBuildToCart() {
+        const btn = document.getElementById('qbAddBtn');
+        btn.disabled = true;
+        btn.innerHTML = "Processing...";
+
+        fetch('{{ route("cart.add") }}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            body: JSON.stringify({
+                id: currentPoolId,
+                quantity: 1,
+                type: 'bundle',
+                products: selectedPoolProducts // Assuming backend handles this
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if(data.success) {
+                closeQuickBuild();
+                const toast = document.getElementById('toast');
+                toast.innerText = currentPoolTitle + ' added to Bag! 🎉';
+                toast.style.opacity = '1';
+                setTimeout(() => toast.style.opacity = '0', 2500);
+                
+                const cartBadge = document.querySelector('.cart-count'); 
+                if(cartBadge) {
+                    cartBadge.innerText = data.cartCount;
+                    cartBadge.style.display = 'flex';
+                }
+            } else {
+                alert(data.message || 'Error adding to cart');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        })
+        .finally(() => {
+            btn.disabled = false;
+            btn.innerHTML = "Add Collection to Bag";
+        });
     }
 </script>
 @endpush

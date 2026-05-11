@@ -338,9 +338,15 @@
                         <span>Shipping</span>
                         <span style="color: green; font-weight: 600;">Free</span>
                     </div>
+                    @if($savings > 0)
+                    <div class="totals-row" style="color: #C5A059; font-weight: 700;">
+                        <span>Bundle / Volume Discount</span>
+                        <span>-₹{{ number_format($savings) }}</span>
+                    </div>
+                    @endif
                     <div class="final-total">
                         <span>Total</span>
-                        <span>₹{{ number_format($subtotal) }}</span>
+                        <span>₹{{ number_format($total) }}</span>
                     </div>
                 </div>
                 
