@@ -542,6 +542,14 @@
         grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
         gap: 15px;
     }
+
+    @media (max-width: 500px) {
+        .pool-selection-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+        .modal-body { padding: 15px; }
+    }
     
     .pool-item {
         border: 1px solid #eee;
@@ -809,7 +817,7 @@
                                     <span style="font-weight: 700; font-size: 15px; color: #000;">Buy {{ $pb_prod->pivot->quantity }} @if($pb_variant) ({{ $pb_variant->size }}) @endif</span>
                                     <span style="font-size: 12px; font-weight: 700; color: #10B981;">Save ₹{{ number_format($savings, 0) }} instantly</span>
                                 </div>
-                                <button onclick="addBundleToCart({{ $pack->id }}, '{{ addslashes($pack->title) }}', this)" 
+                                <button onclick="addBundleToCart({{ $pack->id }}, '{{ addslashes($pack->title) }}', this, {{ $pb_prod->id }}, {{ $pb_prod->pivot->quantity }}, '{{ $pb_variant ? $pb_variant->size : "" }}')" 
                                         style="background: #000; color: #fff; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 700; font-size: 13px; cursor: pointer; transition: 0.3s;">
                                     Add ₹{{ number_format($pack->total_price, 0) }}
                                 </button>
@@ -831,7 +839,7 @@
                                 <h4 style="font-size: 14px; margin: 0 0 4px 0; font-weight: 600;">{{ $pool->title }}</h4>
                                 <p style="font-size: 13px; color: var(--color-gold); font-weight: 700; margin: 0;">Starts ₹{{ number_format($pool->total_price, 0) }}</p>
                             </div>
-                            <button onclick="openQuickBuild({{ $pool->id }}, '{{ addslashes($pool->title) }}', {{ $pool->min_quantity }}, {{ json_encode($pool->products->map(fn($p) => ['id' => $p->id, 'title' => $p->title, 'image' => $p->main_image_url])) }})" 
+                            <button onclick="openQuickBuild({{ $pool->id }}, '{{ addslashes($pool->title) }}', {{ $pool->min_quantity }}, {{ json_encode($pool->products->map(fn($p) => ['id' => $p->id, 'title' => $p->title, 'image' => $p->main_image_url, 'price' => $p->starting_price])) }})" 
                                style="padding: 8px 12px; background: var(--color-gold); color: #fff; border: none; border-radius: 4px; font-size: 11px; font-weight: 700; text-transform: uppercase; cursor: pointer;">
                                 Quick Build
                             </button>
@@ -995,10 +1003,16 @@
         el.classList.add('active');
     }
 
-    function addBundleToCart(id, title, btn) {
+    function addBundleToCart(id, title, btn, productId, qty, size) {
         const originalText = btn.innerHTML;
         btn.disabled = true;
         btn.innerHTML = '...';
+
+        const multiProducts = [{
+            id: productId,
+            quantity: qty,
+            size: size
+        }];
 
         fetch('{{ route("cart.add") }}', {
             method: 'POST',
@@ -1007,16 +1021,14 @@
                 'X-CSRF-TOKEN': '{{ csrf_token() }}'
             },
             body: JSON.stringify({
-                id: id,
-                quantity: 1,
-                type: 'bundle'
+                multi_products: multiProducts
             })
         })
         .then(response => response.json())
         .then(data => {
             if(data.success) {
                 const toast = document.getElementById('toast');
-                toast.innerText = (title || 'Item') + ' added to Bag! 🎉';
+                toast.innerText = 'Bundle items added to Bag! 🎉';
                 toast.style.opacity = '1';
                 setTimeout(() => toast.style.opacity = '0', 2500);
                 
@@ -1066,6 +1078,7 @@
             item.innerHTML = `
                 <img src="${p.image}" class="pool-item-img" onerror="handleImageError(this)">
                 <p class="pool-item-name">${p.title}</p>
+                <p style="font-size: 11px; font-weight: 700; color: var(--color-gold); margin: 3px 0 0 0;">₹${new Intl.NumberFormat().format(p.price)}</p>
                 <div class="selection-badge">✓</div>
             `;
             grid.appendChild(item);
@@ -1112,6 +1125,10 @@
         btn.disabled = true;
         btn.innerHTML = "Processing...";
 
+        const multiProducts = selectedPoolProducts.map(pid => {
+            return { id: pid, quantity: 1 };
+        });
+
         fetch('{{ route("cart.add") }}', {
             method: 'POST',
             headers: {
@@ -1119,10 +1136,7 @@
                 'X-CSRF-TOKEN': '{{ csrf_token() }}'
             },
             body: JSON.stringify({
-                id: currentPoolId,
-                quantity: 1,
-                type: 'bundle',
-                products: selectedPoolProducts // Assuming backend handles this
+                multi_products: multiProducts
             })
         })
         .then(response => response.json())
@@ -1130,7 +1144,7 @@
             if(data.success) {
                 closeQuickBuild();
                 const toast = document.getElementById('toast');
-                toast.innerText = currentPoolTitle + ' added to Bag! 🎉';
+                toast.innerText = 'Items added to Bag! 🎉';
                 toast.style.opacity = '1';
                 setTimeout(() => toast.style.opacity = '0', 2500);
                 

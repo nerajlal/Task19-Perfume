@@ -110,6 +110,80 @@ class CartController extends Controller
      */
     public function add(Request $request)
     {
+        // Handle multiple products (for splitting bundles)
+        if ($request->has('multi_products')) {
+            $cart = Auth::check() ? $this->getCartFromDb() : session()->get('cart', []);
+            
+            foreach ($request->multi_products as $itemData) {
+                $pId = $itemData['id'];
+                $qty = $itemData['quantity'] ?? 1;
+                $size = $itemData['size'] ?? null;
+                $variantId = $itemData['variant_id'] ?? null;
+
+                $product = Product::find($pId);
+                if (!$product) continue;
+
+                $price = $product->starting_price;
+                if ($size) {
+                    $v = $product->variants()->where('size', $size)->first();
+                    if ($v) { $price = $v->price; $variantId = $v->id; }
+                }
+
+                $cartKey = $pId . ($size ? '-' . $size : '');
+
+                if (Auth::check()) {
+                    $cartItem = Cart::where('user_id', Auth::id())
+                        ->where('product_id', $pId)
+                        ->where('size', $size)
+                        ->first();
+                    if ($cartItem) {
+                        $cartItem->quantity += $qty;
+                        $cartItem->save();
+                    } else {
+                        Cart::create([
+                            'user_id' => Auth::id(),
+                            'product_id' => $pId,
+                            'quantity' => $qty,
+                            'size' => $size,
+                            'product_variant_id' => $variantId
+                        ]);
+                    }
+                } else {
+                    if (isset($cart[$cartKey])) {
+                        $cart[$cartKey]['quantity'] += $qty;
+                    } else {
+                        $cart[$cartKey] = [
+                            "product_id" => $product->id,
+                            "variant_id" => $variantId,
+                            "name" => $product->title,
+                            "quantity" => $qty,
+                            "price" => $price,
+                            "image" => $product->main_image_url,
+                            "size" => $size,
+                            "type" => "product"
+                        ];
+                    }
+                }
+            }
+            
+            if (!Auth::check()) {
+                session()->put('cart', $cart);
+            } else {
+                $cart = $this->getCartFromDb();
+            }
+
+            $count = 0;
+            foreach($cart as $item) $count += $item['quantity'];
+            $cartData = $this->calculateTotal($cart);
+
+            return response()->json([
+                'success' => true, 
+                'message' => 'Collection added to Bag!',
+                'cartCount' => $count,
+                'cartTotal' => $cartData['total']
+            ]);
+        }
+
         $id = $request->id;
         $quantity = $request->quantity ?? 1;
         $size = $request->size;
