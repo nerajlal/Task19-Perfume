@@ -49,10 +49,10 @@
 
     <style>
         .a-page-header {
-            padding: 80px 0;
+            padding: 40px 0;
             text-align: center;
-            background: var(--bg-soft);
-            margin-bottom: 60px;
+            background: #fff;
+            margin-bottom: 20px;
         }
 
         .a-page-header h1 { font-size: 42px; margin-bottom: 10px; }
@@ -61,7 +61,7 @@
         .a-listing-layout {
             display: grid;
             grid-template-columns: 280px 1fr;
-            gap: 50px;
+            gap: 30px;
         }
 
         .a-listing-sidebar {

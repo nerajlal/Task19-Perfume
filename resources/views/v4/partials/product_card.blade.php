@@ -40,11 +40,6 @@
                 <span class="a-price-original">₹{{ number_format($product->compare_at_price, 0) }}</span>
             @endif
         </div>
-        
-        <div class="a-tags">
-            <span class="a-tag">Best Seller</span>
-            <span class="a-tag">Long Lasting</span>
-        </div>
     </div>
 
     <button class="a-add-btn" onclick="quickAdd({{ $product->id }})">
@@ -71,7 +66,7 @@
         position: relative;
         aspect-ratio: 1;
         background: #fff;
-        padding: 20px;
+        padding: 10px;
     }
 
     .a-product-image {
@@ -82,14 +77,17 @@
 
     .a-badge-discount {
         position: absolute;
-        top: 10px;
-        left: 10px;
-        background: var(--accent);
+        top: 12px;
+        left: 12px;
+        background: #800000; /* Luxury Maroon */
         color: #fff;
-        font-size: 10px;
+        font-size: 11px;
         font-weight: 800;
-        padding: 4px 8px;
-        border-radius: 2px;
+        padding: 5px 12px;
+        border-radius: 50px;
+        box-shadow: 0 4px 10px rgba(128, 0, 0, 0.2);
+        z-index: 10;
+        letter-spacing: 0.5px;
     }
 
     .a-wishlist-btn {
@@ -107,16 +105,15 @@
     .a-wishlist-btn:hover { color: var(--accent); }
 
     .a-product-info {
-        padding: 15px;
-        flex-grow: 1;
+        padding: 10px 12px;
         text-align: left;
     }
 
     .a-product-title {
-        font-size: 14px;
+        font-size: 13px;
         font-weight: 600;
-        margin-bottom: 8px;
-        height: 40px;
+        margin-bottom: 2px;
+        line-height: 1.2;
         overflow: hidden;
         display: -webkit-box;
         -webkit-line-clamp: 2;
@@ -127,24 +124,24 @@
 
     .a-rating {
         color: #FFD700;
-        font-size: 10px;
-        margin-bottom: 10px;
+        font-size: 9px;
+        margin-bottom: 6px;
         display: flex;
         align-items: center;
         gap: 3px;
     }
 
-    .a-rating span { color: #999; margin-left: 5px; font-size: 11px; }
+    .a-rating span { color: #999; margin-left: 3px; font-size: 10px; }
 
     .a-product-price {
         display: flex;
         align-items: center;
-        gap: 10px;
-        margin-bottom: 15px;
+        gap: 8px;
+        margin-bottom: 5px;
     }
 
-    .a-price-current { font-weight: 700; font-size: 16px; color: #000; }
-    .a-price-original { color: #999; text-decoration: line-through; font-size: 13px; }
+    .a-price-current { font-weight: 700; font-size: 15px; color: #000; }
+    .a-price-original { color: #999; text-decoration: line-through; font-size: 12px; }
 
     .a-tags { display: flex; gap: 5px; margin-bottom: 10px; }
     .a-tag {
@@ -162,13 +159,13 @@
         background: #000;
         color: #fff;
         border: none;
-        padding: 12px;
+        padding: 10px;
         font-weight: 700;
-        font-size: 12px;
+        font-size: 11px;
         letter-spacing: 1px;
         cursor: pointer;
         transition: 0.3s;
     }
 
-    .a-add-btn:hover { background: var(--accent); }
+    .a-add-btn:hover { background: var(--aj-gold); }
 </style>

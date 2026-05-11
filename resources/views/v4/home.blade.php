@@ -8,31 +8,27 @@
         <div class="aj-slides-container">
             @if($sliders->count() > 0)
                 @foreach($sliders as $index => $slide)
-                    <div class="aj-slide {{ $index == 0 ? 'active' : '' }}" style="background-image: url('{{ Storage::url($slide->image_desktop) }}');">
-                        <div class="aj-hero-box">
-                            <h2 class="serif">{{ $slide->title ?? 'New Collection' }}</h2>
-                            <p>{{ $slide->sub_title ?? 'EXCLUSIVE OFFERS' }}</p>
-                            @if($slide->link)
-                                <a href="{{ $slide->link }}" class="aj-btn-white">Shop Now</a>
-                            @endif
-                        </div>
+                    <div class="aj-slide {{ $index == 0 ? 'active' : '' }}">
+                        <picture>
+                            <source media="(max-width: 768px)" srcset="{{ Storage::url($slide->image_mobile) }}">
+                            <img src="{{ Storage::url($slide->image_desktop) }}" alt="{{ $slide->title ?? 'Task19 Perfumes' }}" class="hero-img">
+                        </picture>
+                        {{-- Text removed as per request --}}
                     </div>
                 @endforeach
             @else
                 <!-- Fallback Slider -->
-                <div class="aj-slide active" style="background-image: url('https://ajmalperfume.com/cdn/shop/files/Mother_s_Day_Banner_Desktop.jpg');">
-                    <div class="aj-hero-box">
-                        <h2 class="serif">Mother's Day</h2>
-                        <p>GIFTS STARTING AT ₹999</p>
-                        <a href="#" class="aj-btn-white">Shop Now</a>
-                    </div>
+                <div class="aj-slide active">
+                    <picture>
+                        <source media="(max-width: 768px)" srcset="https://ajmalperfume.com/cdn/shop/files/Mother_s_Day_Banner_Mobile.jpg">
+                        <img src="https://ajmalperfume.com/cdn/shop/files/Mother_s_Day_Banner_Desktop.jpg" alt="Mother's Day" class="hero-img">
+                    </picture>
                 </div>
-                <div class="aj-slide" style="background-image: url('https://ajmalperfume.com/cdn/shop/files/Aureum_Banner_Desktop.jpg');">
-                    <div class="aj-hero-box">
-                        <h2 class="serif">Signature Oudh</h2>
-                        <p>PURE & AUTHENTIC</p>
-                        <a href="#" class="aj-btn-white">Explore</a>
-                    </div>
+                <div class="aj-slide">
+                    <picture>
+                        <source media="(max-width: 768px)" srcset="https://ajmalperfume.com/cdn/shop/files/Aureum_Banner_Mobile.jpg">
+                        <img src="https://ajmalperfume.com/cdn/shop/files/Aureum_Banner_Desktop.jpg" alt="Signature Oudh" class="hero-img">
+                    </picture>
                 </div>
             @endif
         </div>
@@ -174,6 +170,27 @@
         </div>
     </section>
 
+    <!-- SHOP BY PRICE -->
+    <section class="aj-section">
+        <div class="container text-center">
+            <h2 class="aj-title cursive">SHOP BY <span class="sketch-under">PRICE</span></h2>
+            
+            <div class="aj-tabs-center" style="margin: 40px 0;">
+                <button class="active">UNDER 1999</button>
+                <button>FROM 2000 TO 2999</button>
+                <button>FROM 3000 TO 3999</button>
+                <button>FROM 4000 TO 4999</button>
+                <button>ABOVE 5000</button>
+            </div>
+
+            <div class="aj-product-grid">
+                @foreach($products->shuffle()->take(4) as $product)
+                    @include('v4.partials.product_card', ['product' => $product])
+                @endforeach
+            </div>
+        </div>
+    </section>
+
     <!-- NEW ARRIVALS -->
     <section class="aj-section bg-soft">
         <div class="container">
@@ -238,8 +255,9 @@
         <div class="container">
             <div class="aj-manufacturing">
                 <div class="aj-man-media">
-                    <img src="https://ajmalperfume.com/cdn/shop/files/Process_of_Manufacturing.jpg" alt="Manufacturing">
-                    <div class="play-overlay"><i class="fa-solid fa-play"></i></div>
+                    <div class="video-container" style="padding-bottom: 56.25%; border-radius: 4px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                        <iframe src="https://www.youtube.com/embed/QM18rD-zrCs?autoplay=0&mute=1&rel=0&modestbranding=1" title="Manufacturing Process" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe>
+                    </div>
                 </div>
                 <div class="aj-man-text">
                     <h2 class="aj-title">PROCESS OF <span class="gold-under">MANUFACTURING</span></h2>
@@ -311,14 +329,23 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-size: cover;
-            background-position: center;
             display: flex;
             align-items: center;
             justify-content: center;
             opacity: 0;
             transition: opacity 1s ease-in-out;
             z-index: 1;
+            overflow: hidden;
+        }
+
+        .hero-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
         }
 
         .aj-slide.active {
@@ -631,7 +658,7 @@
         }
 
         @media (max-width: 991px) {
-            .aj-hero-slider { height: 450px; }
+            .aj-hero-slider { height: auto; aspect-ratio: 4/5; }
             .aj-hero-box h2 { font-size: 36px; }
             .aj-hero-box p { font-size: 11px; letter-spacing: 1.5px; }
             .aj-btn-white { padding: 12px 25px; font-size: 10px; }
