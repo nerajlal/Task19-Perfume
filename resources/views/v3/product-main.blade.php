@@ -597,13 +597,206 @@
     
     .pool-item.selected .selection-badge { display: flex; }
     
-    .modal-footer {
-        padding: 20px 30px;
-        border-top: 1px solid #eee;
+    /* GRAPHICAL REPS */
+    .fragrance-profile {
+        margin: 40px 0;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+        background: #fdfaf5;
+        padding: 30px;
+        border-radius: 15px;
+    }
+
+    .notes-pyramid {
+        position: relative;
+        text-align: center;
+        padding: 10px;
+    }
+
+    .pyramid-tier {
+        padding: 15px;
+        border: 1px solid #e5dcc3;
+        margin-bottom: 8px;
+        border-radius: 8px;
+        background: #fff;
+        transition: transform 0.3s;
+    }
+
+    .pyramid-tier:hover {
+        transform: scale(1.02);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    }
+
+    .tier-label {
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        color: var(--color-gold);
+        font-weight: 700;
+        margin-bottom: 4px;
+    }
+
+    .tier-content {
+        font-size: 13px;
+        font-weight: 600;
+        color: #333;
+    }
+
+    .scent-meters {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 20px;
+    }
+
+    .meter-item {
+        margin-bottom: 5px;
+    }
+
+    .meter-label {
         display: flex;
         justify-content: space-between;
+        font-size: 12px;
+        font-weight: 700;
+        margin-bottom: 8px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .meter-bar-bg {
+        height: 6px;
+        background: #eee;
+        border-radius: 3px;
+        overflow: hidden;
+    }
+
+    .meter-bar-fill {
+        height: 100%;
+        background: var(--color-gold);
+        border-radius: 3px;
+    }
+
+    .accords-flex {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 15px;
+    }
+
+    .accord-pill {
+        background: #fff;
+        border: 1px solid #eee;
+        padding: 6px 15px;
+        border-radius: 99px;
+        font-size: 12px;
+        font-weight: 500;
+        color: #666;
+    }
+
+    /* FEATURE ICONS */
+    .feature-icons {
+        display: flex;
+        gap: 30px;
+        margin: 30px 0;
+        padding: 20px 0;
+        border-top: 1px solid #eee;
+        border-bottom: 1px solid #eee;
+    }
+
+    .feature-icon-item {
+        display: flex;
+        flex-direction: column;
         align-items: center;
-        background: #f9f9f9;
+        gap: 8px;
+        text-align: center;
+        flex: 1;
+    }
+
+    .feature-icon-item i {
+        font-size: 20px;
+        color: var(--color-gold);
+    }
+
+    .feature-icon-item span {
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: #333;
+    }
+
+    /* CONCENTRATION BAR */
+    .concentration-bar {
+        display: flex;
+        gap: 5px;
+        margin-top: 15px;
+    }
+
+    .conc-step {
+        flex: 1;
+        height: 40px;
+        background: #f5f5f5;
+        border-radius: 4px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        opacity: 0.4;
+        transition: 0.3s;
+    }
+
+    .conc-step.active {
+        background: var(--color-gold);
+        color: #fff;
+        opacity: 1;
+        box-shadow: 0 4px 10px rgba(197, 160, 89, 0.3);
+    }
+
+    .conc-label {
+        font-size: 8px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .conc-value {
+        font-size: 10px;
+        font-weight: 700;
+    }
+
+    /* ACCORDS BAR */
+    .accord-bar-container {
+        margin-top: 20px;
+    }
+
+    .accord-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 8px;
+    }
+
+    .accord-name {
+        width: 80px;
+        font-size: 11px;
+        font-weight: 700;
+        color: #666;
+        text-transform: uppercase;
+    }
+
+    .accord-track {
+        flex: 1;
+        height: 6px;
+        background: #eee;
+        border-radius: 3px;
+        overflow: hidden;
+    }
+
+    .accord-fill {
+        height: 100%;
+        background: var(--color-gold);
+        border-radius: 3px;
     }
     
     .btn-build {
@@ -724,8 +917,117 @@
             </div>
 
             <!-- Description -->
-            <div class="desc-block">
+            <div class="desc-block" style="margin-bottom: 30px;">
                 {{ $product->description }}
+            </div>
+
+            <!-- Feature Icons -->
+            <div class="feature-icons">
+                <div class="feature-icon-item">
+                    <i class="fas fa-clock"></i>
+                    <span>Long Lasting</span>
+                </div>
+                <div class="feature-icon-item">
+                    <i class="fas fa-gem"></i>
+                    <span>Premium Quality</span>
+                </div>
+                <div class="feature-icon-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>100% Authentic</span>
+                </div>
+                <div class="feature-icon-item">
+                    <i class="fas fa-leaf"></i>
+                    <span>Cruelty Free</span>
+                </div>
+            </div>
+
+            <!-- Graphical Profile -->
+            <div class="fragrance-profile">
+                <div class="notes-pyramid">
+                    <h4 style="font-family: var(--font-display); font-size: 18px; margin-bottom: 20px;">The Notes</h4>
+                    <div class="pyramid-tier">
+                        <div class="tier-label">Top Notes</div>
+                        <div class="tier-content">{{ $product->notes_top }}</div>
+                    </div>
+                    <div class="pyramid-tier">
+                        <div class="tier-label">Heart Notes</div>
+                        <div class="tier-content">{{ $product->notes_heart }}</div>
+                    </div>
+                    <div class="pyramid-tier">
+                        <div class="tier-label">Base Notes</div>
+                        <div class="tier-content">{{ $product->notes_base }}</div>
+                    </div>
+                </div>
+
+                <div class="scent-meters">
+                    <h4 style="font-family: var(--font-display); font-size: 18px; margin-bottom: 10px;">Performance</h4>
+                    
+                    <div class="meter-item">
+                        <div class="meter-label">
+                            <span>Longevity</span>
+                            <span>Long Lasting</span>
+                        </div>
+                        <div class="meter-bar-bg">
+                            <div class="meter-bar-fill" style="width: 85%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="meter-item">
+                        <div class="meter-label">
+                            <span>Sillage</span>
+                            <span>Strong</span>
+                        </div>
+                        <div class="meter-bar-bg">
+                            <div class="meter-bar-fill" style="width: 75%;"></div>
+                        </div>
+                    </div>
+
+                    @if($product->olfactory_family)
+                    <div class="accord-bar-container">
+                        <div class="meter-label">Main Accords</div>
+                        @php
+                            $accords = explode(',', $product->olfactory_family);
+                            $percentages = [90, 75, 60, 45, 30];
+                        @endphp
+                        @foreach($accords as $index => $accord)
+                            @if($index < 4)
+                            <div class="accord-row">
+                                <div class="accord-name">{{ trim($accord) }}</div>
+                                <div class="accord-track">
+                                    <div class="accord-fill" style="width: {{ $percentages[$index] ?? 40 }}%;"></div>
+                                </div>
+                            </div>
+                            @endif
+                        @endforeach
+                    </div>
+                    @endif
+
+                    @if($product->oil_concentration)
+                    <div style="margin-top: 20px;">
+                        <div class="meter-label">Concentration</div>
+                        <div class="concentration-bar">
+                            @php
+                                $c = strtolower($product->oil_concentration);
+                                $isEDT = str_contains($c, 'edt') || str_contains($c, 'toilette');
+                                $isEDP = str_contains($c, 'edp') || str_contains($c, 'parfum') && !$isEDT;
+                                $isExtrait = str_contains($c, 'extrait') || str_contains($c, 'extract');
+                            @endphp
+                            <div class="conc-step {{ $isEDT ? 'active' : '' }}">
+                                <span class="conc-label">EDT</span>
+                                <span class="conc-value">10-15%</span>
+                            </div>
+                            <div class="conc-step {{ $isEDP ? 'active' : '' }}">
+                                <span class="conc-label">EDP</span>
+                                <span class="conc-value">15-20%</span>
+                            </div>
+                            <div class="conc-step {{ $isExtrait ? 'active' : '' }}">
+                                <span class="conc-label">Extrait</span>
+                                <span class="conc-value">25-40%</span>
+                            </div>
+                        </div>
+                    </div>
+                    @endif
+                </div>
             </div>
 
             <!-- Bundle Link -->
@@ -737,6 +1039,62 @@
                 </div>
                 <i class="fas fa-arrow-right" style="color: #666;"></i>
             </a>
+            @endif
+
+            <!-- Bundle & Save Integration -->
+            @if((isset($packBundles) && $packBundles->count() > 0) || (isset($poolBundles) && $poolBundles->count() > 0))
+            <div class="bundle-save-container" style="margin-top: 40px; padding-bottom: 30px; border-bottom: 1px solid #eee; margin-bottom: 30px;">
+                <h3 style="font-family: var(--font-display); font-size: 20px; margin-bottom: 20px;">Bundle & <em>Save</em></h3>
+                
+                @if(isset($packBundles) && $packBundles->count() > 0)
+                <div style="margin-bottom: 25px;">
+                    <h3 style="font-size: 14px; font-weight: 700; color: #000; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px;">Special Volume Deals</h3>
+                    <div style="display: flex; flex-direction: column; gap: 10px;">
+                        @foreach($packBundles as $pack)
+                            @php 
+                                $pb_prod = $pack->products->first();
+                                $pb_variant = $pb_prod ? $pb_prod->variants->firstWhere('id', $pb_prod->pivot->product_variant_id) : null;
+                                $originalTotal = ($pb_variant ? $pb_variant->price : $pb_prod->starting_price) * $pb_prod->pivot->quantity;
+                                $savings = $originalTotal - $pack->total_price;
+                            @endphp
+                            @if($pb_prod)
+                            <div style="display: flex; align-items: center; justify-content: space-between; background: #fff; border: 1.5px dashed #e5e5e5; padding: 12px 15px; border-radius: 12px; transition: 0.3s;">
+                                <div style="display: flex; flex-direction: column; gap: 2px;">
+                                    <span style="font-weight: 700; font-size: 15px; color: #000;">Buy {{ $pb_prod->pivot->quantity }} @if($pb_variant) ({{ $pb_variant->size }}) @endif</span>
+                                    <span style="font-size: 12px; font-weight: 700; color: #C5A059;">Save ₹{{ number_format($savings, 0) }} instantly</span>
+                                </div>
+                                <button onclick="addBundleToCart({{ $pack->id }}, '{{ addslashes($pack->title) }}', this, {{ $pb_prod->id }}, {{ $pb_prod->pivot->quantity }}, '{{ $pb_variant ? $pb_variant->size : "" }}')" 
+                                        style="background: #000; color: #fff; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 700; font-size: 13px; cursor: pointer; transition: 0.3s;">
+                                    Add ₹{{ number_format($pack->total_price, 0) }}
+                                </button>
+                            </div>
+                            @endif
+                        @endforeach
+                    </div>
+                </div>
+                @endif
+
+                @if(isset($poolBundles) && $poolBundles->count() > 0)
+                <div>
+                    <span class="group-label" style="margin-bottom: 15px;">Collections (Build Your Own)</span>
+                    <div style="display: flex; flex-direction: column; gap: 12px;">
+                        @foreach($poolBundles as $pool)
+                        <div style="display: flex; align-items: center; gap: 15px; background: #fdf8ef; padding: 12px; border-radius: 8px; border: 1px solid #C5A059;">
+                            <img src="{{ \Illuminate\Support\Facades\Storage::url($pool->image) }}" style="width: 60px; height: 60px; object-fit: cover; border-radius: 4px;" onerror="handleImageError(this)">
+                            <div style="flex: 1;">
+                                <h4 style="font-size: 14px; margin: 0 0 4px 0; font-weight: 600;">{{ $pool->title }}</h4>
+                                <p style="font-size: 13px; color: var(--color-gold); font-weight: 700; margin: 0;">Starts ₹{{ number_format($pool->total_price, 0) }}</p>
+                            </div>
+                            <button onclick="openQuickBuild({{ $pool->id }}, '{{ addslashes($pool->title) }}', {{ $pool->min_quantity }}, {{ json_encode($pool->products->map(fn($p) => ['id' => $p->id, 'title' => $p->title, 'image' => $p->main_image_url, 'price' => $p->starting_price])) }})" 
+                               style="padding: 8px 12px; background: var(--color-gold); color: #fff; border: none; border-radius: 4px; font-size: 11px; font-weight: 700; text-transform: uppercase; cursor: pointer;">
+                                Quick Build
+                            </button>
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+                @endif
+            </div>
             @endif
 
             <!-- Variants -->
@@ -794,62 +1152,6 @@
             </div>
             
             <p style="text-align: center; margin-top: 15px; font-size: 11px; color: #999; text-transform: uppercase; letter-spacing: 1px;">Free Shipping over ₹399 • 14-Day Returns</p>
-
-            <!-- Bundle & Save Integration -->
-            @if((isset($packBundles) && $packBundles->count() > 0) || (isset($poolBundles) && $poolBundles->count() > 0))
-            <div class="bundle-save-container" style="margin-top: 40px; padding-top: 30px; border-top: 1px solid #eee;">
-                <h3 style="font-family: var(--font-display); font-size: 20px; margin-bottom: 20px;">Bundle & <em>Save</em></h3>
-                
-                @if(isset($packBundles) && $packBundles->count() > 0)
-                <div style="margin-bottom: 25px;">
-                    <h3 style="font-size: 14px; font-weight: 700; color: #000; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px;">Special Volume Deals</h3>
-                    <div style="display: flex; flex-direction: column; gap: 10px;">
-                        @foreach($packBundles as $pack)
-                            @php 
-                                $pb_prod = $pack->products->first();
-                                $pb_variant = $pb_prod ? $pb_prod->variants->firstWhere('id', $pb_prod->pivot->product_variant_id) : null;
-                                $originalTotal = ($pb_variant ? $pb_variant->price : $pb_prod->starting_price) * $pb_prod->pivot->quantity;
-                                $savings = $originalTotal - $pack->total_price;
-                            @endphp
-                            @if($pb_prod)
-                            <div style="display: flex; align-items: center; justify-content: space-between; background: #fff; border: 1.5px dashed #e5e5e5; padding: 12px 15px; border-radius: 12px; transition: 0.3s;">
-                                <div style="display: flex; flex-direction: column; gap: 2px;">
-                                    <span style="font-weight: 700; font-size: 15px; color: #000;">Buy {{ $pb_prod->pivot->quantity }} @if($pb_variant) ({{ $pb_variant->size }}) @endif</span>
-                                    <span style="font-size: 12px; font-weight: 700; color: #10B981;">Save ₹{{ number_format($savings, 0) }} instantly</span>
-                                </div>
-                                <button onclick="addBundleToCart({{ $pack->id }}, '{{ addslashes($pack->title) }}', this, {{ $pb_prod->id }}, {{ $pb_prod->pivot->quantity }}, '{{ $pb_variant ? $pb_variant->size : "" }}')" 
-                                        style="background: #000; color: #fff; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 700; font-size: 13px; cursor: pointer; transition: 0.3s;">
-                                    Add ₹{{ number_format($pack->total_price, 0) }}
-                                </button>
-                            </div>
-                            @endif
-                        @endforeach
-                    </div>
-                </div>
-                @endif
-
-                @if(isset($poolBundles) && $poolBundles->count() > 0)
-                <div>
-                    <span class="group-label" style="margin-bottom: 15px;">Collections (Build Your Own)</span>
-                    <div style="display: flex; flex-direction: column; gap: 12px;">
-                        @foreach($poolBundles as $pool)
-                        <div style="display: flex; align-items: center; gap: 15px; background: #fdf8ef; padding: 12px; border-radius: 8px; border: 1px solid #C5A059;">
-                            <img src="{{ \Illuminate\Support\Facades\Storage::url($pool->image) }}" style="width: 60px; height: 60px; object-fit: cover; border-radius: 4px;" onerror="handleImageError(this)">
-                            <div style="flex: 1;">
-                                <h4 style="font-size: 14px; margin: 0 0 4px 0; font-weight: 600;">{{ $pool->title }}</h4>
-                                <p style="font-size: 13px; color: var(--color-gold); font-weight: 700; margin: 0;">Starts ₹{{ number_format($pool->total_price, 0) }}</p>
-                            </div>
-                            <button onclick="openQuickBuild({{ $pool->id }}, '{{ addslashes($pool->title) }}', {{ $pool->min_quantity }}, {{ json_encode($pool->products->map(fn($p) => ['id' => $p->id, 'title' => $p->title, 'image' => $p->main_image_url, 'price' => $p->starting_price])) }})" 
-                               style="padding: 8px 12px; background: var(--color-gold); color: #fff; border: none; border-radius: 4px; font-size: 11px; font-weight: 700; text-transform: uppercase; cursor: pointer;">
-                                Quick Build
-                            </button>
-                        </div>
-                        @endforeach
-                    </div>
-                </div>
-                @endif
-            </div>
-            @endif
 
         </div>
     </div>

@@ -4,7 +4,8 @@
         <!-- Brand Column -->
         <div class="footer-col">
             <div class="footer-logo">Task19 Perfumes</div>
-            <p class="footer-tagline">Crafting memories through scents. India's first perfume bar offering exceptional, long-lasting fragrances.</p>
+            <p class="footer-tagline">Crafting memories through scents. India's first perfume bar offering exceptional,
+                long-lasting fragrances.</p>
             <div class="footer-social">
                 <a href="#" class="social-link"><i class="fab fa-whatsapp"></i></a>
                 <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
@@ -41,14 +42,16 @@
         <!-- Chat Support Column -->
         <div class="footer-col">
             <h3 class="footer-heading">Need Assistance?</h3>
-            <p class="newsletter-text">Have questions concerning our perfumes? Chat with our support team for instant assistance.</p>
+            <p class="newsletter-text">Have questions concerning our perfumes? Chat with our support team for instant
+                assistance.</p>
         </div>
     </div>
 
     <div class="footer-bottom">
         <div class="copyright">
-            © 2025 Task19 Perfumes. All rights reserved. 
-            <span style="opacity: 0.7; margin-left: 5px;">Developed by <a href="https://metora.in/" target="_blank" style="color: var(--gold); text-decoration: none; font-weight: bold;">Metora</a></span>
+            © 2025 Task19 Perfumes. All rights reserved.
+            <span style="opacity: 0.7; margin-left: 5px;">Developed by <a href="#" target="_blank"
+                    style="color: var(--gold); text-decoration: none; font-weight: bold;">Task19</a></span>
         </div>
         <div class="payment-icons">
             <i class="fab fa-cc-visa"></i>
@@ -61,7 +64,8 @@
 
 <!-- Quick Action Button -->
 <div class="quick-action">
-    <a href="https://wa.me/8547470675" target="_blank" class="action-btn" style="background-color: #25D366; display: flex; align-items: center; justify-content: center; text-decoration: none;">
+    <a href="https://wa.me/8547470675" target="_blank" class="action-btn"
+        style="background-color: #25D366; display: flex; align-items: center; justify-content: center; text-decoration: none;">
         <i class="fab fa-whatsapp" style="font-size: 24px;"></i>
     </a>
 </div>
