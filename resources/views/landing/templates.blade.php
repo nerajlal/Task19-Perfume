@@ -4,7 +4,7 @@
     <style>
         .templates-hero {
             padding: 10rem 0 6rem;
-            background: #F4F1ED;
+            background: var(--bg-color);
             text-align: center;
         }
 

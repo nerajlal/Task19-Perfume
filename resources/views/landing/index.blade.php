@@ -4,8 +4,8 @@
 <style>
     /* Hero Section */
     .hero {
-        padding: 10rem 0 5rem;
-        min-height: 90vh;
+        padding: 8rem 0 4rem;
+        min-height: 80vh;
         display: flex;
         align-items: center;
         background: radial-gradient(circle at 80% 20%, rgba(197, 160, 89, 0.05) 0%, transparent 40%);
@@ -14,9 +14,9 @@
 
     .hero-grid {
         display: grid;
-        grid-template-columns: 1.2fr 1fr;
+        grid-template-columns: 1fr 1.3fr;
         align-items: center;
-        gap: 4rem;
+        gap: 6rem;
     }
 
     .hero-content {
@@ -64,12 +64,12 @@
 
     /* Features Section */
     .section-padding {
-        padding: 8rem 0;
+        padding: 5rem 0;
     }
 
     .section-header {
         text-align: center;
-        margin-bottom: 5rem;
+        margin-bottom: 3.5rem;
     }
 
     .section-header h2 {
@@ -84,47 +84,60 @@
         font-size: 0.9rem;
     }
 
-    .features-grid {
+    /* Features Section */
+    .features-minimal {
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 2rem;
+        grid-template-columns: 1fr 1.5fr;
+        gap: 6rem;
+        align-items: flex-start;
     }
 
-    .feature-card {
-        padding: 2.5rem 2rem;
-        background: var(--white);
-        border: 1px solid rgba(197, 160, 89, 0.1);
-        border-radius: 20px;
-        transition: var(--transition);
-        text-align: left;
-    }
-
-    .feature-card:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.03);
-        border-color: var(--accent-gold);
-    }
-
-    .feature-icon {
-        font-size: 2rem;
-        color: var(--accent-gold);
+    .features-text h2 {
+        font-size: 3.5rem;
         margin-bottom: 1.5rem;
     }
 
-    .feature-card h3 {
-        font-size: 1.25rem;
-        margin-bottom: 1rem;
+    .features-text p {
+        font-size: 1.1rem;
+        color: var(--text-light);
+        max-width: 400px;
     }
 
-    .feature-card p {
+    .features-list-minimal {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+    }
+
+    .feature-item {
+        display: flex;
+        gap: 1.5rem;
+        align-items: flex-start;
+    }
+
+    .feature-item-icon {
+        color: var(--accent-gold);
+        font-size: 1.5rem;
+        margin-top: 0.2rem;
+    }
+
+    .feature-item-content h3 {
+        font-size: 1.1rem;
+        margin-bottom: 0.5rem;
+        font-family: 'Montserrat', sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .feature-item-content p {
         color: var(--text-light);
-        font-size: 0.9rem;
-        line-height: 1.5;
+        font-size: 0.85rem;
+        line-height: 1.6;
     }
 
     /* Template Showcase */
     .templates-section {
-        background: #FDFBF7;
+        background: var(--bg-color);
     }
 
     .template-grid {
@@ -282,14 +295,25 @@
 
     /* Testimonials */
     .testimonials {
-        background: #FDFBF7;
-        padding: 10rem 0;
+        background: var(--bg-color);
+        padding: 6rem 0;
     }
 
-    .testimonial-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
+    .testimonials-overflow {
+        overflow: hidden;
+        width: 100%;
+        position: relative;
+    }
+
+    .testimonials-track {
+        display: flex;
         gap: 3rem;
+        animation: scroll 40s linear infinite;
+        width: max-content;
+    }
+
+    .testimonials-track:hover {
+        animation-play-state: paused;
     }
 
     .testimonial-card {
@@ -301,6 +325,13 @@
         transition: var(--transition);
         display: flex;
         flex-direction: column;
+        width: 450px; /* Fixed width for consistent scroll */
+        flex-shrink: 0;
+    }
+
+    @keyframes scroll {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(calc(-50% - 1.5rem)); }
     }
 
     .testimonial-card:hover {
@@ -379,8 +410,22 @@
         .pricing-card.featured:hover {
             transform: translateY(-5px);
         }
-        .testimonial-grid {
+        .features-minimal {
             grid-template-columns: 1fr;
+            gap: 3rem;
+            text-align: center;
+        }
+        .features-text p {
+            margin: 0 auto;
+        }
+        .features-list-minimal {
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            text-align: left;
+        }
+        .testimonial-card {
+            width: 300px;
+            padding: 2.5rem 2rem;
         }
         .features-grid, .template-grid {
             grid-template-columns: 1fr !important;
@@ -422,9 +467,8 @@
                 <span class="hero-tag">Perfume SaaS Solution</span>
                 <h1>The Art of Scent,<br>Automated<span>.</span></h1>
                 <p>Elevate your perfume brand with Task19 Perfume SaaS—the ultimate e-commerce platform designed for the luxury fragrance market.</p>
-                <div class="hero-actions">
-                    <a href="#contact" class="btn-premium">Launch Your Brand</a>
-                    <a href="{{ route('landing.templates') }}" class="btn-outline" style="margin-left: 1rem;">View Templates</a>
+                <div class="hero-btns" data-reveal>
+                    <a href="#inquiry" class="btn-premium">Get Started</a>
                 </div>
             </div>
             <div class="hero-image-container" data-reveal>
@@ -437,50 +481,55 @@
 <!-- Features Section -->
 <section id="features" class="section-padding">
     <div class="container">
-        <div class="section-header" data-reveal>
-            <p>Crafted for Excellence</p>
-            <h2>Bespoke Features</h2>
-        </div>
-        <div class="features-grid">
-            <div class="feature-card" data-reveal>
-                <div class="feature-icon"><i class="fa-solid fa-palette"></i></div>
-                <h3>Multi-Theme Engine</h3>
-                <p>Switch between world-class designs like Afnan and Velvet with a single click.</p>
+        <div class="features-minimal">
+            <div class="features-text" data-reveal>
+                <span class="hero-tag">Excellence Defined</span>
+                <h2>Platform<br>Features</h2>
+                <p>Everything you need to run a world-class fragrance brand, delivered in one seamless experience.</p>
             </div>
-            <div class="feature-card" data-reveal>
-                <div class="feature-icon"><i class="fa-solid fa-layer-group"></i></div>
-                <h3>Smart Bundling</h3>
-                <p>Intelligent combo pools and pack-of-X deals to maximize your revenue per order.</p>
-            </div>
-            <div class="feature-card" data-reveal>
-                <div class="feature-icon"><i class="fa-solid fa-users-gear"></i></div>
-                <h3>Multi-Tenancy</h3>
-                <p>Manage multiple storefronts from a single, centralized administrative core.</p>
-            </div>
-            <div class="feature-card" data-reveal>
-                <div class="feature-icon"><i class="fa-solid fa-gauge-high"></i></div>
-                <h3>High Performance</h3>
-                <p>Ultra-fast loading times optimized for core web vitals and mobile conversion.</p>
-            </div>
-            <div class="feature-card" data-reveal>
-                <div class="feature-icon"><i class="fa-solid fa-magnifying-glass-chart"></i></div>
-                <h3>SEO Mastery</h3>
-                <p>Built-in SEO tools to ensure your fragrance house dominates search results.</p>
-            </div>
-            <div class="feature-card" data-reveal>
-                <div class="feature-icon"><i class="fa-solid fa-shield-halved"></i></div>
-                <h3>Secure Checkout</h3>
-                <p>Robust, encrypted payment flows designed to build customer trust and security.</p>
-            </div>
-            <div class="feature-card" data-reveal>
-                <div class="feature-icon"><i class="fa-solid fa-mobile-screen-button"></i></div>
-                <h3>Mobile First</h3>
-                <p>Every pixel crafted for a seamless shopping experience on any mobile device.</p>
-            </div>
-            <div class="feature-card" data-reveal>
-                <div class="feature-icon"><i class="fa-solid fa-headset"></i></div>
-                <h3>Expert Support</h3>
-                <p>Dedicated assistance to help you scale your digital perfume empire.</p>
+            <div class="features-list-minimal">
+                <div class="feature-item" data-reveal>
+                    <div class="feature-item-icon"><i class="fa-solid fa-palette"></i></div>
+                    <div class="feature-item-content">
+                        <h3>Multi-Theme</h3>
+                        <p>Switch between world-class designs with a single click.</p>
+                    </div>
+                </div>
+                <div class="feature-item" data-reveal>
+                    <div class="feature-item-icon"><i class="fa-solid fa-layer-group"></i></div>
+                    <div class="feature-item-content">
+                        <h3>Smart Bundling</h3>
+                        <p>Maximize revenue with intelligent combo pools.</p>
+                    </div>
+                </div>
+                <div class="feature-item" data-reveal>
+                    <div class="feature-item-icon"><i class="fa-solid fa-users-gear"></i></div>
+                    <div class="feature-item-content">
+                        <h3>Multi-Tenancy</h3>
+                        <p>Manage multiple storefronts from one dashboard.</p>
+                    </div>
+                </div>
+                <div class="feature-item" data-reveal>
+                    <div class="feature-item-icon"><i class="fa-solid fa-gauge-high"></i></div>
+                    <div class="feature-item-content">
+                        <h3>Performance</h3>
+                        <p>Ultra-fast loading for high-conversion rates.</p>
+                    </div>
+                </div>
+                <div class="feature-item" data-reveal>
+                    <div class="feature-item-icon"><i class="fa-solid fa-magnifying-glass-chart"></i></div>
+                    <div class="feature-item-content">
+                        <h3>SEO Mastery</h3>
+                        <p>Built-in tools to dominate search results.</p>
+                    </div>
+                </div>
+                <div class="feature-item" data-reveal>
+                    <div class="feature-item-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                    <div class="feature-item-content">
+                        <h3>Secure Checkout</h3>
+                        <p>Robust, encrypted payment flows for trust.</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -546,60 +595,117 @@
             <p>Voices of Excellence</p>
             <h2>Trusted by Curators</h2>
         </div>
-        <div class="testimonial-grid">
-            <!-- Review 1 -->
-            <div class="testimonial-card" data-reveal>
-                <div class="rating">
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                </div>
-                <p class="testimonial-text">"The Afnan theme captures our brand's heritage perfectly. The backend efficiency is unmatched for scaling globally."</p>
-                <div class="testimonial-author">
-                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=150&auto=format&fit=crop" alt="Client" class="author-img">
-                    <div class="author-info">
-                        <h4>Marcello Davila</h4>
-                        <p>Maison l'Amour</p>
+        <div class="testimonials-overflow">
+            <div class="testimonials-track">
+                <!-- Review 1 -->
+                <div class="testimonial-card">
+                    <div class="rating">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">"The Afnan theme captures our brand's heritage perfectly. The backend efficiency is unmatched for scaling globally."</p>
+                    <div class="testimonial-author">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=150&auto=format&fit=crop" alt="Client" class="author-img">
+                        <div class="author-info">
+                            <h4>Marcello Davila</h4>
+                            <p>Maison l'Amour</p>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Review 2 -->
-            <div class="testimonial-card" data-reveal>
-                <div class="rating">
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                </div>
-                <p class="testimonial-text">"Switching to Task19 was the best decision for our boutique. The multi-theme engine is a total game changer."</p>
-                <div class="testimonial-author">
-                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=150&auto=format&fit=crop" alt="Client" class="author-img">
-                    <div class="author-info">
-                        <h4>Elena Rosso</h4>
-                        <p>Scent & Soul</p>
+                <!-- Review 2 -->
+                <div class="testimonial-card">
+                    <div class="rating">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">"Switching to Task19 was the best decision for our boutique. The multi-theme engine is a total game changer."</p>
+                    <div class="testimonial-author">
+                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=150&auto=format&fit=crop" alt="Client" class="author-img">
+                        <div class="author-info">
+                            <h4>Elena Rosso</h4>
+                            <p>Scent & Soul</p>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Review 3 -->
-            <div class="testimonial-card" data-reveal>
-                <div class="rating">
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
+                <!-- Review 3 -->
+                <div class="testimonial-card">
+                    <div class="rating">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">"Ultra-fast performance and incredible support. Our conversion rates have never been higher than with the Velvet theme."</p>
+                    <div class="testimonial-author">
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=150&auto=format&fit=crop" alt="Client" class="author-img">
+                        <div class="author-info">
+                            <h4>Julian Thorne</h4>
+                            <p>Thorne Fragrances</p>
+                        </div>
+                    </div>
                 </div>
-                <p class="testimonial-text">"Ultra-fast performance and incredible support. Our conversion rates have never been higher than with the Velvet theme."</p>
-                <div class="testimonial-author">
-                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=150&auto=format&fit=crop" alt="Client" class="author-img">
-                    <div class="author-info">
-                        <h4>Julian Thorne</h4>
-                        <p>Thorne Fragrances</p>
+
+                <!-- Duplicate for Seamless Loop -->
+                <div class="testimonial-card">
+                    <div class="rating">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">"The Afnan theme captures our brand's heritage perfectly. The backend efficiency is unmatched for scaling globally."</p>
+                    <div class="testimonial-author">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=150&auto=format&fit=crop" alt="Client" class="author-img">
+                        <div class="author-info">
+                            <h4>Marcello Davila</h4>
+                            <p>Maison l'Amour</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="rating">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">"Switching to Task19 was the best decision for our boutique. The multi-theme engine is a total game changer."</p>
+                    <div class="testimonial-author">
+                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=150&auto=format&fit=crop" alt="Client" class="author-img">
+                        <div class="author-info">
+                            <h4>Elena Rosso</h4>
+                            <p>Scent & Soul</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="rating">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">"Ultra-fast performance and incredible support. Our conversion rates have never been higher than with the Velvet theme."</p>
+                    <div class="testimonial-author">
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=150&auto=format&fit=crop" alt="Client" class="author-img">
+                        <div class="author-info">
+                            <h4>Julian Thorne</h4>
+                            <p>Thorne Fragrances</p>
+                        </div>
                     </div>
                 </div>
             </div>

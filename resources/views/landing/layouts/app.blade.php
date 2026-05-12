@@ -8,18 +8,18 @@
     <meta name="keywords" content="perfume saas, fragrance e-commerce, luxury perfume website, task19, perfume business solution">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         :root {
-            --bg-color: #FDFBF7;
-            --text-main: #2D2D2D;
-            --text-light: #666666;
-            --accent-gold: #C5A059;
-            --accent-gold-light: #E5D5B7;
+            --bg-color: #F4F4F4;
+            --text-main: #1A1A1A;
+            --text-light: #555555;
+            --accent-gold: #B88E2F;
+            --accent-gold-light: #DFD3BD;
             --white: #FFFFFF;
-            --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            --transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
 
         * {
@@ -29,15 +29,16 @@
         }
 
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Montserrat', sans-serif;
             background-color: var(--bg-color);
             color: var(--text-main);
-            line-height: 1.6;
+            line-height: 1.7;
             overflow-x: hidden;
         }
 
         h1, h2, h3, .serif {
-            font-family: 'Playfair Display', serif;
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 600;
         }
 
         .container {
