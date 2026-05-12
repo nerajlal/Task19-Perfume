@@ -93,19 +93,15 @@
 
     <header class="af-header">
         <div class="container">
-            <div class="af-header-main">
-                <button class="af-menu-toggle" onclick="toggleMenu()"><i class="fa-solid fa-bars"></i></button>
-
+            <div class="af-header-top">
+                <div class="af-header-left">
+                    <button class="af-menu-toggle" onclick="toggleMenu()"><i class="fa-solid fa-bars"></i></button>
+                </div>
+                
                 <a href="{{ route('v5.home') }}" class="af-logo">
-                    AFNAN<span>.</span>
+                    AFNAN
+                    <small>PERFUMES</small>
                 </a>
-
-                <nav class="af-nav">
-                    <a href="{{ route('v5.home') }}" class="af-nav-item">Home</a>
-                    <a href="{{ route('v5.all-products') }}" class="af-nav-item">Perfumes</a>
-                    <a href="{{ route('v5.combos') }}" class="af-nav-item">Collections</a>
-                    <a href="{{ route('v5.collection') }}" class="af-nav-item">Categories</a>
-                </nav>
 
                 <div class="af-actions">
                     <a href="#" class="af-action-link"><i class="fa-solid fa-magnifying-glass"></i></a>
@@ -116,8 +112,31 @@
                     </a>
                 </div>
             </div>
+            
+            <nav class="af-nav">
+                <a href="{{ route('v5.home') }}" class="af-nav-item">Home</a>
+                <a href="{{ route('v5.all-products') }}" class="af-nav-item">All Perfumes</a>
+                <a href="{{ route('v5.combos') }}" class="af-nav-item">Exclusive Combos</a>
+                <a href="{{ route('v5.collection') }}" class="af-nav-item">Collections</a>
+                <a href="#" class="af-nav-item">About Us</a>
+            </nav>
         </div>
     </header>
+
+    <style>
+        .af-header-top { display: flex; align-items: center; justify-content: space-between; padding: 25px 0 15px; position: relative; }
+        .af-header-left { flex: 1; }
+        .af-logo { font-size: 32px; font-weight: 800; text-decoration: none; color: var(--af-black); letter-spacing: 2px; text-transform: uppercase; text-align: center; flex: 2; }
+        .af-actions { flex: 1; display: flex; justify-content: flex-end; gap: 20px; }
+        
+        .af-nav { display: flex; justify-content: center; gap: 40px; padding: 15px 0 25px; border-top: 1px solid transparent; }
+        .af-nav-item { text-decoration: none; color: var(--af-black); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; transition: 0.3s; }
+        .af-nav-item:hover { color: var(--af-red); }
+
+        .af-header.scrolled .af-nav { display: none; }
+        .af-header.scrolled .af-header-top { padding: 15px 0; }
+        .af-header.scrolled .af-logo { font-size: 24px; }
+    </style>
 
     <main>
         @yield('content')

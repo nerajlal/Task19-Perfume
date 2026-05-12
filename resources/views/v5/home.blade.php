@@ -68,7 +68,7 @@
     <!-- Narrative Section -->
     <section class="af-narrative">
         <div class="af-narrative-img">
-            <img src="https://india.afnan.com/cdn/shop/files/Editorial_Banner.jpg" alt="Narrative">
+            <img src="{{ asset('images/afnan_narrative_banner.png') }}" alt="Afnan Narrative">
         </div>
         <div class="af-narrative-text">
             <div class="af-narrative-box">
@@ -84,6 +84,56 @@
     <section class="af-section">
         <div class="container">
             <h2 class="af-section-title">New Arrivals</h2>
+            <div class="af-product-grid">
+                @foreach($products->skip(4)->take(4) as $product)
+                    @include('v5.partials.product_card', ['product' => $product])
+                @endforeach
+            </div>
+        </div>
+    </section>
+
+    <!-- Brand Values Marquee -->
+    <div class="af-marquee-bar">
+        <div class="af-marquee-inner">
+            <span>&bull; WORLDWIDE SHIPPING &bull; 100% AUTHENTIC FRAGRANCES &bull; PREMIUM CRAFTSMANSHIP &bull; LUXURY REDEFINED &bull; </span>
+            <span>&bull; WORLDWIDE SHIPPING &bull; 100% AUTHENTIC FRAGRANCES &bull; PREMIUM CRAFTSMANSHIP &bull; LUXURY REDEFINED &bull; </span>
+        </div>
+    </div>
+
+    <!-- Lifestyle Gallery -->
+    <section class="af-section">
+        <div class="container">
+            <h2 class="af-section-title">Follow the Journey</h2>
+            <div class="af-insta-grid">
+                <div class="af-insta-item"><img src="https://india.afnan.com/cdn/shop/files/insta_1.jpg" onerror="this.src='https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&q=80&w=600'" alt="Insta 1"></div>
+                <div class="af-insta-item"><img src="https://india.afnan.com/cdn/shop/files/insta_2.jpg" onerror="this.src='https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&q=80&w=600'" alt="Insta 2"></div>
+                <div class="af-insta-item"><img src="https://india.afnan.com/cdn/shop/files/insta_3.jpg" onerror="this.src='https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&q=80&w=600'" alt="Insta 3"></div>
+                <div class="af-insta-item"><img src="https://india.afnan.com/cdn/shop/files/insta_4.jpg" onerror="this.src='https://images.unsplash.com/photo-1615484477778-ca3b77940c25?auto=format&fit=crop&q=80&w=600'" alt="Insta 4"></div>
+                <div class="af-insta-item"><img src="https://india.afnan.com/cdn/shop/files/insta_5.jpg" onerror="this.src='https://images.unsplash.com/photo-1592914610354-fd354ea45e48?auto=format&fit=crop&q=80&w=600'" alt="Insta 5"></div>
+            </div>
+        </div>
+    </section>
+
+    <style>
+        /* Marquee */
+        .af-marquee-bar { background: #000; color: #fff; padding: 20px 0; overflow: hidden; white-space: nowrap; border-top: 1px solid #222; border-bottom: 1px solid #222; }
+        .af-marquee-inner { display: inline-block; animation: marquee 20s linear infinite; }
+        .af-marquee-inner span { font-size: 14px; font-weight: 700; letter-spacing: 3px; margin-right: 50px; }
+        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        /* Insta Grid */
+        .af-insta-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px; }
+        .af-insta-item { aspect-ratio: 1; overflow: hidden; position: relative; }
+        .af-insta-item img { width: 100%; height: 100%; object-fit: cover; transition: 0.8s; filter: grayscale(100%); }
+        .af-insta-item:hover img { transform: scale(1.1); filter: grayscale(0%); }
+        .af-insta-item::after { content: '\f16d'; font-family: 'Font Awesome 6 Brands'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #fff; font-size: 24px; opacity: 0; transition: 0.3s; }
+        .af-insta-item:hover::after { opacity: 1; }
+
+        @media (max-width: 991px) {
+            .af-insta-grid { grid-template-columns: repeat(3, 1fr); }
+            .af-insta-item:nth-child(n+4) { display: none; }
+        }
+    </style>
             <div class="af-product-grid">
                 @foreach($products->skip(4)->take(4) as $product)
                     @include('v5.partials.product_card', ['product' => $product])

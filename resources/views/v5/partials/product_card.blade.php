@@ -40,92 +40,106 @@
         </button>
     </div>
 </div>
-
 <style>
     .af-p-card {
         background: #fff;
-        padding: 20px;
-        border-right: 1px solid var(--af-border);
-        border-bottom: 1px solid var(--af-border);
+        padding: 6.45px 6.45px 25.8px;
+        border-right: 1px solid #E8E8E8;
+        border-bottom: 1px solid #E8E8E8;
         display: flex;
         flex-direction: column;
         transition: 0.3s;
         position: relative;
+        height: 100%;
     }
 
     .af-p-media {
         position: relative;
-        aspect-ratio: 0.9;
+        aspect-ratio: 1;
         overflow: hidden;
         margin-bottom: 15px;
+        background: #fff;
     }
 
     .af-p-media img {
         width: 100%;
         height: 100%;
         object-fit: contain;
-        transition: 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
     }
-
-    .af-p-hover-img {
-        position: absolute;
-        top: 0;
-        left: 0;
-        opacity: 0;
-    }
-
-    .af-p-card:hover .af-p-hover-img { opacity: 1; }
-    .af-p-card:hover .af-p-main-img { opacity: 0; }
 
     .af-p-badge {
         position: absolute;
-        top: 0;
-        left: 0;
-        background: var(--af-red);
+        top: 10px;
+        left: 10px;
+        background: #E32C2B;
         color: #fff;
-        font-size: 9px;
+        font-size: 10px;
         font-weight: 700;
         padding: 4px 10px;
-        letter-spacing: 1px;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
     }
 
-    .af-badge-new { background: #000; }
+    .af-p-info { 
+        text-align: center; 
+        padding: 0 10px;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .af-p-meta { 
+        font-size: 10px; 
+        color: #999; 
+        text-transform: uppercase; 
+        letter-spacing: 2.16px; 
+        margin-bottom: 10px; 
+        font-weight: 500; 
+    }
+
+    .af-p-title { 
+        font-size: 12px; 
+        font-weight: 500; 
+        margin-bottom: 12px; 
+        text-transform: uppercase; 
+        letter-spacing: 2.16px; 
+        line-height: 1.4; 
+        min-height: 34px; 
+    }
+    .af-p-title a { text-decoration: none; color: #1C1C1C; }
+
+    .af-p-price { 
+        display: flex; 
+        align-items: center; 
+        justify-content: center; 
+        gap: 10px; 
+        margin-bottom: 20px;
+    }
+    .af-price-old { text-decoration: line-through; color: #999; font-size: 12px; font-weight: 500; letter-spacing: 1.5px; }
+    .af-price-new { font-size: 12px; font-weight: 700; color: #E32C2B; letter-spacing: 1.5px; }
 
     .af-quick-add {
         display: block;
         width: 100%;
-        background: var(--af-black);
+        background: #000;
         color: #fff;
         border: none;
-        padding: 10px;
-        font-size: 10px;
-        font-weight: 700;
-        letter-spacing: 1px;
+        padding: 12px;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 2.16px;
         cursor: pointer;
         transition: 0.3s;
-        margin-top: 12px;
+        text-transform: uppercase;
     }
 
-    .af-quick-add:hover { background: var(--af-red); }
-
-    .af-p-info { text-align: center; }
-    .af-p-meta { font-size: 9px; color: var(--af-gray); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; font-weight: 600; }
-    .af-p-title { font-size: 14px; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; line-height: 1.2; }
-    .af-p-title a { text-decoration: none; color: inherit; }
-    .af-p-title a:hover { color: var(--af-red); }
-
-    .af-p-price { display: flex; align-items: center; justify-content: center; gap: 8px; }
-    .af-price-old { text-decoration: line-through; color: #999; font-size: 12px; }
-    .af-price-new { font-size: 14px; font-weight: 700; color: var(--af-black); }
+    .af-quick-add:hover { background: #E32C2B; }
 
     @media (max-width: 768px) {
-        .af-p-card { padding: 12px; border-right: none; }
-        .af-quick-add { 
-            padding: 8px;
-            font-size: 9px;
-            margin-top: 10px;
-        }
-        .af-p-title { font-size: 12px; }
-        .af-p-meta { font-size: 8px; }
+        .af-p-card { padding: 10px 10px 20px; border-right: none; }
+        .af-p-title { font-size: 10px; min-height: 28px; letter-spacing: 1.5px; }
+        .af-p-meta { font-size: 8px; letter-spacing: 1.5px; }
+        .af-quick-add { padding: 10px; font-size: 9px; letter-spacing: 1.5px; }
     }
 </style>
