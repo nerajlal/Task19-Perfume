@@ -487,10 +487,9 @@
         <div class="container">
             <div class="hero-grid">
                 <div class="hero-content" data-reveal>
-                    <span class="hero-tag">Perfume SaaS Solution</span>
-                    <h1>The Art of Scent,<br>Automated<span>.</span></h1>
-                    <p>Elevate your perfume brand with Task19 Perfume SaaS—the ultimate e-commerce platform designed for the
-                        luxury fragrance market.</p>
+                    <span class="hero-tag">The Fragrance OS</span>
+                    <h1>The Art of<br>Scent<span>.</span></h1>
+                    <p>The definitive e-commerce ecosystem for luxury perfume houses. From artisanal boutiques to global heritage labels, Task19 orchestrates your digital presence with absolute elegance.</p>
                     <div class="hero-btns" data-reveal>
                         <a href="#inquiry" class="btn-premium">Get Started</a>
                     </div>
@@ -515,43 +514,43 @@
                     <div class="feature-item" data-reveal>
                         <div class="feature-item-icon"><i class="fa-solid fa-palette"></i></div>
                         <div class="feature-item-content">
-                            <h3>Multi-Theme</h3>
+                            <h3>Couture Themes</h3>
                             <p>Switch between world-class designs with a single click.</p>
                         </div>
                     </div>
                     <div class="feature-item" data-reveal>
                         <div class="feature-item-icon"><i class="fa-solid fa-layer-group"></i></div>
                         <div class="feature-item-content">
-                            <h3>Smart Bundling</h3>
-                            <p>Maximize revenue with intelligent combo pools.</p>
+                            <h3>Olfactory Bundling</h3>
+                            <p>Maximize revenue with intelligent fragrance combo pools.</p>
                         </div>
                     </div>
                     <div class="feature-item" data-reveal>
                         <div class="feature-item-icon"><i class="fa-solid fa-users-gear"></i></div>
                         <div class="feature-item-content">
-                            <h3>Multi-Tenancy</h3>
-                            <p>Manage multiple storefronts from one dashboard.</p>
+                            <h3>Maison Control</h3>
+                            <p>Manage multiple fragrance labels from one elite dashboard.</p>
                         </div>
                     </div>
                     <div class="feature-item" data-reveal>
                         <div class="feature-item-icon"><i class="fa-solid fa-gauge-high"></i></div>
                         <div class="feature-item-content">
-                            <h3>Performance</h3>
-                            <p>Ultra-fast loading for high-conversion rates.</p>
+                            <h3>Velvet Performance</h3>
+                            <p>Ultra-fast loading for high-conversion fragrance sales.</p>
                         </div>
                     </div>
                     <div class="feature-item" data-reveal>
                         <div class="feature-item-icon"><i class="fa-solid fa-magnifying-glass-chart"></i></div>
                         <div class="feature-item-content">
-                            <h3>SEO Mastery</h3>
-                            <p>Built-in tools to dominate search results.</p>
+                            <h3>Discovery SEO</h3>
+                            <p>Built-in tools to dominate organic search for scents.</p>
                         </div>
                     </div>
                     <div class="feature-item" data-reveal>
                         <div class="feature-item-icon"><i class="fa-solid fa-shield-halved"></i></div>
                         <div class="feature-item-content">
-                            <h3>Secure Checkout</h3>
-                            <p>Robust, encrypted payment flows for trust.</p>
+                            <h3>Private Security</h3>
+                            <p>Robust, encrypted payment flows for high-value trust.</p>
                         </div>
                     </div>
                 </div>
@@ -763,47 +762,47 @@
                 <h2>Investment</h2>
             </div>
             <div class="pricing-grid">
-                <!-- Starter Plan -->
+                <!-- Boutique Plan -->
                 <div class="pricing-card" data-reveal>
-                    <span class="hero-tag" style="color: var(--text-light)">Starter</span>
+                    <span class="hero-tag" style="color: var(--text-light)">Boutique</span>
                     <div class="price">$10<span>/month</span></div>
-                    <p style="margin-bottom: 1.5rem; font-size: 0.9rem;">Perfect for emerging boutique fragrance houses.</p>
+                    <p style="margin-bottom: 1.5rem; font-size: 0.9rem;">Perfect for emerging artisanal fragrance houses.</p>
                     <ul class="pricing-features" style="flex-grow: 1;">
-                        <li><i class="fa-solid fa-check"></i> Up to 50 Products</li>
-                        <li><i class="fa-solid fa-check"></i> Standard Nurah Theme</li>
-                        <li><i class="fa-solid fa-check"></i> Basic Inventory Tools</li>
-                        <li><i class="fa-solid fa-check"></i> Email Support</li>
+                        <li><i class="fa-solid fa-check"></i> Up to 50 Fragrances</li>
+                        <li><i class="fa-solid fa-check"></i> Nurah Classic Theme</li>
+                        <li><i class="fa-solid fa-check"></i> Essence Inventory Tools</li>
+                        <li><i class="fa-solid fa-check"></i> Concierge Support</li>
                     </ul>
-                    <a href="#contact" class="btn-outline">Choose Starter</a>
+                    <a href="#contact" class="btn-outline">Select Boutique</a>
                 </div>
 
-                <!-- Premium Plan -->
+                <!-- Maison Plan -->
                 <div class="pricing-card featured" data-reveal>
-                    <div class="badge">MOST POPULAR</div>
-                    <span class="hero-tag" style="color: var(--accent-gold)">Premium</span>
+                    <div class="badge">ESTABLISHED</div>
+                    <span class="hero-tag" style="color: var(--accent-gold)">Maison</span>
                     <div class="price">$20<span>/month</span></div>
-                    <p style="margin-bottom: 1.5rem; font-size: 0.9rem;">Full access for scaling luxury brands.</p>
+                    <p style="margin-bottom: 1.5rem; font-size: 0.9rem;">The complete ecosystem for scaling luxury maisons.</p>
                     <ul class="pricing-features" style="flex-grow: 1;">
-                        <li><i class="fa-solid fa-check"></i> Unlimited Products</li>
-                        <li><i class="fa-solid fa-check"></i> All 5 Premium Themes</li>
-                        <li><i class="fa-solid fa-check"></i> Advanced Bundle Engine</li>
-                        <li><i class="fa-solid fa-check"></i> Priority WhatsApp Support</li>
+                        <li><i class="fa-solid fa-check"></i> Unlimited Fragrances</li>
+                        <li><i class="fa-solid fa-check"></i> Full Template Library</li>
+                        <li><i class="fa-solid fa-check"></i> Olfactory Combo Engine</li>
+                        <li><i class="fa-solid fa-check"></i> Priority WhatsApp Care</li>
                     </ul>
-                    <a href="#contact" class="btn-premium">Choose Premium</a>
+                    <a href="#contact" class="btn-premium">Select Maison</a>
                 </div>
 
-                <!-- Elite Plan -->
+                <!-- Heritage Plan -->
                 <div class="pricing-card" data-reveal>
-                    <span class="hero-tag" style="color: var(--text-main)">Elite</span>
+                    <span class="hero-tag" style="color: var(--text-main)">Heritage</span>
                     <div class="price">$49<span>/month</span></div>
-                    <p style="margin-bottom: 1.5rem; font-size: 0.9rem;">Custom solutions for elite fragrance labels.</p>
+                    <p style="margin-bottom: 1.5rem; font-size: 0.9rem;">Bespoke solutions for global fragrance legends.</p>
                     <ul class="pricing-features" style="flex-grow: 1;">
-                        <li><i class="fa-solid fa-check"></i> White-label Dashboard</li>
-                        <li><i class="fa-solid fa-check"></i> Custom Domain Integration</li>
-                        <li><i class="fa-solid fa-check"></i> Dedicated Account Manager</li>
-                        <li><i class="fa-solid fa-check"></i> API Access & Webhooks</li>
+                        <li><i class="fa-solid fa-check"></i> White-label Experience</li>
+                        <li><i class="fa-solid fa-check"></i> Bespoke Domain Integration</li>
+                        <li><i class="fa-solid fa-check"></i> Dedicated Brand Partner</li>
+                        <li><i class="fa-solid fa-check"></i> Full API & Webhook Access</li>
                     </ul>
-                    <a href="#contact" class="btn-outline">Choose Elite</a>
+                    <a href="#contact" class="btn-outline">Select Heritage</a>
                 </div>
             </div>
         </div>
@@ -822,8 +821,8 @@
                 </a>
                 <div style="margin-top: 2rem;">
                     <p style="color: var(--text-light); font-size: 0.9rem;">Or email us at: <a
-                            href="mailto:hello@nurah.saas"
-                            style="color: var(--accent-gold); text-decoration: none;">hello@nurah.saas</a></p>
+                            href="mailto:perfume@task19.com"
+                            style="color: var(--accent-gold); text-decoration: none;">perfume@task19.com</a></p>
                 </div>
             </div>
         </div>
