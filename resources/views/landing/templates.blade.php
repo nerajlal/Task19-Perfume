@@ -117,7 +117,7 @@
                         <li><i class="fa-solid fa-check"></i> Quick-Add Enabled</li>
                         <li><i class="fa-solid fa-check"></i> SEO Optimized</li>
                     </ul>
-                    <a href="{{ route('v5.home') }}" target="_blank" class="btn-premium">View Live Demo</a>
+                    <a href="javascript:void(0)" onclick="openDemoAccess(event, '{{ route('v5.home') }}')" class="btn-premium">View Live Demo</a>
                 </div>
             </div>
 
@@ -137,7 +137,7 @@
                         <li><i class="fa-solid fa-check"></i> Parallax Scrolling</li>
                         <li><i class="fa-solid fa-check"></i> Interactive Gallery</li>
                     </ul>
-                    <a href="{{ route('velvet.home') }}" target="_blank" class="btn-premium">View Live Demo</a>
+                    <a href="javascript:void(0)" onclick="openDemoAccess(event, '{{ route('velvet.home') }}')" class="btn-premium">View Live Demo</a>
                 </div>
             </div>
 
@@ -157,7 +157,7 @@
                         <li><i class="fa-solid fa-check"></i> Advanced Filters</li>
                         <li><i class="fa-solid fa-check"></i> Blog Integration</li>
                     </ul>
-                    <a href="{{ route('v4.home') }}" target="_blank" class="btn-premium">View Live Demo</a>
+                    <a href="javascript:void(0)" onclick="openDemoAccess(event, '{{ route('v4.home') }}')" class="btn-premium">View Live Demo</a>
                 </div>
             </div>
 
@@ -176,7 +176,7 @@
                         <li><i class="fa-solid fa-check"></i> Simple Checkout</li>
                         <li><i class="fa-solid fa-check"></i> Fully Responsive</li>
                     </ul>
-                    <a href="{{ route('home') }}" target="_blank" class="btn-premium">View Live Demo</a>
+                    <a href="javascript:void(0)" onclick="openDemoAccess(event, '{{ route('home') }}')" class="btn-premium">View Live Demo</a>
                 </div>
             </div>
         </div>

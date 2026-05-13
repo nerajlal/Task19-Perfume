@@ -4,22 +4,18 @@
     <style>
         /* Hero Section */
         .hero {
-            padding: 8rem 0 4rem;
-            min-height: 80vh;
+            padding: 12rem 0 8rem;
+            min-height: 70vh;
             display: flex;
             align-items: center;
-            background: radial-gradient(circle at 80% 20%, rgba(197, 160, 89, 0.05) 0%, transparent 40%);
+            text-align: center;
+            background: radial-gradient(circle at center, rgba(197, 160, 89, 0.05) 0%, transparent 60%);
             overflow: hidden;
         }
 
-        .hero-grid {
-            display: grid;
-            grid-template-columns: 1fr 1.3fr;
-            align-items: center;
-            gap: 6rem;
-        }
-
         .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
             position: relative;
             z-index: 2;
         }
@@ -35,8 +31,8 @@
         }
 
         .hero h1 {
-            font-size: 4.5rem;
-            line-height: 1.1;
+            font-size: 5.5rem;
+            line-height: 1.05;
             margin-bottom: 2rem;
             color: var(--text-main);
         }
@@ -485,17 +481,21 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="container">
-            <div class="hero-grid">
-                <div class="hero-content" data-reveal>
-                    <span class="hero-tag">The Fragrance OS</span>
-                    <h1>The Art of<br>Scent<span>.</span></h1>
-                    <p>The definitive e-commerce ecosystem for luxury perfume houses. From artisanal boutiques to global heritage labels, Task19 orchestrates your digital presence with absolute elegance.</p>
-                    <div class="hero-btns" data-reveal>
-                        <a href="#inquiry" class="btn-premium">Get Started</a>
-                    </div>
+            <div class="hero-content" data-reveal>
+                <span class="hero-tag">The Fragrance OS</span>
+                <h1>The Art of<br>Scent<span>.</span></h1>
+                <p>The definitive e-commerce ecosystem for luxury perfume houses. From artisanal boutiques to global heritage labels, Task19 orchestrates your digital presence with absolute elegance.</p>
+                <div class="hero-btns" data-reveal>
+                    <a href="#inquiry" class="btn-premium">Get Started</a>
                 </div>
-                <div class="hero-image-container" data-reveal>
-                    <img src="{{ asset('Images/landing/hero.png') }}" alt="Luxury Perfume" class="hero-img">
+                <div class="hero-trust" data-reveal style="margin-top: 4rem; opacity: 0.7;">
+                    <p style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 1.5rem;">Orchestrating Excellence For</p>
+                    <div style="display: flex; justify-content: center; gap: 3rem; align-items: center; filter: grayscale(1) brightness(0.5); font-weight: 700; font-size: 1.2rem; font-family: 'Cormorant Garamond', serif;">
+                        <span>MAISON L'AMOUR</span>
+                        <span>SCENT & SOUL</span>
+                        <span>THORNE</span>
+                        <span>ROSSO</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -576,7 +576,7 @@
                         <h3>Afnan Luxury</h3>
                         <p style="color: var(--text-light); font-size: 0.9rem; margin-bottom: 1.5rem;">Editorial style with
                             clean typography and high-conversion layouts.</p>
-                        <a href="{{ route('v5.home') }}" target="_blank" class="btn-outline"
+                        <a href="javascript:void(0)" onclick="openDemoAccess(event, '{{ route('v5.home') }}')" class="btn-outline"
                             style="padding: 0.6rem 1.5rem; font-size: 0.8rem;">Live Demo</a>
                     </div>
                 </div>
@@ -591,7 +591,7 @@
                         <h3>Velvet Noir</h3>
                         <p style="color: var(--text-light); font-size: 0.9rem; margin-bottom: 1.5rem;">A high-end,
                             minimalist aesthetic for boutique fragrance houses.</p>
-                        <a href="{{ route('velvet.home') }}" target="_blank" class="btn-outline"
+                        <a href="javascript:void(0)" onclick="openDemoAccess(event, '{{ route('velvet.home') }}')" class="btn-outline"
                             style="padding: 0.6rem 1.5rem; font-size: 0.8rem;">Live Demo</a>
                     </div>
                 </div>
@@ -606,7 +606,7 @@
                         <h3>Nurah Classic</h3>
                         <p style="color: var(--text-light); font-size: 0.9rem; margin-bottom: 1.5rem;">The original heritage
                             design, focused on product storytelling.</p>
-                        <a href="{{ route('home') }}" target="_blank" class="btn-outline"
+                        <a href="javascript:void(0)" onclick="openDemoAccess(event, '{{ route('home') }}')" class="btn-outline"
                             style="padding: 0.6rem 1.5rem; font-size: 0.8rem;">Live Demo</a>
                     </div>
                 </div>

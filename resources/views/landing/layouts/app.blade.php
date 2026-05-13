@@ -352,6 +352,80 @@
                 text-align: center;
             }
         }
+        /* Demo Modal */
+        .demo-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .demo-modal.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .demo-modal-content {
+            background: var(--white);
+            padding: 3rem;
+            border-radius: 30px;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+        }
+
+        .demo-modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 1.5rem;
+            color: var(--text-light);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .demo-modal-close:hover {
+            color: var(--accent-gold);
+        }
+
+        .demo-form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .demo-form-group label {
+            display: block;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+            color: var(--text-light);
+        }
+
+        .demo-input {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid rgba(197, 160, 89, 0.2);
+            border-radius: 10px;
+            background: #fcfcfc;
+            font-family: 'Montserrat', sans-serif;
+            transition: var(--transition);
+        }
+
+        .demo-input:focus {
+            outline: none;
+            border-color: var(--accent-gold);
+            background: white;
+        }
     </style>
     @yield('styles')
 </head>
@@ -438,6 +512,37 @@
         </div>
     </footer>
 
+    <!-- Demo Access Modal -->
+    <div class="demo-modal" id="demoModal">
+        <div class="demo-modal-content">
+            <div class="demo-modal-close" id="closeDemoModal">&times;</div>
+            <div style="text-align: center; margin-bottom: 2rem;">
+                <h3 style="font-size: 1.8rem; margin-bottom: 0.5rem;">Experience Task19</h3>
+                <p style="color: var(--text-light); font-size: 0.9rem;">Please provide your details to access the live demo.</p>
+            </div>
+            <form id="demoAccessForm">
+                <input type="hidden" id="targetDemoUrl">
+                <div class="demo-form-group">
+                    <label>Full Name</label>
+                    <input type="text" class="demo-input" required placeholder="Enter your name">
+                </div>
+                <div class="demo-form-group">
+                    <label>Business Email</label>
+                    <input type="email" class="demo-input" required placeholder="name@company.com">
+                </div>
+                <div class="demo-form-group">
+                    <label>Phone Number</label>
+                    <input type="tel" class="demo-input" required placeholder="+1 (555) 000-0000">
+                </div>
+                <div class="demo-form-group">
+                    <label>Business Name</label>
+                    <input type="text" class="demo-input" required placeholder="Your Brand Name">
+                </div>
+                <button type="submit" class="btn-premium" style="width: 100%; border: none; cursor: pointer;">Access Live Demo</button>
+            </form>
+        </div>
+    </div>
+
     <script>
         // Navbar Scroll Effect
         window.addEventListener('scroll', () => {
@@ -481,6 +586,54 @@
                 navLinks.classList.remove('active');
                 menuToggle.querySelector('i').classList.replace('fa-xmark', 'fa-bars-staggered');
             });
+        });
+
+        // Demo Modal Logic
+        const demoModal = document.getElementById('demoModal');
+        const demoForm = document.getElementById('demoAccessForm');
+        const closeDemoBtn = document.getElementById('closeDemoModal');
+        const targetInput = document.getElementById('targetDemoUrl');
+
+        // Function to open modal
+        window.openDemoAccess = function(e, url) {
+            if(e) e.preventDefault();
+            
+            // Check if user has already provided details
+            if (localStorage.getItem('task19_demo_accessed')) {
+                window.open(url, '_blank');
+                return;
+            }
+
+            targetInput.value = url;
+            demoModal.style.display = 'flex';
+            setTimeout(() => {
+                demoModal.classList.add('active');
+            }, 10);
+        };
+
+        closeDemoBtn.addEventListener('click', () => {
+            demoModal.classList.remove('active');
+            setTimeout(() => {
+                demoModal.style.display = 'none';
+            }, 300);
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target === demoModal) {
+                closeDemoBtn.click();
+            }
+        });
+
+        demoForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Save access flag to local storage
+            localStorage.setItem('task19_demo_accessed', 'true');
+            
+            const targetUrl = targetInput.value;
+            window.open(targetUrl, '_blank');
+            closeDemoBtn.click();
+            demoForm.reset();
         });
     </script>
     @yield('scripts')
