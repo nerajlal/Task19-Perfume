@@ -460,8 +460,17 @@
         }
 
         @media (max-width: 576px) {
+            .hero {
+                padding: 8rem 0 4rem;
+            }
+
             .hero h1 {
                 font-size: 2.5rem;
+            }
+
+            .hero-trust div {
+                flex-direction: column;
+                gap: 1.5rem !important;
             }
 
             .hero-actions {
@@ -488,15 +497,19 @@
                 <div class="hero-btns" data-reveal>
                     <a href="#inquiry" class="btn-premium">Get Started</a>
                 </div>
-                <div class="hero-trust" data-reveal style="margin-top: 4rem; opacity: 0.7;">
-                    <p style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 1.5rem;">Orchestrating Excellence For</p>
-                    <div style="display: flex; justify-content: center; gap: 3rem; align-items: center; filter: grayscale(1) brightness(0.5); font-weight: 700; font-size: 1.2rem; font-family: 'Cormorant Garamond', serif;">
-                        <span>MAISON L'AMOUR</span>
-                        <span>SCENT & SOUL</span>
-                        <span>THORNE</span>
-                        <span>ROSSO</span>
-                    </div>
-                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Section -->
+    <section class="trust-bar" style="padding: 3rem 0; background: white; border-bottom: 1px solid rgba(0,0,0,0.03);">
+        <div class="container">
+            <div style="display: flex; justify-content: center; gap: 4rem; align-items: center; flex-wrap: wrap; opacity: 0.5; filter: grayscale(1);">
+                <span style="font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 600;">MAISON L'AMOUR</span>
+                <span style="font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 600;">SCENT & SOUL</span>
+                <span style="font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 600;">THORNE</span>
+                <span style="font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 600;">ROSSO</span>
+                <span style="font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 600;">ESSENCE</span>
             </div>
         </div>
     </section>
