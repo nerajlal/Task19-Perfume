@@ -1,6 +1,34 @@
 @extends('layouts.storefront')
 
-@section('title', $product->title . ' | Task19 Perfumes')
+@section('title', $product->title . ' | VESPR Perfumes')
+@section('meta_description', Str::limit(strip_tags($product->description), 160))
+@section('meta_keywords', $product->title . ', ' . $product->olfactory_family . ', ' . $product->type . ', VESPR perfumes')
+@section('og_image', $product->main_image_url ?? asset('images/products/p' . $product->id . '.png'))
+
+@section('styles')
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@type": "Product",
+  "name": "{{ $product->title }}",
+  "image": [
+    "{{ $product->main_image_url ?? asset('images/products/p' . $product->id . '.png') }}"
+  ],
+  "description": "{{ strip_tags($product->description) }}",
+  "brand": {
+    "@type": "Brand",
+    "name": "VESPR"
+  },
+  "offers": {
+    "@type": "Offer",
+    "url": "{{ url()->current() }}",
+    "priceCurrency": "INR",
+    "price": "{{ $product->starting_price }}",
+    "availability": "https://schema.org/InStock"
+  }
+}
+</script>
+@endsection
 
 @section('content')
 <div class="product-page-container">
@@ -51,7 +79,7 @@
 
         <!-- Info -->
         <div class="product-details-panel">
-            <p class="p-vendor-label">TASK19 FRAGRANCE HOUSE</p>
+            <p class="p-vendor-label">VESPR FRAGRANCE HOUSE</p>
             <h1 class="p-title-serif">{{ $product->title }}</h1>
             
             <div class="p-price-row">

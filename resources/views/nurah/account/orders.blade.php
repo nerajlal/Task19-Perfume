@@ -1,6 +1,6 @@
 @extends('layouts.storefront')
 
-@section('title', 'My Orders | Task19 Perfumes')
+@section('title', 'My Orders | VESPR Perfumes')
 
 @section('content')
 <div class="account-page-container" style="max-width: 1000px; margin: 0 auto; padding: 2rem;">

@@ -1,6 +1,6 @@
 @extends('layouts.storefront')
 
-@section('title', 'Shop All Fragrances | Task19 Perfumes')
+@section('title', 'Shop All Fragrances | VESPR Perfumes')
 
 @section('content')
 <div class="collection-header">

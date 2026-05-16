@@ -3,7 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Task19 Perfumes | Luxury Fragrances')</title>
+    <title>@yield('title', 'VESPR Perfumes | Luxury Fragrances')</title>
+    <meta name="description" content="@yield('meta_description', 'Discover VESPR Perfumes - The ultimate destination for luxury artisanal fragrances, oils, and exclusive perfume collections.')">
+    <meta name="keywords" content="@yield('meta_keywords', 'perfumes, luxury fragrances, artisanal oils, VESPR, buy perfumes online')">
+    <link rel="canonical" href="{{ url()->current() }}">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:title" content="@yield('title', 'VESPR Perfumes | Luxury Fragrances')">
+    <meta property="og:description" content="@yield('meta_description', 'Discover VESPR Perfumes - The ultimate destination for luxury artisanal fragrances, oils, and exclusive perfume collections.')">
+    <meta property="og:image" content="@yield('og_image', asset('images/hero-banner.png'))">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="{{ url()->current() }}">
+    <meta property="twitter:title" content="@yield('title', 'VESPR Perfumes | Luxury Fragrances')">
+    <meta property="twitter:description" content="@yield('meta_description', 'Discover VESPR Perfumes - The ultimate destination for luxury artisanal fragrances, oils, and exclusive perfume collections.')">
+    <meta property="twitter:image" content="@yield('og_image', asset('images/hero-banner.png'))">
     <link rel="stylesheet" href="{{ asset('css/storefront.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -271,7 +288,7 @@
             </button>
             <div class="modal-header">
                 <h2 class="modal-title">Welcome Back</h2>
-                <p class="modal-subtitle">Log in to your Task19 account to continue.</p>
+                <p class="modal-subtitle">Log in to your VESPR account to continue.</p>
             </div>
             
             <form action="{{ route('login') }}" method="POST" class="modal-form">
@@ -302,7 +319,7 @@
             </a>
 
             <div class="modal-footer-box" style="margin-top: 2rem; text-align: center; font-size: 0.9rem; color: var(--text-muted);">
-                <span>New to Task19? <a href="javascript:void(0)" onclick="switchModal('login-modal', 'register-modal')" style="color: var(--accent-color); font-weight: 700; text-decoration: none;">Create an account</a></span>
+                <span>New to VESPR? <a href="javascript:void(0)" onclick="switchModal('login-modal', 'register-modal')" style="color: var(--accent-color); font-weight: 700; text-decoration: none;">Create an account</a></span>
             </div>
         </div>
     </div>
@@ -314,7 +331,7 @@
                 <i class="fa-solid fa-xmark"></i>
             </button>
             <div class="modal-header">
-                <h2 class="modal-title">Join Task19</h2>
+                <h2 class="modal-title">Join VESPR</h2>
                 <p class="modal-subtitle">Experience the finest luxury fragrances today.</p>
             </div>
             

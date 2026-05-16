@@ -1,6 +1,6 @@
 @extends('layouts.storefront')
 
-@section('title', $bundle->title . ' | Exclusive Combo | Task19 Perfumes')
+@section('title', $bundle->title . ' | Exclusive Combo | VESPR Perfumes')
 
 @section('content')
 <div class="product-page-container">
@@ -156,7 +156,7 @@
 
             <div style="margin-top: 3rem; background: #f0fdf4; border: 1px solid #bbf7d0; padding: 1.5rem; border-radius: 1.5rem; display: flex; align-items: center; gap: 1rem;">
                 <i class="fa-solid fa-shield-check" style="color: #16a34a; font-size: 1.5rem;"></i>
-                <p style="font-size: 0.95rem; color: #166534; font-weight: 500;">This exclusive combo is backed by Task19's Authenticity Guarantee.</p>
+                <p style="font-size: 0.95rem; color: #166534; font-weight: 500;">This exclusive combo is backed by VESPR's Authenticity Guarantee.</p>
             </div>
         </div>
     </div>

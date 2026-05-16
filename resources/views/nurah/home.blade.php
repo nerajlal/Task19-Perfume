@@ -1,16 +1,18 @@
 @extends('layouts.storefront')
 
-@section('title', 'Task19 Perfumes | Luxury Fragrance House')
+@section('title', 'VESPR Perfumes | Luxury Fragrance House')
+@section('meta_description', 'Experience the art of scent with VESPR Perfumes. Explore our artisanal collection of luxury fragrances, exclusive combos, and signature oils.')
+@section('meta_keywords', 'VESPR perfumes, luxury scent, artisanal fragrance, signature perfume, perfume house')
 
 @section('content')
     <!-- Hero Section -->
     <div class="hero-banner">
         <div class="hero-content">
             <h1 class="hero-title">Elevate Your Presence</h1>
-            <p class="hero-subtitle">Discover Task19's curated collection of artisanal fragrances. Crafted for those who appreciate the finer things in life.</p>
+            <p class="hero-subtitle">Discover VESPR's curated collection of artisanal fragrances. Crafted for those who appreciate the finer things in life.</p>
             <a href="{{ route('v1.all-products') }}" class="btn-primary">Explore Collection</a>
         </div>
-        <img src="{{ asset('images/hero-banner.png') }}" alt="Task19 Perfume" class="hero-image">
+        <img src="{{ asset('images/hero-banner.png') }}" alt="VESPR Perfume" class="hero-image">
     </div>
     
     <!-- USP Trust Bar -->
@@ -19,7 +21,7 @@
             <i class="fa-solid fa-circle-check"></i>
             <div class="usp-text">
                 <span class="usp-title">100% Authentic</span>
-                <span class="usp-desc">Direct from Task19</span>
+                <span class="usp-desc">Direct from VESPR</span>
             </div>
         </div>
         <div class="usp-item">
@@ -112,7 +114,7 @@
     <div class="video-section">
         <div class="section-header">
             <h2 class="section-title">Fragrance Stories</h2>
-            <p class="section-subtitle" style="margin-top: 0.5rem; color: var(--text-muted);">Experience the essence of Task19 through our visual journey.</p>
+            <p class="section-subtitle" style="margin-top: 0.5rem; color: var(--text-muted);">Experience the essence of VESPR through our visual journey.</p>
         </div>
         
         <div class="video-grid">

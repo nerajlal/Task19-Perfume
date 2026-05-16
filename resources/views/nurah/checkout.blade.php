@@ -1,12 +1,12 @@
 @extends('layouts.storefront')
 
-@section('title', 'Secure Checkout | Task19 Perfumes')
+@section('title', 'Secure Checkout | VESPR Perfumes')
 
 @section('content')
 <div class="checkout-page-container">
     <div class="checkout-header-lg">
         <h1 class="checkout-title-lg">Checkout</h1>
-        <p class="checkout-subtitle">Complete your order with Task19's secure checkout.</p>
+        <p class="checkout-subtitle">Complete your order with VESPR's secure checkout.</p>
     </div>
 
     <div class="checkout-main-grid">

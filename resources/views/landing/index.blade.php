@@ -493,7 +493,7 @@
             <div class="hero-content" data-reveal>
                 <span class="hero-tag">The Fragrance OS</span>
                 <h1>The Art of<br>Scent<span>.</span></h1>
-                <p>The definitive e-commerce ecosystem for luxury perfume houses. From artisanal boutiques to global heritage labels, Task19 orchestrates your digital presence with absolute elegance.</p>
+                <p>The definitive e-commerce ecosystem for luxury perfume houses. From artisanal boutiques to global heritage labels, VESPR orchestrates your digital presence with absolute elegance.</p>
                 <div class="hero-btns" data-reveal>
                     <a href="#inquiry" class="btn-premium">Get Started</a>
                 </div>
@@ -669,7 +669,7 @@
                             <i class="fa-solid fa-star"></i>
                             <i class="fa-solid fa-star"></i>
                         </div>
-                        <p class="testimonial-text">"Switching to Task19 was the best decision for our boutique. The
+                        <p class="testimonial-text">"Switching to VESPR was the best decision for our boutique. The
                             multi-theme engine is a total game changer."</p>
                         <div class="testimonial-author">
                             <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=150&auto=format&fit=crop"
@@ -731,7 +731,7 @@
                             <i class="fa-solid fa-star"></i>
                             <i class="fa-solid fa-star"></i>
                         </div>
-                        <p class="testimonial-text">"Switching to Task19 was the best decision for our boutique. The
+                        <p class="testimonial-text">"Switching to VESPR was the best decision for our boutique. The
                             multi-theme engine is a total game changer."</p>
                         <div class="testimonial-author">
                             <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=150&auto=format&fit=crop"
@@ -827,15 +827,15 @@
             <div class="inquiry-content" data-reveal>
                 <p class="hero-tag">Connect With Us</p>
                 <h2>Ready to transform your brand?</h2>
-                <p style="margin-bottom: 3rem; font-size: 1.1rem;">Join the elite fragrance houses using Task19 Perfume SaaS
+                <p style="margin-bottom: 3rem; font-size: 1.1rem;">Join the elite fragrance houses using VESPR Perfume SaaS
                     to power their digital presence.</p>
                 <a href="https://wa.me/your-number" class="btn-premium" style="padding: 1.2rem 4rem; font-size: 1.1rem;">
                     <i class="fa-brands fa-whatsapp" style="margin-right: 10px;"></i> Chat on WhatsApp
                 </a>
                 <div style="margin-top: 2rem;">
                     <p style="color: var(--text-light); font-size: 0.9rem;">Or email us at: <a
-                            href="mailto:perfume@task19.com"
-                            style="color: var(--accent-gold); text-decoration: none;">perfume@task19.com</a></p>
+                            href="mailto:perfume@vespr.com"
+                            style="color: var(--accent-gold); text-decoration: none;">perfume@vespr.com</a></p>
                 </div>
             </div>
         </div>

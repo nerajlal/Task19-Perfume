@@ -1,6 +1,6 @@
 @extends('layouts.storefront')
 
-@section('title', ($title ?? 'Collection') . ' | Task19 Perfumes')
+@section('title', ($title ?? 'Collection') . ' | VESPR Perfumes')
 
 @section('content')
 <div class="collection-header">

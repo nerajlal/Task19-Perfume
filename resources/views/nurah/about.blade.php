@@ -1,13 +1,13 @@
 @extends('layouts.storefront')
 
-@section('title', 'Our Legacy | Task19 Perfumes')
+@section('title', 'Our Legacy | VESPR Perfumes')
 
 @section('content')
 <div class="about-hero">
     <div class="about-hero-content">
         <span class="eyebrow">The Essence of Excellence</span>
         <h1 class="about-title">Crafting Memories <br> Through Scent</h1>
-        <p class="about-subtitle">A journey from the world's finest flower fields to your skin. Task19 Perfumes is more than a fragrance house—it's a tribute to the art of fine living.</p>
+        <p class="about-subtitle">A journey from the world's finest flower fields to your skin. VESPR Perfumes is more than a fragrance house—it's a tribute to the art of fine living.</p>
     </div>
 </div>
 
@@ -21,7 +21,7 @@
             <div class="section-text">
                 <span class="section-badge">Our Philosophy</span>
                 <h2 class="h1">The Alchemy of Nature</h2>
-                <p>Task19 Perfumes was born from a singular vision: to bridge the gap between traditional artisanal perfumery and the modern desire for unique, long-lasting signatures.</p>
+                <p>VESPR Perfumes was born from a singular vision: to bridge the gap between traditional artisanal perfumery and the modern desire for unique, long-lasting signatures.</p>
                 <p>We don't just sell perfumes; we curate olfactory experiences. Every raw material is ethically sourced, from the petals of Grasse to the precious woods of the East, ensuring that every drop remains true to its heritage.</p>
                 <div class="stat-grid">
                     <div class="stat-item">
@@ -43,7 +43,7 @@
             <div class="section-text">
                 <span class="section-badge">The Process</span>
                 <h2 class="h1">Meticulous Craftsmanship</h2>
-                <p>Each fragrance undergoes a rigorous aging process, allowing the complex notes to mature and harmonize. This patience results in the depth and sillage that Task19 is renowned for.</p>
+                <p>Each fragrance undergoes a rigorous aging process, allowing the complex notes to mature and harmonize. This patience results in the depth and sillage that VESPR is renowned for.</p>
                 <ul class="check-list">
                     <li><i class="fa-solid fa-check"></i> Small-batch distillation for purity.</li>
                     <li><i class="fa-solid fa-check"></i> Hand-poured in artisanal glass.</li>

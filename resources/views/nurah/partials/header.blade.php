@@ -4,7 +4,7 @@
             <i class="fa-solid fa-bars"></i>
         </button>
         <a href="{{ route('v1.home') }}" class="logo">
-            Task19 Perfumes
+            VESPR Perfumes
         </a>
 
         <div class="search-bar">

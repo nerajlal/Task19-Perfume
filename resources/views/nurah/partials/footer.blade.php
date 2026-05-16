@@ -2,8 +2,8 @@
     <div class="footer-content-wrapper">
         <div class="footer-container">
             <div class="footer-brand">
-                <a href="{{ route('v1.home') }}" class="logo">Task19 Perfumes</a>
-                <p>Elevating the art of fine perfumery. Task19 brings you the world's most exquisite artisanal
+                <a href="{{ route('v1.home') }}" class="logo">VESPR Perfumes</a>
+                <p>Elevating the art of fine perfumery. VESPR brings you the world's most exquisite artisanal
                     fragrances
                     and essential oils.</p>
                 <div class="footer-trust">
@@ -51,7 +51,7 @@
 
         <div class="footer-bottom">
             <div class="copyright">
-                &copy; {{ date('Y') }} Task19 Perfumes. All rights reserved. <span style="opacity: 0.7; margin-left: 10px;">| Developed by <a href="#" style="color: inherit; text-decoration: none; font-weight: 600;">Task19 Technologies</a></span>
+                &copy; {{ date('Y') }} VESPR Perfumes. All rights reserved. <span style="opacity: 0.7; margin-left: 10px;">| Developed by <a href="#" style="color: inherit; text-decoration: none; font-weight: 600;">VESPR Technologies</a></span>
             </div>
             <div class="social-links">
                 <a href="#"><i class="fa-brands fa-instagram"></i></a>

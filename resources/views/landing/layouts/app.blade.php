@@ -4,11 +4,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Task19 Perfume SaaS - Premium Perfume Business Solution</title>
+    <title>VESPR Perfume SaaS - Premium Perfume Business Solution</title>
     <meta name="description"
         content="The ultimate e-commerce SaaS platform for luxury perfume brands. Multi-theme, multi-tenant, and optimized for high-conversion fragrance sales.">
     <meta name="keywords"
-        content="perfume saas, fragrance e-commerce, luxury perfume website, task19, perfume business solution">
+        content="perfume saas, fragrance e-commerce, luxury perfume website, vespr, perfume business solution">
+    <link rel="canonical" href="{{ url()->current() }}">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:title" content="VESPR Perfume SaaS - Premium Perfume Business Solution">
+    <meta property="og:description" content="The ultimate e-commerce SaaS platform for luxury perfume brands. Multi-theme, multi-tenant, and optimized for high-conversion fragrance sales.">
+    <meta property="og:image" content="{{ asset('Images/landing/v5-template.png') }}">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="{{ url()->current() }}">
+    <meta property="twitter:title" content="VESPR Perfume SaaS - Premium Perfume Business Solution">
+    <meta property="twitter:description" content="The ultimate e-commerce SaaS platform for luxury perfume brands. Multi-theme, multi-tenant, and optimized for high-conversion fragrance sales.">
+    <meta property="twitter:image" content="{{ asset('Images/landing/v5-template.png') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -434,12 +449,12 @@
     <nav class="navbar" id="navbar">
         <div class="container">
             <div class="nav-content">
-                <a href="{{ route('landing') }}" class="logo">TASK19<span>.</span>SAAS</a>
+                <a href="{{ route('landing') }}" class="logo">VESPR<span>.</span>SAAS</a>
                 <div class="menu-toggle" id="menu-toggle">
                     <i class="fa-solid fa-bars-staggered"></i>
                 </div>
                 <div class="nav-links" id="nav-links">
-                    <a href="https://task19.com" target="_blank" class="nav-link">Task19</a>
+                    <a href="https://vespr.com" target="_blank" class="nav-link">VESPR</a>
                     <a href="{{ route('landing') }}#features" class="nav-link">Features</a>
                     <a href="{{ route('landing.templates') }}" class="nav-link">Templates</a>
                     <a href="{{ route('landing') }}#pricing" class="nav-link">Pricing</a>
@@ -458,7 +473,7 @@
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-info">
-                    <a href="#" class="logo footer-logo">TASK19<span>.</span>SAAS</a>
+                    <a href="#" class="logo footer-logo">VESPR<span>.</span>SAAS</a>
                     <p>The ultimate e-commerce solution for the modern fragrance industry. Elevating brands with premium
                         digital experiences.</p>
                     <div class="footer-social">
@@ -503,7 +518,7 @@
             </div>
 
             <div class="footer-bottom">
-                <p class="copyright">&copy; {{ date('Y') }} Task19 Perfume SaaS. All rights reserved.</p>
+                <p class="copyright">&copy; {{ date('Y') }} VESPR Perfume SaaS. All rights reserved.</p>
                 <div class="footer-nav" style="display: flex; gap: 2rem;">
                     <a href="#" style="margin-bottom: 0;">Privacy Policy</a>
                     <a href="#" style="margin-bottom: 0;">Terms of Service</a>
@@ -517,7 +532,7 @@
         <div class="demo-modal-content">
             <div class="demo-modal-close" id="closeDemoModal">&times;</div>
             <div style="text-align: center; margin-bottom: 2rem;">
-                <h3 style="font-size: 1.8rem; margin-bottom: 0.5rem;">Experience Task19</h3>
+                <h3 style="font-size: 1.8rem; margin-bottom: 0.5rem;">Experience VESPR</h3>
                 <p style="color: var(--text-light); font-size: 0.9rem;">Please provide your details to access the live demo.</p>
             </div>
             <form id="demoAccessForm">
@@ -599,7 +614,7 @@
             if(e) e.preventDefault();
             
             // Check if user has already provided details
-            if (localStorage.getItem('task19_demo_accessed')) {
+            if (localStorage.getItem('vespr_demo_accessed')) {
                 window.open(url, '_blank');
                 return;
             }
@@ -628,7 +643,7 @@
             e.preventDefault();
             
             // Save access flag to local storage
-            localStorage.setItem('task19_demo_accessed', 'true');
+            localStorage.setItem('vespr_demo_accessed', 'true');
             
             const targetUrl = targetInput.value;
             window.open(targetUrl, '_blank');

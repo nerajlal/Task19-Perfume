@@ -1,6 +1,6 @@
 @extends('layouts.storefront')
 
-@section('title', 'Shopping Cart | Task19 Perfumes')
+@section('title', 'Shopping Cart | VESPR Perfumes')
 
 @section('content')
 <div class="cart-page-inner">
@@ -89,7 +89,7 @@
                     Checkout Now <i class="fa-solid fa-arrow-right ms-2"></i>
                 </a>
                 <div class="summary-trust">
-                    <i class="fa-solid fa-shield-halved"></i> Secure checkout with Task19
+                    <i class="fa-solid fa-shield-halved"></i> Secure checkout with VESPR
                 </div>
             </div>
             

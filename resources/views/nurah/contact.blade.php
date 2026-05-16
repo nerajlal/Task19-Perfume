@@ -1,6 +1,6 @@
 @extends('layouts.storefront')
 
-@section('title', 'Contact Us | Task19 Perfumes')
+@section('title', 'Contact Us | VESPR Perfumes')
 
 @section('content')
 <div class="static-page-container">
