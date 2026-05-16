@@ -3,10 +3,11 @@
 use App\Http\Controllers\PageController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [App\Http\Controllers\LandingController::class, 'index'])->name('landing');
-Route::get('/home', function() {
+Route::get('/', function() {
     return view('landing.vespr-landing');
-})->name('landing.vespr');
+})->name('landing');
+
+Route::get('/home', [App\Http\Controllers\LandingController::class, 'index'])->name('landing.old');
 Route::get('/templates', [App\Http\Controllers\LandingController::class, 'templates'])->name('landing.templates');
 
 // Shared Actions (Global)

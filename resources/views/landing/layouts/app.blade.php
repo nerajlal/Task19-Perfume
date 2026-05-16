@@ -455,11 +455,11 @@
                 </div>
                 <div class="nav-links" id="nav-links">
                     <a href="https://vespr.com" target="_blank" class="nav-link">VESPR</a>
-                    <a href="{{ route('landing') }}#features" class="nav-link">Features</a>
+                    <a href="{{ route('landing.old') }}#features" class="nav-link">Features</a>
                     <a href="{{ route('landing.templates') }}" class="nav-link">Templates</a>
-                    <a href="{{ route('landing') }}#pricing" class="nav-link">Pricing</a>
-                    <a href="{{ route('landing') }}#contact" class="nav-link">Enquiry</a>
-                    <a href="{{ route('landing') }}#contact" class="btn-premium">Get Started</a>
+                    <a href="{{ route('landing.old') }}#pricing" class="nav-link">Pricing</a>
+                    <a href="{{ route('landing.old') }}#contact" class="nav-link">Enquiry</a>
+                    <a href="{{ route('landing.old') }}#contact" class="btn-premium">Get Started</a>
                 </div>
             </div>
         </div>
@@ -498,9 +498,9 @@
                     <div>
                         <h4 class="footer-title">Company</h4>
                         <ul class="footer-nav">
-                            <li><a href="{{ route('landing') }}#features">Features</a></li>
-                            <li><a href="{{ route('landing') }}#pricing">Pricing</a></li>
-                            <li><a href="{{ route('landing') }}#contact">Contact Us</a></li>
+                            <li><a href="{{ route('landing.old') }}#features">Features</a></li>
+                            <li><a href="{{ route('landing.old') }}#pricing">Pricing</a></li>
+                            <li><a href="{{ route('landing.old') }}#contact">Contact Us</a></li>
                             <li><a href="{{ route('landing.templates') }}">Live Demos</a></li>
                         </ul>
                     </div>

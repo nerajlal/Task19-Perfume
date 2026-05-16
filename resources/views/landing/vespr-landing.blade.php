@@ -1,84 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>VESPR — The Ultimate Perfume Platform</title>
-    <meta name="description" content="Vespr gives independent perfumers and fragrance houses everything they need to sell online — beautiful stores, smart tools, and zero complexity.">
-    <meta name="keywords" content="perfume saas, fragrance e-commerce, luxury perfume website, vespr, perfume business solution">
-    <link rel="canonical" href="{{ url()->current() }}">
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+@extends('landing.layouts.vespr')
+
+@section('styles')
 <style>
-  :root {
-    --cream:    #F5F0E8;
-    --warm:     #EDE6D6;
-    --sand:     #D4C9B0;
-    --stone:    #9C9080;
-    --bark:     #5C5147;
-    --ink:      #1E1A16;
-    --violet:   #7C5C8A;
-    --violet-l: #C4A8D4;
-    --violet-d: #4A3556;
-    --white:    #FDFAF5;
-    --serif:    'Cormorant Garamond', Georgia, serif;
-    --sans:     'DM Sans', system-ui, sans-serif;
-    --radius:   6px;
-    --transition: 0.3s cubic-bezier(0.4,0,0.2,1);
-  }
-
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    font-family: var(--sans);
-    background: var(--cream);
-    color: var(--ink);
-    font-size: 16px;
-    line-height: 1.7;
-    -webkit-font-smoothing: antialiased;
-  }
-
-  /* ── NAV ── */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 20px 48px;
-    background: rgba(245,240,232,0.9);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--sand);
-  }
-  .nav-logo {
-    font-family: var(--serif);
-    font-size: 28px;
-    font-weight: 300;
-    letter-spacing: 8px;
-    color: var(--ink);
-    text-decoration: none;
-  }
-  .nav-logo span { color: var(--violet); }
-  .nav-links { display: flex; gap: 36px; list-style: none; }
-  .nav-links a {
-    font-family: var(--sans);
-    font-size: 13px;
-    font-weight: 400;
-    letter-spacing: 1.5px;
-    color: var(--bark);
-    text-decoration: none;
-    text-transform: uppercase;
-    transition: color var(--transition);
-  }
-  .nav-links a:hover { color: var(--violet); }
-  .nav-cta {
-    background: var(--ink);
-    color: var(--white) !important;
-    padding: 10px 24px;
-    border-radius: 2px;
-    letter-spacing: 1.5px;
-  }
-  .nav-cta:hover { background: var(--violet); color: var(--white) !important; }
-
   /* ── HERO ── */
   .hero {
     min-height: 100vh;
@@ -133,37 +56,7 @@
     line-height: 1.8;
   }
   .hero-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
-  .btn-primary {
-    background: var(--ink);
-    color: var(--white);
-    padding: 16px 40px;
-    font-family: var(--sans);
-    font-size: 13px;
-    font-weight: 500;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    text-decoration: none;
-    border-radius: 2px;
-    transition: background var(--transition);
-    border: none; cursor: pointer;
-  }
-  .btn-primary:hover { background: var(--violet); }
-  .btn-ghost {
-    background: transparent;
-    color: var(--bark);
-    padding: 16px 40px;
-    font-family: var(--sans);
-    font-size: 13px;
-    font-weight: 400;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    text-decoration: none;
-    border-radius: 2px;
-    border: 1px solid var(--sand);
-    transition: border-color var(--transition), color var(--transition);
-    cursor: pointer;
-  }
-  .btn-ghost:hover { border-color: var(--violet); color: var(--violet); }
+  
   .hero-trust {
     margin-top: 64px;
     font-size: 11px;
@@ -185,20 +78,7 @@
 
   /* ── SECTION COMMONS ── */
   section { padding: 100px 48px; }
-  .section-label {
-    font-size: 11px; font-weight: 500;
-    letter-spacing: 4px; text-transform: uppercase;
-    color: var(--violet); margin-bottom: 16px;
-  }
-  .section-title {
-    font-family: var(--serif);
-    font-size: clamp(36px, 4vw, 56px);
-    font-weight: 300;
-    line-height: 1.15;
-    color: var(--ink);
-    margin-bottom: 20px;
-  }
-  .section-title em { font-style: italic; color: var(--violet); }
+  
   .section-desc {
     font-size: 16px; font-weight: 300;
     color: var(--stone); max-width: 520px;
@@ -297,6 +177,70 @@
     font-weight: 300;
     color: var(--stone);
     line-height: 1.8;
+  }
+
+  /* ── TESTIMONIALS ── */
+  .testimonials { background: var(--white); }
+  .testimonials-inner { max-width: 1100px; margin: 0 auto; }
+  .testimonials-head { text-align: center; margin-bottom: 72px; }
+  .testimonials-head .section-desc { margin: 0 auto; }
+  .testimonial-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  }
+  .testimonial {
+    background: var(--cream);
+    padding: 48px 40px;
+    border-radius: 2px;
+    transition: var(--transition);
+    display: flex;
+    flex-direction: column;
+  }
+  .testimonial:hover { transform: translateY(-4px); background: var(--warm); }
+  .t-rating {
+    color: var(--violet);
+    font-size: 12px;
+    letter-spacing: 2px;
+    margin-bottom: 24px;
+  }
+  .t-text {
+    font-family: var(--serif);
+    font-size: 20px;
+    font-style: italic;
+    font-weight: 300;
+    color: var(--ink);
+    line-height: 1.6;
+    margin-bottom: 32px;
+    flex-grow: 1;
+  }
+  .t-author {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .t-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    border: 1px solid var(--sand);
+  }
+  .t-meta {
+    display: flex;
+    flex-direction: column;
+  }
+  .t-name {
+    font-family: var(--sans);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink);
+  }
+  .t-role {
+    font-size: 12px;
+    color: var(--stone);
+    font-weight: 300;
   }
 
   /* ── PRICING ── */
@@ -459,45 +403,6 @@
   .cta-section .section-title { max-width: 600px; margin: 0 auto 16px; }
   .cta-section .section-desc { margin: 0 auto 48px; text-align: center; }
 
-  /* ── FOOTER ── */
-  footer {
-    background: var(--ink);
-    padding: 60px 48px 40px;
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr;
-    gap: 48px;
-  }
-  .footer-brand .nav-logo { display: block; margin-bottom: 16px; }
-  .footer-brand p {
-    font-size: 13px; font-weight: 300;
-    color: var(--stone); max-width: 260px; line-height: 1.8;
-  }
-  footer h5 {
-    font-size: 11px; letter-spacing: 3px;
-    text-transform: uppercase; color: var(--stone);
-    margin-bottom: 20px; font-weight: 500;
-  }
-  footer ul { list-style: none; }
-  footer ul li { margin-bottom: 10px; }
-  footer ul a {
-    font-size: 14px; font-weight: 300;
-    color: rgba(255,255,255,0.5);
-    text-decoration: none;
-    transition: color var(--transition);
-  }
-  footer ul a:hover { color: var(--white); }
-  .footer-bottom {
-    background: var(--ink);
-    padding: 20px 48px;
-    border-top: 1px solid rgba(255,255,255,0.06);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .footer-bottom p {
-    font-size: 12px; color: var(--stone); font-weight: 300;
-  }
-
   /* ── ANIMATIONS ── */
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(24px); }
@@ -510,31 +415,29 @@
   .delay-4 { animation-delay: 0.55s; opacity: 0; }
 
   @media (max-width: 900px) {
-    nav { padding: 16px 24px; }
-    .nav-links { display: none; }
-    section { padding: 72px 24px; }
-    .steps { grid-template-columns: 1fr 1fr; }
-    .features-grid { grid-template-columns: 1fr 1fr; }
-    .plans { grid-template-columns: 1fr; }
+    section { padding: 60px 24px; }
+    .hero { padding: 100px 24px 60px; }
+    .hero-sub { margin-bottom: 32px; }
+    .steps { grid-template-columns: 1fr; gap: 16px; }
+    .step-connector { display: none; }
+    .features-grid { grid-template-columns: 1fr; gap: 16px; }
+    .testimonial-grid { grid-template-columns: 1fr; gap: 24px; }
+    .plans { grid-template-columns: 1fr; gap: 24px; }
     .plan.featured { transform: none; }
     .brand-grid { grid-template-columns: 1fr; }
-    footer { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 600px) {
+    .hero h1 { font-size: 52px; }
+    .hero-brands { gap: 20px; }
+    .hero-brands span { font-size: 14px; }
+    .palette { flex-wrap: wrap; }
+    .swatch { flex: 1 1 30%; height: 50px; }
   }
 </style>
-</head>
-<body>
+@endsection
 
-<!-- NAV -->
-<nav>
-  <a href="{{ route('landing.vespr') }}" class="nav-logo">vesp<span>r</span></a>
-  <ul class="nav-links">
-    <li><a href="#onboarding">How it works</a></li>
-    <li><a href="#features">Features</a></li>
-    <li><a href="#pricing">Pricing</a></li>
-    <li><a href="#pricing" class="nav-cta">Start free</a></li>
-  </ul>
-</nav>
-
+@section('content')
 <!-- HERO -->
 <section class="hero">
   <p class="hero-eyebrow fade-up">Perfume Platform</p>
@@ -628,6 +531,52 @@
         <div class="feature-icon">◇</div>
         <div class="feature-title">Secure payments</div>
         <div class="feature-desc">Robust, encrypted payment flows for high-value trust. Accept cards, UPI, and international payments out of the box.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials" id="testimonials">
+  <div class="testimonials-inner">
+    <div class="testimonials-head">
+      <p class="section-label">Success stories</p>
+      <h2 class="section-title">Loved by the world's<br/><em>finest noses</em></h2>
+      <p class="section-desc">Join the community of independent perfumers and established heritage brands scaling their digital presence with Vespr.</p>
+    </div>
+    <div class="testimonial-grid">
+      <div class="testimonial">
+        <div class="t-rating">★★★★★</div>
+        <p class="t-text">"Vespr understood the nuance of fragrance storytelling. Our online boutique now feels as premium as our physical atelier in Grasse."</p>
+        <div class="t-author">
+          <div class="t-avatar" style="background-image: url('https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop')"></div>
+          <div class="t-meta">
+            <span class="t-name">Marc-Antoine</span>
+            <span class="t-role">Creative Director, Maison L'Amour</span>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial">
+        <div class="t-rating">★★★★★</div>
+        <p class="t-text">"The scent bundling engine alone increased our average order value by 45%. It's the only platform that truly 'gets' the perfume business."</p>
+        <div class="t-author">
+          <div class="t-avatar" style="background-image: url('https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop')"></div>
+          <div class="t-meta">
+            <span class="t-name">Elena Rossi</span>
+            <span class="t-role">Founder, Scent & Soul</span>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial">
+        <div class="t-rating">★★★★★</div>
+        <p class="t-text">"We migrated from Shopify in a weekend. The themes are exquisite and the multi-brand dashboard is a game-changer for our group."</p>
+        <div class="t-author">
+          <div class="t-avatar" style="background-image: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop')"></div>
+          <div class="t-meta">
+            <span class="t-name">James Thorne</span>
+            <span class="t-role">CEO, Thorne Fragrance Group</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -766,36 +715,4 @@
     <a href="https://wa.me/your-number" class="btn-ghost">Chat on WhatsApp</a>
   </div>
 </section>
-
-<!-- FOOTER -->
-<footer>
-  <div class="footer-brand">
-    <a href="{{ route('landing.vespr') }}" class="nav-logo">vesp<span>r</span></a>
-    <p>The e-commerce platform built for perfumers. From artisanal boutiques to global fragrance houses.</p>
-  </div>
-  <div>
-    <h5>Platform</h5>
-    <ul>
-      <li><a href="#">Features</a></li>
-      <li><a href="{{ route('landing.templates') }}">Templates</a></li>
-      <li><a href="#pricing">Pricing</a></li>
-      <li><a href="{{ route('landing.templates') }}">Live demos</a></li>
-    </ul>
-  </div>
-  <div>
-    <h5>Company</h5>
-    <ul>
-      <li><a href="#">About</a></li>
-      <li><a href="#">Contact</a></li>
-      <li><a href="#">Privacy policy</a></li>
-      <li><a href="#">Terms of service</a></li>
-    </ul>
-  </div>
-</footer>
-<div class="footer-bottom">
-  <p>© 2026 Vespr. All rights reserved.</p>
-  <p>perfume@vespr.com</p>
-</div>
-
-</body>
-</html>
+@endsection

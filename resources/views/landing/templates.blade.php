@@ -1,194 +1,227 @@
-@extends('landing.layouts.app')
+@extends('landing.layouts.vespr')
+
+@section('title', 'Explore Templates — VESPR')
 
 @section('styles')
-    <style>
-        .templates-hero {
-            padding: 10rem 0 6rem;
-            background: var(--bg-color);
-            text-align: center;
-        }
+<style>
+  .templates-hero {
+    padding: 160px 48px 80px;
+    background: var(--cream);
+    text-align: center;
+    position: relative;
+  }
+  .templates-hero::after {
+    content: '';
+    position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+    width: 1px; height: 60px; background: var(--sand);
+  }
 
-        .templates-hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1.5rem;
-        }
+  .templates-grid {
+    padding: 100px 48px;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 64px;
+  }
 
-        .templates-hero p {
-            color: var(--text-light);
-            font-size: 1.1rem;
-            max-width: 600px;
-            margin: 0 auto;
-        }
+  .template-card {
+    background: var(--white);
+    border: 1px solid var(--sand);
+    border-radius: 2px;
+    overflow: hidden;
+    transition: var(--transition);
+    display: flex;
+    flex-direction: column;
+  }
+  .template-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--violet);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+  }
 
-        .template-grid-detailed {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 4rem;
-            padding: 8rem 0;
-        }
+  .template-preview {
+    height: 400px;
+    background: var(--warm);
+    overflow: hidden;
+  }
+  .template-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 1s ease;
+  }
+  .template-card:hover .template-preview img {
+    transform: scale(1.05);
+  }
 
-        .template-card-large {
-            background: var(--white);
-            border-radius: 30px;
-            overflow: hidden;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.05);
-            transition: var(--transition);
-            border: 1px solid rgba(197, 160, 89, 0.05);
-        }
+  .template-info {
+    padding: 40px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .template-tag {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--violet);
+    font-weight: 500;
+    margin-bottom: 12px;
+  }
+  .template-title {
+    font-family: var(--serif);
+    font-size: 32px;
+    font-weight: 300;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+  .template-desc {
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--stone);
+    line-height: 1.7;
+    margin-bottom: 24px;
+  }
+  .template-features {
+    list-style: none;
+    margin-bottom: 32px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .template-features li {
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--bark);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .template-features li::before {
+    content: '◈';
+    color: var(--violet);
+    font-size: 10px;
+  }
 
-        .template-card-large:hover {
-            transform: translateY(-15px);
-            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.1);
-        }
+  .template-actions {
+    margin-top: auto;
+  }
 
-        .template-preview-large {
-            height: 500px;
-            background: #eee;
-            overflow: hidden;
-        }
+  @media (max-width: 900px) {
+    .templates-grid {
+      grid-template-columns: 1fr;
+      gap: 40px;
+      padding: 60px 24px;
+    }
+    .template-info { padding: 32px 24px; }
+  }
 
-        .template-preview-large img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: var(--transition);
-        }
-
-        .template-content-large {
-            padding: 3rem;
-        }
-
-        .template-features {
-            list-style: none;
-            margin: 1.5rem 0 2rem;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-        }
-
-        .template-features li {
-            font-size: 0.9rem;
-            color: var(--text-light);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .template-features li i {
-            color: var(--accent-gold);
-            font-size: 0.8rem;
-        }
-
-        @media (max-width: 992px) {
-            .template-grid-detailed {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+  @media (max-width: 600px) {
+    .templates-hero { padding: 120px 24px 60px; }
+    .template-title { font-size: 28px; }
+  }
+</style>
 @endsection
 
 @section('content')
-    <section class="templates-hero">
-        <div class="container">
-            <div data-reveal>
-                <span class="hero-tag">Digital Excellence</span>
-                <h1>Explore Our Templates</h1>
-                <p>From high-conversion editorial layouts to minimalist boutique designs, discover the perfect digital home
-                    for your fragrance brand.</p>
-            </div>
-        </div>
-    </section>
+<section class="templates-hero">
+  <p class="section-label">Digital Excellence</p>
+  <h1 class="section-title">Explore our<br/><em>curated templates</em></h1>
+  <p class="section-desc" style="margin: 0 auto;">From high-conversion editorial layouts to minimalist boutique designs, discover the perfect digital home for your fragrance brand.</p>
+</section>
 
-    <section class="container">
-        <div class="template-grid-detailed">
-            <!-- V5 Afnan -->
-            <div class="template-card-large" data-reveal>
-                <div class="template-preview-large">
-                    <img src="{{ asset('Images/landing/v5-template.png') }}" alt="Afnan Template">
-                </div>
-                <div class="template-content-large">
-                    <span class="template-tag">Modern Luxury</span>
-                    <h3>Afnan V5 Edition</h3>
-                    <p>Our most advanced template, featuring a center-focused header hierarchy, premium typography, and
-                        editorial product showcases.</p>
-                    <ul class="template-features">
-                        <li><i class="fa-solid fa-check"></i> Center-Focused Header</li>
-                        <li><i class="fa-solid fa-check"></i> Jost Typography</li>
-                        <li><i class="fa-solid fa-check"></i> Quick-Add Enabled</li>
-                        <li><i class="fa-solid fa-check"></i> SEO Optimized</li>
-                    </ul>
-                    <a href="javascript:void(0)" onclick="openDemoAccess(event, '{{ route('v5.home') }}')" class="btn-premium">View Live Demo</a>
-                </div>
-            </div>
+<section class="templates-grid">
+  <!-- V5 Afnan -->
+  <div class="template-card">
+    <div class="template-preview">
+      <img src="{{ asset('Images/landing/v5-template.png') }}" alt="Afnan Template">
+    </div>
+    <div class="template-info">
+      <span class="template-tag">Modern Luxury</span>
+      <h3 class="template-title">Afnan V5 Edition</h3>
+      <p class="template-desc">Our most advanced template, featuring a center-focused header hierarchy, premium typography, and editorial product showcases.</p>
+      <ul class="template-features">
+        <li>Center Header</li>
+        <li>Jost Typography</li>
+        <li>Quick-Add</li>
+        <li>SEO Optimized</li>
+      </ul>
+      <div class="template-actions">
+        <a href="javascript:void(0)" onclick="openDemoAccess(event, '{{ route('v5.home') }}')" class="btn-primary" style="width: 100%; text-align: center;">View Live Demo</a>
+      </div>
+    </div>
+  </div>
 
-            <!-- V2 Velvet -->
-            <div class="template-card-large" data-reveal>
-                <div class="template-preview-large">
-                    <img src="{{ asset('Images/landing/v2-template.png') }}" alt="Velvet Template">
-                </div>
-                <div class="template-content-large">
-                    <span class="template-tag">Minimalist</span>
-                    <h3>Velvet Noir V2</h3>
-                    <p>A dark, sophisticated aesthetic designed for high-end boutique collections and exclusive releases.
-                    </p>
-                    <ul class="template-features">
-                        <li><i class="fa-solid fa-check"></i> Sidebar Navigation</li>
-                        <li><i class="fa-solid fa-check"></i> Dark Mode Option</li>
-                        <li><i class="fa-solid fa-check"></i> Parallax Scrolling</li>
-                        <li><i class="fa-solid fa-check"></i> Interactive Gallery</li>
-                    </ul>
-                    <a href="javascript:void(0)" onclick="openDemoAccess(event, '{{ route('velvet.home') }}')" class="btn-premium">View Live Demo</a>
-                </div>
-            </div>
+  <!-- V2 Velvet -->
+  <div class="template-card">
+    <div class="template-preview">
+      <img src="{{ asset('Images/landing/v2-template.png') }}" alt="Velvet Template">
+    </div>
+    <div class="template-info">
+      <span class="template-tag">Minimalist Noir</span>
+      <h3 class="template-title">Velvet Noir V2</h3>
+      <p class="template-desc">A dark, sophisticated aesthetic designed for high-end boutique collections and exclusive releases.</p>
+      <ul class="template-features">
+        <li>Sidebar Nav</li>
+        <li>Dark Mode</li>
+        <li>Parallax</li>
+        <li>Rich Gallery</li>
+      </ul>
+      <div class="template-actions">
+        <a href="javascript:void(0)" onclick="openDemoAccess(event, '{{ route('velvet.home') }}')" class="btn-primary" style="width: 100%; text-align: center;">View Live Demo</a>
+      </div>
+    </div>
+  </div>
 
-            <!-- V4 Ajmal -->
-            <div class="template-card-large" data-reveal>
-                <div class="template-preview-large">
-                    <img src="{{ asset('Images/landing/v4-template.png') }}" alt="Ajmal Template">
-                </div>
-                <div class="template-content-large">
-                    <span class="template-tag">Classic Elegance</span>
-                    <h3>Ajmal Heritage V4</h3>
-                    <p>Traditional layouts meeting modern performance. Perfect for established brands with large catalogs.
-                    </p>
-                    <ul class="template-features">
-                        <li><i class="fa-solid fa-check"></i> Wide Grid Layout</li>
-                        <li><i class="fa-solid fa-check"></i> Mega Menu Support</li>
-                        <li><i class="fa-solid fa-check"></i> Advanced Filters</li>
-                        <li><i class="fa-solid fa-check"></i> Blog Integration</li>
-                    </ul>
-                    <a href="javascript:void(0)" onclick="openDemoAccess(event, '{{ route('v4.home') }}')" class="btn-premium">View Live Demo</a>
-                </div>
-            </div>
+  <!-- V4 Ajmal -->
+  <div class="template-card">
+    <div class="template-preview">
+      <img src="{{ asset('Images/landing/v4-template.png') }}" alt="Ajmal Template">
+    </div>
+    <div class="template-info">
+      <span class="template-tag">Classic Elegance</span>
+      <h3 class="template-title">Ajmal Heritage V4</h3>
+      <p class="template-desc">Traditional layouts meeting modern performance. Perfect for established brands with large catalogs.</p>
+      <ul class="template-features">
+        <li>Wide Grid</li>
+        <li>Mega Menu</li>
+        <li>Advanced Filters</li>
+        <li>Blog Integrated</li>
+      </ul>
+      <div class="template-actions">
+        <a href="javascript:void(0)" onclick="openDemoAccess(event, '{{ route('v4.home') }}')" class="btn-primary" style="width: 100%; text-align: center;">View Live Demo</a>
+      </div>
+    </div>
+  </div>
 
-            <!-- Nurah Classic -->
-            <div class="template-card-large" data-reveal>
-                <div class="template-preview-large">
-                    <img src="{{ asset('Images/landing/v1-template.png') }}" alt="Nurah Template">
-                </div>
-                <div class="template-content-large">
-                    <span class="template-tag">Legacy</span>
-                    <h3>Nurah Original V1</h3>
-                    <p>The theme that started it all. A balanced, clean approach to perfume storytelling and commerce.</p>
-                    <ul class="template-features">
-                        <li><i class="fa-solid fa-check"></i> Clean Whitespace</li>
-                        <li><i class="fa-solid fa-check"></i> Story-Focused Home</li>
-                        <li><i class="fa-solid fa-check"></i> Simple Checkout</li>
-                        <li><i class="fa-solid fa-check"></i> Fully Responsive</li>
-                    </ul>
-                    <a href="javascript:void(0)" onclick="openDemoAccess(event, '{{ route('v1.home') }}')" class="btn-premium">View Live Demo</a>
-                </div>
-            </div>
-        </div>
-    </section>
+  <!-- Nurah Classic -->
+  <div class="template-card">
+    <div class="template-preview">
+      <img src="{{ asset('Images/landing/v1-template.png') }}" alt="Nurah Template">
+    </div>
+    <div class="template-info">
+      <span class="template-tag">Legacy Theme</span>
+      <h3 class="template-title">Nurah Original V1</h3>
+      <p class="template-desc">The theme that started it all. A balanced, clean approach to perfume storytelling and commerce.</p>
+      <ul class="template-features">
+        <li>Clean White</li>
+        <li>Story-Focused</li>
+        <li>Simple Flows</li>
+        <li>Mobile First</li>
+      </ul>
+      <div class="template-actions">
+        <a href="javascript:void(0)" onclick="openDemoAccess(event, '{{ route('v1.home') }}')" class="btn-primary" style="width: 100%; text-align: center;">View Live Demo</a>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <!-- Call to Action -->
-    <section class="section-padding" style="background: #F8F5F1; text-align: center;">
-        <div class="container" data-reveal>
-            <h2>Need a custom solution?</h2>
-            <p style="margin-bottom: 2.5rem; color: var(--text-light);">We can craft a unique digital identity for your
-                fragrance house.</p>
-            <a href="{{ route('landing') }}#contact" class="btn-premium">Let's Talk</a>
-        </div>
-    </section>
+<!-- Call to Action -->
+<section style="background: var(--warm); text-align: center; padding: 100px 48px;">
+  <p class="section-label">Custom Design</p>
+  <h2 class="section-title">Need a unique<br/><em>digital identity?</em></h2>
+  <p class="section-desc" style="margin: 0 auto 40px;">We can craft a bespoke fragrance experience tailored specifically to your brand heritage.</p>
+  <a href="{{ route('landing') }}#contact" class="btn-primary">Request Custom Theme</a>
+</section>
 @endsection
