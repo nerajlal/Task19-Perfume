@@ -425,7 +425,76 @@
     .plans { grid-template-columns: 1fr; gap: 24px; }
     .plan.featured { transform: none; }
     .brand-grid { grid-template-columns: 1fr; }
+    .t-preview-grid { grid-template-columns: 1fr; }
   }
+
+  /* ── TEMPLATES PREVIEW ── */
+  .templates-preview { background: var(--white); }
+  .templates-inner { max-width: 1100px; margin: 0 auto; }
+  .templates-head { text-align: center; margin-bottom: 72px; }
+  .templates-head .section-desc { margin: 0 auto; }
+  .t-preview-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+  .t-preview-card {
+    background: var(--cream);
+    border-radius: 2px;
+    overflow: hidden;
+    transition: var(--transition);
+    border: 1px solid transparent;
+  }
+  .t-preview-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--sand);
+    background: var(--warm);
+  }
+  .t-preview-img {
+    height: 320px;
+    background-size: cover;
+    background-position: center;
+    background-color: var(--sand);
+  }
+  .t-preview-info {
+    padding: 32px;
+  }
+  .t-preview-tag {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--violet);
+    font-weight: 500;
+    margin-bottom: 12px;
+    display: block;
+  }
+  .t-preview-info h3 {
+    font-family: var(--serif);
+    font-size: 28px;
+    font-weight: 300;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+  .t-preview-info p {
+    font-size: 14px;
+    color: var(--stone);
+    margin-bottom: 24px;
+    line-height: 1.6;
+  }
+  .t-preview-link {
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-decoration: none;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: gap 0.3s ease;
+  }
+  .t-preview-link:hover { gap: 12px; color: var(--violet); }
+  .t-preview-link span { font-size: 16px; }
 
   @media (max-width: 600px) {
     .hero h1 { font-size: 52px; }
@@ -532,6 +601,40 @@
         <div class="feature-title">Secure payments</div>
         <div class="feature-desc">Robust, encrypted payment flows for high-value trust. Accept cards, UPI, and international payments out of the box.</div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEMPLATES PREVIEW -->
+<section class="templates-preview" id="templates">
+  <div class="templates-inner">
+    <div class="templates-head">
+      <p class="section-label">Exquisite Themes</p>
+      <h2 class="section-title">Designed for high-conversion<br/><em>fragrance storytelling</em></h2>
+      <p class="section-desc">Choose from our curated collection of luxury themes. Each one is meticulously crafted to reflect the heritage and nuance of your scent brand.</p>
+    </div>
+    <div class="t-preview-grid">
+      <div class="t-preview-card">
+        <div class="t-preview-img" style="background-image: url('{{ asset('Images/landing/v5-template.png') }}')"></div>
+        <div class="t-preview-info">
+          <span class="t-preview-tag">Editorial</span>
+          <h3>Afnan V5</h3>
+          <p>The gold standard for modern fragrance houses. Centered elegance with high-impact product grids.</p>
+          <a href="{{ route('landing.templates') }}" class="t-preview-link">View Details <span>→</span></a>
+        </div>
+      </div>
+      <div class="t-preview-card">
+        <div class="t-preview-img" style="background-image: url('{{ asset('Images/landing/v2-template.png') }}')"></div>
+        <div class="t-preview-info">
+          <span class="t-preview-tag">Minimalist</span>
+          <h3>Velvet Noir</h3>
+          <p>A sophisticated dark aesthetic for exclusive collections and boutique perfume ateliers.</p>
+          <a href="{{ route('landing.templates') }}" class="t-preview-link">View Details <span>→</span></a>
+        </div>
+      </div>
+    </div>
+    <div style="text-align: center; margin-top: 64px;">
+      <a href="{{ route('landing.templates') }}" class="btn-ghost">Explore all templates</a>
     </div>
   </div>
 </section>
