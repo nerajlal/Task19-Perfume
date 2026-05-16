@@ -19,7 +19,7 @@
     <div class="department-section" style="margin-bottom: 5rem;">
         <div class="section-header">
             <h2 class="section-title">Exclusive Combos</h2>
-            <a href="{{ route('combos') }}" class="view-all" style="font-weight: 600; color: var(--accent-color); font-size: 0.95rem;">View all <i class="fa-solid fa-chevron-right ms-1"></i></a>
+            <a href="{{ route('v1.combos') }}" class="view-all" style="font-weight: 600; color: var(--accent-color); font-size: 0.95rem;">View all <i class="fa-solid fa-chevron-right ms-1"></i></a>
         </div>
         <div class="product-grid bundle-responsive-grid">
             @foreach($bundles->take(4) as $bundle)
@@ -44,7 +44,7 @@
             <i class="fa-solid fa-wind mb-4" style="font-size: 4rem; opacity: 0.1;"></i>
             <h2>Our catalog is currently quiet</h2>
             <p>We are currently updating our collection. Please check back soon!</p>
-            <a href="{{ route('home') }}" class="btn-primary mt-4">Return Home</a>
+            <a href="{{ route('v1.home') }}" class="btn-primary mt-4">Return Home</a>
         </div>
     @endif
 </div>

@@ -50,12 +50,12 @@
             <ul class="sidebar-menu">
                 @php $sidebarCollections = \App\Models\Collection::where('status', 1)->get(); @endphp
                 <li class="menu-item">
-                    <a href="{{ route('all-products') }}" class="menu-link {{ request()->routeIs('all-products') ? 'active' : '' }}">
+                    <a href="{{ route('v1.all-products') }}" class="menu-link {{ request()->routeIs('v1.all-products') ? 'active' : '' }}">
                         <i class="fa-solid fa-border-all"></i> All Products
                     </a>
                 </li>
                 <li class="menu-item">
-                    <a href="{{ route('combos') }}" class="menu-link {{ request()->routeIs('combos') || request()->routeIs('combo') ? 'active' : '' }}">
+                    <a href="{{ route('v1.combos') }}" class="menu-link {{ request()->routeIs('v1.combos') || request()->routeIs('v1.combo') ? 'active' : '' }}">
                         <i class="fa-solid fa-layer-group"></i> Exclusive Combos
                     </a>
                 </li>
@@ -71,7 +71,7 @@
                     elseif (str_contains($slug, 'spice') || str_contains($slug, 'warm')) $icon = 'fa-fire';
                 @endphp
                 <li class="menu-item">
-                    <a href="{{ route('collection', ['slug' => $col->slug]) }}" class="menu-link {{ request()->query('slug') == $col->slug ? 'active' : '' }}">
+                    <a href="{{ route('v1.collection', ['slug' => $col->slug]) }}" class="menu-link {{ request()->query('slug') == $col->slug ? 'active' : '' }}">
                         <i class="fa-solid {{ $icon }}"></i> {{ $col->name }}
                     </a>
                 </li>
@@ -81,17 +81,17 @@
             <h2 class="sidebar-title" style="margin-top: 2rem;">Shop By Gender</h2>
             <ul class="sidebar-menu">
                 <li class="menu-item">
-                    <a href="{{ route('collection', ['gender' => 'for-him']) }}" class="menu-link">
+                    <a href="{{ route('v1.collection', ['gender' => 'for-him']) }}" class="menu-link">
                         <i class="fa-solid fa-mars"></i> For Him
                     </a>
                 </li>
                 <li class="menu-item">
-                    <a href="{{ route('collection', ['gender' => 'for-her']) }}" class="menu-link">
+                    <a href="{{ route('v1.collection', ['gender' => 'for-her']) }}" class="menu-link">
                         <i class="fa-solid fa-venus"></i> For Her
                     </a>
                 </li>
                 <li class="menu-item">
-                    <a href="{{ route('collection', ['gender' => 'unisex']) }}" class="menu-link">
+                    <a href="{{ route('v1.collection', ['gender' => 'unisex']) }}" class="menu-link">
                         <i class="fa-solid fa-venus-mars"></i> Unisex
                     </a>
                 </li>
@@ -100,12 +100,12 @@
             <h2 class="sidebar-title" style="margin-top: 2rem;">Company</h2>
             <ul class="sidebar-menu">
                 <li class="menu-item">
-                    <a href="{{ route('about') }}" class="menu-link">
+                    <a href="{{ route('v1.about') }}" class="menu-link">
                         <i class="fa-solid fa-circle-info"></i> Our Story
                     </a>
                 </li>
                 <li class="menu-item">
-                    <a href="{{ route('contact') }}" class="menu-link">
+                    <a href="{{ route('v1.contact') }}" class="menu-link">
                         <i class="fa-solid fa-paper-plane"></i> Contact
                     </a>
                 </li>
@@ -211,7 +211,7 @@
             });
         }
 
-        $(document).on('click', '#cart-trigger-n, #close-cart-n, #cart-drawer-overlay-n', function() {
+        $(document).on('click', '#close-cart-n, #cart-drawer-overlay-n', function() {
             const isOpen = $('#cart-drawer-n').hasClass('open');
             toggleNCart(!isOpen);
         });

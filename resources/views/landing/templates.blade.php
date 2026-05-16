@@ -176,7 +176,7 @@
                         <li><i class="fa-solid fa-check"></i> Simple Checkout</li>
                         <li><i class="fa-solid fa-check"></i> Fully Responsive</li>
                     </ul>
-                    <a href="javascript:void(0)" onclick="openDemoAccess(event, '{{ route('home') }}')" class="btn-premium">View Live Demo</a>
+                    <a href="javascript:void(0)" onclick="openDemoAccess(event, '{{ route('v1.home') }}')" class="btn-premium">View Live Demo</a>
                 </div>
             </div>
         </div>

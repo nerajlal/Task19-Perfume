@@ -3,28 +3,34 @@
 use App\Http\Controllers\PageController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [PageController::class, 'home'])->name('home');
-Route::get('/home', [App\Http\Controllers\LandingController::class, 'index'])->name('landing');
+Route::get('/', [App\Http\Controllers\LandingController::class, 'index'])->name('landing');
 Route::get('/templates', [App\Http\Controllers\LandingController::class, 'templates'])->name('landing.templates');
-Route::get('/collections', [PageController::class, 'collection'])->name('collection');
-Route::get('/products', [PageController::class, 'collection'])->name('products');
-Route::get('/all-products', [PageController::class, 'allProducts'])->name('all-products');
-Route::get('/combos', [PageController::class, 'combos'])->name('combos');
-Route::get('/combo', [PageController::class, 'combo'])->name('combo');
-Route::get('/cosmopolitan', [PageController::class, 'cosmopolitan'])->name('cosmopolitan');
-Route::get('/product', [PageController::class, 'product'])->name('product');
-Route::view('/about', 'nurah.about')->name('about');
-Route::view('/contact', 'nurah.contact')->name('contact');
-Route::get('/cart', [App\Http\Controllers\CartController::class, 'index'])->name('cart');
+
+// Shared Actions (Global)
 Route::post('/cart/add', [App\Http\Controllers\CartController::class, 'add'])->name('cart.add');
 Route::post('/cart/update', [App\Http\Controllers\CartController::class, 'update'])->name('cart.update');
 Route::post('/cart/remove', [App\Http\Controllers\CartController::class, 'remove'])->name('cart.remove');
 Route::get('/cart/fetch', [App\Http\Controllers\CartController::class, 'fetch'])->name('cart.fetch');
-Route::get('/checkout', [PageController::class, 'checkout'])->name('checkout');
-Route::get('/shipping-policy', [PageController::class, 'shippingPolicy'])->name('shipping-policy');
-Route::get('/return-policy', [PageController::class, 'returnPolicy'])->name('return-policy');
-Route::get('/terms-of-service', [PageController::class, 'termsOfService'])->name('terms-of-service');
 Route::post('/order/place', [App\Http\Controllers\OrderController::class, 'store'])->name('order.place');
+
+// v1 Nurah Theme Routes
+Route::prefix('v1')->name('v1.')->group(function () {
+    Route::get('/', [PageController::class, 'home'])->name('home');
+    Route::get('/collections', [PageController::class, 'collection'])->name('collection');
+    Route::get('/products', [PageController::class, 'collection'])->name('products');
+    Route::get('/all-products', [PageController::class, 'allProducts'])->name('all-products');
+    Route::get('/combos', [PageController::class, 'combos'])->name('combos');
+    Route::get('/combo', [PageController::class, 'combo'])->name('combo');
+    Route::get('/cosmopolitan', [PageController::class, 'cosmopolitan'])->name('cosmopolitan');
+    Route::get('/product', [PageController::class, 'product'])->name('product');
+    Route::view('/about', 'nurah.about')->name('about');
+    Route::view('/contact', 'nurah.contact')->name('contact');
+    Route::get('/cart', [App\Http\Controllers\CartController::class, 'index'])->name('cart');
+    Route::get('/checkout', [PageController::class, 'checkout'])->name('checkout');
+    Route::get('/shipping-policy', [PageController::class, 'shippingPolicy'])->name('shipping-policy');
+    Route::get('/return-policy', [PageController::class, 'returnPolicy'])->name('return-policy');
+    Route::get('/terms-of-service', [PageController::class, 'termsOfService'])->name('terms-of-service');
+});
 
 // Account Routes
 Route::get('/account', [App\Http\Controllers\AccountController::class, 'index'])->name('account.index')->middleware('auth');

@@ -5,9 +5,9 @@
 @section('content')
 <div class="product-page-container">
     <div class="breadcrumb">
-        <a href="{{ route('home') }}">Home</a>
+        <a href="{{ route('v1.home') }}">Home</a>
         <i class="fa-solid fa-chevron-right"></i>
-        <a href="{{ route('all-products') }}">Shop</a>
+        <a href="{{ route('v1.all-products') }}">Shop</a>
         <i class="fa-solid fa-chevron-right"></i>
         <span>{{ $product->title }}</span>
     </div>
@@ -83,7 +83,7 @@
                     <i class="fa-solid fa-layer-group"></i>
                     <span>Save more with the <strong>{{ $bundle->title }}</strong> combo</span>
                 </div>
-                <a href="{{ route('combo', ['id' => $bundle->id]) }}" class="promo-link">
+                <a href="{{ route('v1.combo', ['id' => $bundle->id]) }}" class="promo-link">
                     View Combo <i class="fa-solid fa-chevron-right"></i>
                 </a>
             </div>
@@ -172,7 +172,7 @@
                                     'notes_heart' => $poolProd->notes_heart,
                                     'notes_base' => $poolProd->notes_base,
                                     'price' => '₹' . number_format($poolProd->starting_price, 0),
-                                    'url' => route('product', ['id' => $poolProd->id])
+                                    'url' => route('v1.product', ['id' => $poolProd->id])
                                 ];
                             @endphp
                             <script type="application/json" id="product-data-{{ $poolProd->id }}">
@@ -185,7 +185,7 @@
                                         <i class="fa-solid fa-cart-plus"></i>
                                     </button>
                                 </div>
-                                <a href="{{ route('product', ['id' => $poolProd->id]) }}" class="pool-prod-name">{{ $poolProd->title }}</a>
+                                <a href="{{ route('v1.product', ['id' => $poolProd->id]) }}" class="pool-prod-name">{{ $poolProd->title }}</a>
                             </div>
                         @endforeach
                     </div>

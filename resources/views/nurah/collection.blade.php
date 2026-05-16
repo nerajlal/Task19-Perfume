@@ -25,7 +25,7 @@
             <i class="fa-solid fa-wind mb-4" style="font-size: 4rem; opacity: 0.1;"></i>
             <h2>No fragrances found</h2>
             <p>We couldn't find any products in this selection. Please try another category.</p>
-            <a href="{{ route('all-products') }}" class="btn-primary mt-4">Shop All Products</a>
+            <a href="{{ route('v1.all-products') }}" class="btn-primary mt-4">Shop All Products</a>
         </div>
     @endif
 </div>

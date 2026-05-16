@@ -40,7 +40,7 @@ class AuthController extends Controller
         // Sync session cart to DB
         \App\Http\Controllers\CartController::syncSession($user->id);
 
-        return redirect()->route('home')->with('success', 'Registration successful! Welcome to Task19 Perfumes.');
+        return redirect()->route('v1.home')->with('success', 'Registration successful! Welcome to Task19 Perfumes.');
     }
 
     public function login(Request $request)
@@ -56,7 +56,7 @@ class AuthController extends Controller
             // Sync session cart to DB
             \App\Http\Controllers\CartController::syncSession(Auth::id());
 
-            return redirect()->intended(route('home'));
+            return redirect()->intended(route('v1.home'));
         }
 
         return back()->withErrors([
@@ -122,12 +122,12 @@ class AuthController extends Controller
             // Sync session cart to DB
             \App\Http\Controllers\CartController::syncSession(Auth::id());
         
-            return redirect()->route('home')->with('success', 'Logged in with Google successfully!');
+            return redirect()->route('v1.home')->with('success', 'Logged in with Google successfully!');
         
         } catch (\Exception $e) {
             \Illuminate\Support\Facades\Log::error('Google Login Error: ' . $e->getMessage());
             \Illuminate\Support\Facades\Log::error($e->getTraceAsString());
-            return redirect()->route('home')->with('error', 'Google Login failed: ' . $e->getMessage());
+            return redirect()->route('v1.home')->with('error', 'Google Login failed: ' . $e->getMessage());
         }
     }
 }

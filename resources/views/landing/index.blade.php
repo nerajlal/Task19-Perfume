@@ -619,7 +619,7 @@
                         <h3>Nurah Classic</h3>
                         <p style="color: var(--text-light); font-size: 0.9rem; margin-bottom: 1.5rem;">The original heritage
                             design, focused on product storytelling.</p>
-                        <a href="javascript:void(0)" onclick="openDemoAccess(event, '{{ route('home') }}')" class="btn-outline"
+                        <a href="javascript:void(0)" onclick="openDemoAccess(event, '{{ route('v1.home') }}')" class="btn-outline"
                             style="padding: 0.6rem 1.5rem; font-size: 0.8rem;">Live Demo</a>
                     </div>
                 </div>

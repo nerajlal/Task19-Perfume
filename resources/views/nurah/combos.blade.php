@@ -19,7 +19,7 @@
         <i class="fa-solid fa-layer-group" style="font-size: 3rem; color: var(--border-color); margin-bottom: 1.5rem; display: block;"></i>
         <h2 style="font-size: 1.5rem; margin-bottom: 1rem;">No Combos Available</h2>
         <p style="color: var(--text-muted); margin-bottom: 2rem;">We're currently curating new exclusive bundles. Please check back soon!</p>
-        <a href="{{ route('all-products') }}" class="btn-primary">Browse All Perfumes</a>
+        <a href="{{ route('v1.all-products') }}" class="btn-primary">Browse All Perfumes</a>
     </div>
 @endif
 @endsection

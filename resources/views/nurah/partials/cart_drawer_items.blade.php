@@ -40,14 +40,14 @@
             <span>₹{{ number_format($total, 0) }}</span>
         </div>
         
-        <a href="{{ route('checkout') }}" class="n-checkout-btn">PROCEED TO CHECKOUT</a>
+        <a href="{{ route('v1.checkout') }}" class="n-checkout-btn">PROCEED TO CHECKOUT</a>
     </div>
 @else
     <div class="n-empty-cart">
         <i class="fa-solid fa-cart-shopping"></i>
         <h3>Your cart is empty</h3>
         <p>Looks like you haven't added anything to your cart yet.</p>
-        <a href="{{ route('all-products') }}" class="n-shop-btn">Continue Shopping</a>
+        <a href="{{ route('v1.all-products') }}" class="n-shop-btn">Continue Shopping</a>
     </div>
 @endif
 

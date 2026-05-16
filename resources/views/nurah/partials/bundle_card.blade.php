@@ -1,5 +1,5 @@
 <div class="product-card">
-    <a href="{{ route('combo', ['id' => $bundle->id]) }}" class="card-img">
+    <a href="{{ route('v1.combo', ['id' => $bundle->id]) }}" class="card-img">
         @php 
             $imagePath = $bundle->image ? Storage::url($bundle->image) : null;
             if (!$imagePath && $bundle->type == 'pack') {
@@ -30,7 +30,7 @@
                 <span style="text-decoration: line-through; color: var(--text-muted); font-size: 0.85rem;">₹{{ number_format($originalPrice, 2) }}</span>
             @endif
         </div>
-        <a href="{{ route('combo', ['id' => $bundle->id]) }}" class="p-name">{{ $bundle->title }}</a>
+        <a href="{{ route('v1.combo', ['id' => $bundle->id]) }}" class="p-name">{{ $bundle->title }}</a>
         <span class="p-meta">{{ $bundle->products->count() }} Products Included</span>
     </div>
     <button class="cart-add-btn" data-product-id="{{ $bundle->id }}" data-type="bundle">

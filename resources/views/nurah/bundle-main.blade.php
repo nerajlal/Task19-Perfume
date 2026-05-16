@@ -5,9 +5,9 @@
 @section('content')
 <div class="product-page-container">
     <div class="breadcrumb">
-        <a href="{{ route('home') }}">Home</a>
+        <a href="{{ route('v1.home') }}">Home</a>
         <i class="fa-solid fa-chevron-right"></i>
-        <a href="{{ route('combos') }}">Combos</a>
+        <a href="{{ route('v1.combos') }}">Combos</a>
         <i class="fa-solid fa-chevron-right"></i>
         <span>{{ $bundle->title }}</span>
     </div>
@@ -124,7 +124,7 @@
                                                 "notes_heart": "{{ $product->notes_heart }}",
                                                 "notes_base": "{{ $product->notes_base }}",
                                                 "price": "₹{{ number_format($product->starting_price, 2) }}",
-                                                "url": "{{ route('product', ['id' => $product->id]) }}"
+                                                "url": "{{ route('v1.product', ['id' => $product->id]) }}"
                                             }
                                         </div>
                                     </div>

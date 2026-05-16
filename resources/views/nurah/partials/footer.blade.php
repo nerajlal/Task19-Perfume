@@ -2,7 +2,7 @@
     <div class="footer-content-wrapper">
         <div class="footer-container">
             <div class="footer-brand">
-                <a href="{{ route('home') }}" class="logo">Task19 Perfumes</a>
+                <a href="{{ route('v1.home') }}" class="logo">Task19 Perfumes</a>
                 <p>Elevating the art of fine perfumery. Task19 brings you the world's most exquisite artisanal
                     fragrances
                     and essential oils.</p>
@@ -24,7 +24,7 @@
                 <ul class="footer-links">
                     @php $footerCols = \App\Models\Collection::where('status', 1)->take(5)->get(); @endphp
                     @foreach($footerCols as $col)
-                        <li><a href="{{ route('collection', ['slug' => $col->slug]) }}">{{ $col->name }}</a></li>
+                        <li><a href="{{ route('v1.collection', ['slug' => $col->slug]) }}">{{ $col->name }}</a></li>
                     @endforeach
                 </ul>
             </div>
@@ -32,10 +32,10 @@
             <div class="footer-group">
                 <h3 class="footer-heading">Customer Care</h3>
                 <ul class="footer-links">
-                    <li><a href="{{ route('about') }}">Our Story</a></li>
-                    <li><a href="{{ route('contact') }}">Contact Us</a></li>
-                    <li><a href="{{ route('shipping-policy') }}">Shipping Policy</a></li>
-                    <li><a href="{{ route('return-policy') }}">Return Policy</a></li>
+                    <li><a href="{{ route('v1.about') }}">Our Story</a></li>
+                    <li><a href="{{ route('v1.contact') }}">Contact Us</a></li>
+                    <li><a href="{{ route('v1.shipping-policy') }}">Shipping Policy</a></li>
+                    <li><a href="{{ route('v1.return-policy') }}">Return Policy</a></li>
                 </ul>
             </div>
 

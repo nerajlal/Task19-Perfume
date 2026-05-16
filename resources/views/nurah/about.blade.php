@@ -81,8 +81,8 @@
             <h2>Experience the Difference</h2>
             <p>Ready to find your signature scent? Explore our collections today.</p>
             <div style="display: flex; gap: 1.5rem; justify-content: center; margin-top: 2rem;">
-                <a href="{{ route('all-products') }}" class="btn-primary">Shop All Perfumes</a>
-                <a href="{{ route('combos') }}" class="btn-outline">Exclusive Combos</a>
+                <a href="{{ route('v1.all-products') }}" class="btn-primary">Shop All Perfumes</a>
+                <a href="{{ route('v1.combos') }}" class="btn-outline">Exclusive Combos</a>
             </div>
         </div>
     </section>

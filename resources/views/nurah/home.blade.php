@@ -8,7 +8,7 @@
         <div class="hero-content">
             <h1 class="hero-title">Elevate Your Presence</h1>
             <p class="hero-subtitle">Discover Task19's curated collection of artisanal fragrances. Crafted for those who appreciate the finer things in life.</p>
-            <a href="{{ route('all-products') }}" class="btn-primary">Explore Collection</a>
+            <a href="{{ route('v1.all-products') }}" class="btn-primary">Explore Collection</a>
         </div>
         <img src="{{ asset('images/hero-banner.png') }}" alt="Task19 Perfume" class="hero-image">
     </div>
@@ -60,7 +60,7 @@
                 ];
             @endphp
             @foreach($families as $fam)
-                <a href="{{ route('collection', ['category' => $fam['slug']]) }}" style="background: {{ $fam['color'] }}; padding: 2rem; border-radius: 1.5rem; text-align: center; border: 1px solid rgba(0,0,0,0.05);">
+                <a href="{{ route('v1.collection', ['category' => $fam['slug']]) }}" style="background: {{ $fam['color'] }}; padding: 2rem; border-radius: 1.5rem; text-align: center; border: 1px solid rgba(0,0,0,0.05);">
                     <i class="fa-solid {{ $fam['icon'] }}" style="font-size: 2rem; margin-bottom: 1rem; color: var(--primary-color);"></i>
                     <h3 style="font-size: 1.1rem; font-weight: 700;">{{ $fam['name'] }}</h3>
                 </a>
@@ -80,7 +80,7 @@
         <div class="department-section" id="collection-{{ $collection->id }}">
             <div class="section-header">
                 <h2 class="section-title">{{ $collection->name }}</h2>
-                <a href="{{ route('collection', ['slug' => $collection->slug]) }}" class="view-all">View all <i class="fa-solid fa-chevron-right ms-1"></i></a>
+                <a href="{{ route('v1.collection', ['slug' => $collection->slug]) }}" class="view-all">View all <i class="fa-solid fa-chevron-right ms-1"></i></a>
             </div>
             
             <div class="product-grid">
@@ -97,7 +97,7 @@
     <div class="department-section">
         <div class="section-header">
             <h2 class="section-title">Exclusive Combos</h2>
-            <a href="{{ route('combos') }}" class="view-all">View all <i class="fa-solid fa-chevron-right ms-1"></i></a>
+            <a href="{{ route('v1.combos') }}" class="view-all">View all <i class="fa-solid fa-chevron-right ms-1"></i></a>
         </div>
         
         <div class="product-grid">
@@ -121,7 +121,7 @@
                     <iframe src="https://www.youtube.com/embed/167AIKitcZs?autoplay=1&mute=1&loop=1&playlist=167AIKitcZs&controls=0&modestbranding=1&rel=0&playsinline=1" title="Fragrance Story 1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
                 <div class="video-info">
-                    <a href="{{ route('all-products') }}" class="video-btn">Shop Collection</a>
+                    <a href="{{ route('v1.all-products') }}" class="video-btn">Shop Collection</a>
                 </div>
             </div>
             <div class="video-card">
@@ -129,7 +129,7 @@
                     <iframe src="https://www.youtube.com/embed/QM18rD-zrCs?autoplay=1&mute=1&loop=1&playlist=QM18rD-zrCs&controls=0&modestbranding=1&rel=0&playsinline=1" title="Fragrance Story 2" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
                 <div class="video-info">
-                    <a href="{{ route('all-products') }}" class="video-btn">Shop Collection</a>
+                    <a href="{{ route('v1.all-products') }}" class="video-btn">Shop Collection</a>
                 </div>
             </div>
             <div class="video-card">
@@ -137,7 +137,7 @@
                     <iframe src="https://www.youtube.com/embed/P7MxjMYwU_g?autoplay=1&mute=1&loop=1&playlist=P7MxjMYwU_g&controls=0&modestbranding=1&rel=0&playsinline=1" title="Fragrance Story 3" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
                 <div class="video-info">
-                    <a href="{{ route('all-products') }}" class="video-btn">Shop Collection</a>
+                    <a href="{{ route('v1.all-products') }}" class="video-btn">Shop Collection</a>
                 </div>
             </div>
             <div class="video-card">
@@ -145,7 +145,7 @@
                     <iframe src="https://www.youtube.com/embed/UujTjwkuqbE?autoplay=1&mute=1&loop=1&playlist=UujTjwkuqbE&controls=0&modestbranding=1&rel=0&playsinline=1" title="Fragrance Story 4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
                 <div class="video-info">
-                    <a href="{{ route('all-products') }}" class="video-btn">Shop Collection</a>
+                    <a href="{{ route('v1.all-products') }}" class="video-btn">Shop Collection</a>
                 </div>
             </div>
             <div class="video-card">
@@ -153,7 +153,7 @@
                     <iframe src="https://www.youtube.com/embed/WamyeDrjaVA?autoplay=1&mute=1&loop=1&playlist=WamyeDrjaVA&controls=0&modestbranding=1&rel=0&playsinline=1" title="Fragrance Story 5" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
                 <div class="video-info">
-                    <a href="{{ route('all-products') }}" class="video-btn">Shop Collection</a>
+                    <a href="{{ route('v1.all-products') }}" class="video-btn">Shop Collection</a>
                 </div>
             </div>
         </div>
