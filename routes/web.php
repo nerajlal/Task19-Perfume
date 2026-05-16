@@ -9,6 +9,7 @@ Route::get('/', function() {
 
 Route::get('/home', [App\Http\Controllers\LandingController::class, 'index'])->name('landing.old');
 Route::get('/templates', [App\Http\Controllers\LandingController::class, 'templates'])->name('landing.templates');
+Route::post('/demo-request', [App\Http\Controllers\LandingController::class, 'handleDemoRequest'])->name('demo.request');
 
 // Shared Actions (Global)
 Route::post('/cart/add', [App\Http\Controllers\CartController::class, 'add'])->name('cart.add');

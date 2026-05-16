@@ -290,24 +290,25 @@
             <p style="color: var(--stone); font-size: 0.9rem;">Please provide your details to access the live demo.</p>
         </div>
         <form id="demoAccessForm">
+            @csrf
             <input type="hidden" id="targetDemoUrl">
             <div style="margin-bottom: 1.5rem;">
                 <label style="display: block; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; color: var(--stone);">Full Name</label>
-                <input type="text" style="width: 100%; padding: 1rem; border: 1px solid var(--sand); border-radius: 2px; background: #fcfcfc; font-family: var(--sans);" required placeholder="Enter your name">
+                <input type="text" name="name" style="width: 100%; padding: 1rem; border: 1px solid var(--sand); border-radius: 2px; background: #fcfcfc; font-family: var(--sans);" required placeholder="Enter your name">
             </div>
             <div style="margin-bottom: 1.5rem;">
                 <label style="display: block; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; color: var(--stone);">Business Email</label>
-                <input type="email" style="width: 100%; padding: 1rem; border: 1px solid var(--sand); border-radius: 2px; background: #fcfcfc; font-family: var(--sans);" required placeholder="name@company.com">
+                <input type="email" name="email" style="width: 100%; padding: 1rem; border: 1px solid var(--sand); border-radius: 2px; background: #fcfcfc; font-family: var(--sans);" required placeholder="name@company.com">
             </div>
             <div style="margin-bottom: 1.5rem;">
                 <label style="display: block; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; color: var(--stone);">Phone Number</label>
-                <input type="tel" style="width: 100%; padding: 1rem; border: 1px solid var(--sand); border-radius: 2px; background: #fcfcfc; font-family: var(--sans);" required placeholder="+1 (555) 000-0000">
+                <input type="tel" name="phone" style="width: 100%; padding: 1rem; border: 1px solid var(--sand); border-radius: 2px; background: #fcfcfc; font-family: var(--sans);" required placeholder="+1 (555) 000-0000">
             </div>
             <div style="margin-bottom: 2rem;">
                 <label style="display: block; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; color: var(--stone);">Business Name</label>
-                <input type="text" style="width: 100%; padding: 1rem; border: 1px solid var(--sand); border-radius: 2px; background: #fcfcfc; font-family: var(--sans);" required placeholder="Your Brand Name">
+                <input type="text" name="business_name" style="width: 100%; padding: 1rem; border: 1px solid var(--sand); border-radius: 2px; background: #fcfcfc; font-family: var(--sans);" required placeholder="Your Brand Name">
             </div>
-            <button type="submit" class="btn-primary" style="width: 100%;">Access Live Demo</button>
+            <button type="submit" id="submitDemoBtn" class="btn-primary" style="width: 100%;">Access Live Demo</button>
         </form>
     </div>
 </div>
@@ -342,9 +343,38 @@
 
     demoForm.addEventListener('submit', (e) => {
         e.preventDefault();
-        localStorage.setItem('vespr_demo_accessed', 'true');
-        window.open(targetInput.value, '_blank');
-        closeDemoBtn.click();
+        const submitBtn = document.getElementById('submitDemoBtn');
+        const originalText = submitBtn.innerText;
+        submitBtn.innerText = 'Processing...';
+        submitBtn.disabled = true;
+
+        const formData = new FormData(demoForm);
+        formData.append('target_url', targetInput.value);
+
+        fetch('{{ route("demo.request") }}', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            localStorage.setItem('vespr_demo_accessed', 'true');
+            window.open(targetInput.value, '_blank');
+            closeDemoBtn.click();
+            submitBtn.innerText = originalText;
+            submitBtn.disabled = false;
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            // Even if mail fails, let them see the demo but alert developer
+            localStorage.setItem('vespr_demo_accessed', 'true');
+            window.open(targetInput.value, '_blank');
+            closeDemoBtn.click();
+            submitBtn.innerText = originalText;
+            submitBtn.disabled = false;
+        });
     });
 
     // Mobile Menu Toggle
