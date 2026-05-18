@@ -739,6 +739,141 @@
       }
     }
 
+    /* ── VIDEO SHOWCASE ── */
+    .video-showcase {
+      background: var(--cream);
+      padding: 120px 48px;
+      border-top: 1px solid var(--sand);
+      border-bottom: 1px solid var(--sand);
+    }
+
+    .video-showcase-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+
+    .video-showcase-left {
+      width: 100%;
+    }
+
+    .video-showcase-right {
+      width: 100%;
+      text-align: left;
+    }
+
+    .video-browser-frame {
+      border: 1px solid var(--sand);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.03);
+      background: var(--white);
+    }
+
+    .video-browser-header {
+      padding: 12px 18px;
+      background: #faf8f5;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--sand);
+    }
+
+    .video-browser-dots {
+      display: flex;
+      gap: 6px;
+    }
+
+    .video-browser-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(30, 26, 22, 0.15);
+    }
+
+    .video-browser-address {
+      height: 16px;
+      width: 150px;
+      background: rgba(30, 26, 22, 0.04);
+      border-radius: 2px;
+    }
+
+    .video-wrapper-inner {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #000;
+    }
+
+    .video-wrapper-inner iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    /* Feature List on Right */
+    .v-feature-list {
+      margin-top: 40px;
+      display: grid;
+      gap: 28px;
+    }
+
+    .v-feature-item {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+    }
+
+    .v-feature-num {
+      font-family: var(--serif);
+      font-size: 18px;
+      color: var(--sand);
+      font-weight: 300;
+      line-height: 1.2;
+      border-bottom: 1px solid var(--sand);
+      padding-bottom: 2px;
+    }
+
+    .v-feature-content h4 {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--ink);
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .v-feature-content p {
+      font-size: 13px;
+      color: var(--stone);
+      line-height: 1.5;
+    }
+
+    @media (max-width: 900px) {
+      .video-showcase {
+        padding: 60px 24px;
+      }
+
+      .video-showcase-inner {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .video-showcase-right {
+        text-align: left;
+      }
+
+      .v-feature-list {
+        margin-top: 32px;
+      }
+    }
+
     /* ── TESTIMONIALS ── */
     .testimonials {
       background: var(--white);
@@ -1537,7 +1672,7 @@
               <div class="browser-dot" style="background: #FFBD2E;"></div>
               <div class="browser-dot" style="background: #27C93F;"></div>
             </div>
-            <div class="browser-title">vespr.platform // brand_manager</div>
+            <div class="browser-title">vespr.store // brand_manager</div>
             <div class="browser-actions">
               <div class="browser-btn-dummy"></div>
               <div class="browser-btn-dummy"></div>
@@ -1559,10 +1694,12 @@
 
             <!-- Scent Bundling Tab Content -->
             <div class="tab-content" id="tab-bundling">
-              <img src="{{ asset('Images/landing/bundle1.png') }}" alt="Scent Bundling" class="tab-content-img" style="object-fit: contain; background: var(--white);">
+              <img src="{{ asset('Images/landing/bundle1.png') }}" alt="Scent Bundling" class="tab-content-img"
+                style="object-fit: contain; background: var(--white);">
               <div class="tab-content-overlay">
                 <h3 class="tab-content-title">Intelligent Scent Bundles</h3>
-                <p class="tab-content-desc">Maximize your average order value automatically. Combine complementary perfume sprays, solid balms, and travel vials into custom gift sets directly inside checkout.</p>
+                <p class="tab-content-desc">Maximize your average order value automatically. Combine complementary perfume
+                  sprays, solid balms, and travel vials into custom gift sets directly inside checkout.</p>
               </div>
             </div>
 
@@ -1609,6 +1746,80 @@
                   high-value conversions. Seamlessly integrates credit cards, Apple Pay, Stripe, and global gateways out
                   of the box.</p>
               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VIDEO SHOWCASE -->
+  <section class="video-showcase" id="walkthrough">
+    <div class="video-showcase-inner">
+      <!-- Left: Sleek browser mock frame with autoplaying muted walkthrough video -->
+      <div class="video-showcase-left">
+        <div class="video-browser-frame">
+          <div class="video-browser-header">
+            <div class="video-browser-dots">
+              <div class="video-browser-dot" style="background: #FF5F56;"></div>
+              <div class="video-browser-dot" style="background: #FFBD2E;"></div>
+              <div class="video-browser-dot" style="background: #27C93F;"></div>
+            </div>
+            <div class="video-browser-title"
+              style="font-family: var(--sans); font-size: 11px; letter-spacing: 0.5px; color: var(--stone); font-weight: 400;">
+              vespr.store /admin panel</div>
+            <div style="width: 32px;"></div>
+          </div>
+          <div class="video-wrapper-inner">
+            <iframe
+              src="https://www.youtube.com/embed/V3meLd6ylJM?autoplay=1&amp;mute=1&amp;loop=1&amp;playlist=V3meLd6ylJM&amp;controls=0&amp;modestbranding=1&amp;rel=0&amp;playsinline=1"
+              title="VESPR Atelier Walkthrough Video"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Structured list of features -->
+      <div class="video-showcase-right">
+        <p class="section-label" style="margin-bottom: 8px;">Conversion Engine</p>
+        <h2 class="section-title" style="font-size: 2.2rem; line-height: 1.2; margin-bottom: 16px;">Built to
+          bundle,<br /><em>designed to sell</em></h2>
+        <!-- <p class="section-desc" style="font-size: 14px; margin-bottom: 0; max-width: 100%;">Curate custom fragrance
+                  experiences that keep buyers engaged. VESPR gives you advanced administrative controls to map product pools,
+                  design custom scent bundles, and offer frictionless checkout paths.</p> -->
+
+        <div class="v-feature-list">
+          <div class="v-feature-item">
+            <div class="v-feature-num">01</div>
+            <div class="v-feature-content">
+              <h4>Olfactory Bundling Engine</h4>
+              <p>Launch high-impact scent bundle options. Pair perfume extracts with custom travel sprays, sensory sets,
+                to increase Average Order Value (AOV).</p>
+            </div>
+          </div>
+          <!-- <div class="v-feature-item">
+                      <div class="v-feature-num">02</div>
+                      <div class="v-feature-content">
+                        <h4>One-Click Instant Buy</h4>
+                        <p>Remove purchasing friction with highly optimized checkout slides, persistent 'Add to Bag' panels, and
+                          premium mobile express checkout tabs.</p>
+                      </div>
+                    </div> -->
+          <div class="v-feature-item">
+            <div class="v-feature-num">03</div>
+            <div class="v-feature-content">
+              <h4>Olfactory Scent Profiler</h4>
+              <p>Map scent ingredients (top, heart, and base notes) directly in the admin dashboard to guide user choices
+                and maximize discovery buying.</p>
+            </div>
+          </div>
+          <div class="v-feature-item">
+            <div class="v-feature-num">04</div>
+            <div class="v-feature-content">
+              <h4>Unified Atelier Dashboard</h4>
+              <p>Manage incoming orders, inventory counts, shipping metrics, and multi-brand catalogs inside one
+                high-speed workspace.</p>
             </div>
           </div>
         </div>
@@ -1850,91 +2061,91 @@
         </div>
 
         <!-- <div class="faq-item">
-              <button class="faq-question">
-                <span>Can I migrate my existing store from Shopify or WooCommerce?</span>
-                <span class="faq-toggle-icon">+</span>
-              </button>
-              <div class="faq-answer">
-                <div class="faq-answer-content">
-                  Yes! We provide built-in migration tools that allow you to import your products, collections, pricing lists, and media assets using standard CSV formatting. If you require assistance, our support team is available on WhatsApp and email to help make the transition completely seamless.
-                </div>
-              </div>
-            </div> -->
+                          <button class="faq-question">
+                            <span>Can I migrate my existing store from Shopify or WooCommerce?</span>
+                            <span class="faq-toggle-icon">+</span>
+                          </button>
+                          <div class="faq-answer">
+                            <div class="faq-answer-content">
+                              Yes! We provide built-in migration tools that allow you to import your products, collections, pricing lists, and media assets using standard CSV formatting. If you require assistance, our support team is available on WhatsApp and email to help make the transition completely seamless.
+                            </div>
+                          </div>
+                        </div> -->
       </div>
     </div>
   </section>
 
   <!-- BRAND SYSTEM -->
   <!-- <section class="brand" id="brand">
-        <div class="brand-inner">
-          <div class="brand-head">
-            <p class="section-label">Brand system</p>
-            <h2 class="section-title">Colour palette &<br /><em>typography</em></h2>
-          </div>
-          <div class="brand-grid">
-            <div class="brand-block">
-              <h4>Neutral colour palette</h4>
-              <div class="palette" style="margin-bottom: 36px;">
-                <div class="swatch" style="background:#F5F0E8; border: 1px solid #D4C9B0;"><span>Cream</span></div>
-                <div class="swatch" style="background:#EDE6D6;"><span>Warm</span></div>
-                <div class="swatch" style="background:#D4C9B0;"><span>Sand</span></div>
-                <div class="swatch" style="background:#9C9080;"><span>Stone</span></div>
-                <div class="swatch" style="background:#5C5147;"><span>Bark</span></div>
-                <div class="swatch" style="background:#1E1A16;"><span>Ink</span></div>
-                <div class="swatch" style="background:#7C5C8A;"><span>Violet</span></div>
-              </div>
-              <h4 style="margin-top: 48px;">Usage</h4>
-              <div style="display:grid; gap:8px; margin-top:12px;">
-                <div style="display:flex; align-items:center; gap:12px; font-size:13px; color: var(--bark);">
-                  <div
-                    style="width:16px; height:16px; background:#F5F0E8; border:1px solid #D4C9B0; border-radius:2px; flex-shrink:0;">
-                  </div>
-                  Cream — page backgrounds
-                </div>
-                <div style="display:flex; align-items:center; gap:12px; font-size:13px; color: var(--bark);">
-                  <div style="width:16px; height:16px; background:#D4C9B0; border-radius:2px; flex-shrink:0;"></div>
-                  Sand — borders, dividers
-                </div>
-                <div style="display:flex; align-items:center; gap:12px; font-size:13px; color: var(--bark);">
-                  <div style="width:16px; height:16px; background:#9C9080; border-radius:2px; flex-shrink:0;"></div>
-                  Stone — body text, secondary
-                </div>
-                <div style="display:flex; align-items:center; gap:12px; font-size:13px; color: var(--bark);">
-                  <div style="width:16px; height:16px; background:#1E1A16; border-radius:2px; flex-shrink:0;"></div>
-                  Ink — headings, CTAs
-                </div>
-                <div style="display:flex; align-items:center; gap:12px; font-size:13px; color: var(--bark);">
-                  <div style="width:16px; height:16px; background:#7C5C8A; border-radius:2px; flex-shrink:0;"></div>
-                  Violet — accents, highlights
-                </div>
-              </div>
-            </div>
-            <div class="brand-block">
-              <h4>Font pairing</h4>
-              <div class="font-sample">
-                <div class="fs-name">Display — Cormorant Garamond</div>
-                <div class="fs-display">The Art of Scent</div>
-                <div style="font-size:12px; color:var(--stone); margin-top:6px; font-weight:300;">Light 300 · Italic for
-                  emphasis · Headlines &amp; hero text</div>
-              </div>
-              <div style="height:1px; background: var(--sand); margin: 24px 0;"></div>
-              <div class="font-sample">
-                <div class="fs-name">Body — DM Sans</div>
-                <div class="fs-body">Sell fragrance, effortlessly. Built for independent perfumers and luxury fragrance
-                  houses.</div>
-                <div style="font-size:12px; color:var(--stone); margin-top:6px; font-weight:300;">Light 300 · Regular 400 ·
-                  UI, navigation, body copy</div>
-              </div>
-              <div style="height:1px; background: var(--sand); margin: 24px 0;"></div>
-              <div style="font-size:12px; color:var(--stone); font-weight:300; line-height:1.8;">
-                <strong style="font-weight:500; color:var(--bark);">Why this pairing:</strong> Cormorant brings old-world
-                fragrance house elegance. DM Sans keeps the SaaS UI clean and readable. The contrast between serif display and
-                geometric sans signals both luxury and modern simplicity.
-              </div>
-            </div>
-          </div>
-        </div>
-      </section> -->
+                    <div class="brand-inner">
+                      <div class="brand-head">
+                        <p class="section-label">Brand system</p>
+                        <h2 class="section-title">Colour palette &<br /><em>typography</em></h2>
+                      </div>
+                      <div class="brand-grid">
+                        <div class="brand-block">
+                          <h4>Neutral colour palette</h4>
+                          <div class="palette" style="margin-bottom: 36px;">
+                            <div class="swatch" style="background:#F5F0E8; border: 1px solid #D4C9B0;"><span>Cream</span></div>
+                            <div class="swatch" style="background:#EDE6D6;"><span>Warm</span></div>
+                            <div class="swatch" style="background:#D4C9B0;"><span>Sand</span></div>
+                            <div class="swatch" style="background:#9C9080;"><span>Stone</span></div>
+                            <div class="swatch" style="background:#5C5147;"><span>Bark</span></div>
+                            <div class="swatch" style="background:#1E1A16;"><span>Ink</span></div>
+                            <div class="swatch" style="background:#7C5C8A;"><span>Violet</span></div>
+                          </div>
+                          <h4 style="margin-top: 48px;">Usage</h4>
+                          <div style="display:grid; gap:8px; margin-top:12px;">
+                            <div style="display:flex; align-items:center; gap:12px; font-size:13px; color: var(--bark);">
+                              <div
+                                style="width:16px; height:16px; background:#F5F0E8; border:1px solid #D4C9B0; border-radius:2px; flex-shrink:0;">
+                              </div>
+                              Cream — page backgrounds
+                            </div>
+                            <div style="display:flex; align-items:center; gap:12px; font-size:13px; color: var(--bark);">
+                              <div style="width:16px; height:16px; background:#D4C9B0; border-radius:2px; flex-shrink:0;"></div>
+                              Sand — borders, dividers
+                            </div>
+                            <div style="display:flex; align-items:center; gap:12px; font-size:13px; color: var(--bark);">
+                              <div style="width:16px; height:16px; background:#9C9080; border-radius:2px; flex-shrink:0;"></div>
+                              Stone — body text, secondary
+                            </div>
+                            <div style="display:flex; align-items:center; gap:12px; font-size:13px; color: var(--bark);">
+                              <div style="width:16px; height:16px; background:#1E1A16; border-radius:2px; flex-shrink:0;"></div>
+                              Ink — headings, CTAs
+                            </div>
+                            <div style="display:flex; align-items:center; gap:12px; font-size:13px; color: var(--bark);">
+                              <div style="width:16px; height:16px; background:#7C5C8A; border-radius:2px; flex-shrink:0;"></div>
+                              Violet — accents, highlights
+                            </div>
+                          </div>
+                        </div>
+                        <div class="brand-block">
+                          <h4>Font pairing</h4>
+                          <div class="font-sample">
+                            <div class="fs-name">Display — Cormorant Garamond</div>
+                            <div class="fs-display">The Art of Scent</div>
+                            <div style="font-size:12px; color:var(--stone); margin-top:6px; font-weight:300;">Light 300 · Italic for
+                              emphasis · Headlines &amp; hero text</div>
+                          </div>
+                          <div style="height:1px; background: var(--sand); margin: 24px 0;"></div>
+                          <div class="font-sample">
+                            <div class="fs-name">Body — DM Sans</div>
+                            <div class="fs-body">Sell fragrance, effortlessly. Built for independent perfumers and luxury fragrance
+                              houses.</div>
+                            <div style="font-size:12px; color:var(--stone); margin-top:6px; font-weight:300;">Light 300 · Regular 400 ·
+                              UI, navigation, body copy</div>
+                          </div>
+                          <div style="height:1px; background: var(--sand); margin: 24px 0;"></div>
+                          <div style="font-size:12px; color:var(--stone); font-weight:300; line-height:1.8;">
+                            <strong style="font-weight:500; color:var(--bark);">Why this pairing:</strong> Cormorant brings old-world
+                            fragrance house elegance. DM Sans keeps the SaaS UI clean and readable. The contrast between serif display and
+                            geometric sans signals both luxury and modern simplicity.
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </section> -->
 
   <!-- CTA -->
   <section class="cta-section">

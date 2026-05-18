@@ -123,7 +123,11 @@
     grid-template-columns: 2fr 1fr 1fr;
     gap: 48px;
   }
-  .footer-brand .nav-logo { display: block; margin-bottom: 16px; }
+  .footer-brand .nav-logo {
+    display: block;
+    margin-bottom: 16px;
+    color: var(--cream);
+  }
   .footer-brand p {
     font-size: 13px; font-weight: 300;
     color: var(--stone); max-width: 260px; line-height: 1.8;
@@ -224,6 +228,7 @@
     <li><a href="{{ route('landing') }}#onboarding">How it works</a></li>
     <li><a href="{{ route('landing') }}#features">Features</a></li>
     <li><a href="{{ route('landing.templates') }}">Templates</a></li>
+    <li><a href="{{ route('landing') }}#walkthrough">Walkthrough</a></li>
     <li><a href="{{ route('landing') }}#testimonials">Stories</a></li>
     <li><a href="{{ route('landing') }}#pricing">Pricing</a></li>
     <li><a href="{{ route('landing') }}#pricing" class="nav-cta">Start free</a></li>
@@ -242,6 +247,7 @@
     <li><a href="{{ route('landing') }}#onboarding">How it works</a></li>
     <li><a href="{{ route('landing') }}#features">Features</a></li>
     <li><a href="{{ route('landing.templates') }}">Templates</a></li>
+    <li><a href="{{ route('landing') }}#walkthrough">Walkthrough</a></li>
     <li><a href="{{ route('landing') }}#testimonials">Stories</a></li>
     <li><a href="{{ route('landing') }}#pricing">Pricing</a></li>
     <li><a href="{{ route('landing') }}#pricing" class="nav-cta">Start free</a></li>
@@ -262,6 +268,7 @@
     <ul>
       <li><a href="{{ route('landing') }}#features">Features</a></li>
       <li><a href="{{ route('landing.templates') }}">Templates</a></li>
+      <li><a href="{{ route('landing') }}#walkthrough">Walkthrough</a></li>
       <li><a href="{{ route('landing') }}#pricing">Pricing</a></li>
       <li><a href="{{ route('landing') }}#faq">FAQ</a></li>
     </ul>

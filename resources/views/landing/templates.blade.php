@@ -136,6 +136,109 @@
     .templates-hero { padding: 120px 24px 60px; }
     .template-title { font-size: 28px; }
   }
+
+  /* ── ADMIN PANEL CENTRALIZED MANAGEMENT ── */
+  .admin-showcase-section {
+    background: var(--cream);
+    border-top: 1px solid var(--sand);
+    border-bottom: 1px solid var(--sand);
+    padding: 120px 48px;
+  }
+  .admin-showcase-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 64px;
+    align-items: center;
+  }
+  .admin-showcase-left {
+    text-align: left;
+  }
+  .admin-showcase-right {
+    width: 100%;
+  }
+  .admin-browser-frame {
+    border: 1px solid var(--sand);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.03);
+    background: var(--white);
+  }
+  .admin-browser-header {
+    padding: 12px 18px;
+    background: #faf8f5;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--sand);
+  }
+  .admin-browser-dots {
+    display: flex;
+    gap: 6px;
+  }
+  .admin-browser-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+  .admin-video-wrapper {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: #000;
+  }
+  .admin-video-wrapper iframe {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    border: 0;
+  }
+  .admin-feature-list {
+    margin-top: 36px;
+    display: grid;
+    gap: 24px;
+  }
+  .admin-feature-item {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+  .admin-feature-num {
+    font-family: var(--serif);
+    font-size: 16px;
+    color: var(--violet);
+    border-bottom: 1px solid var(--sand);
+    padding-bottom: 2px;
+  }
+  .admin-feature-content h4 {
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+  .admin-feature-content p {
+    font-size: 13px;
+    color: var(--stone);
+    line-height: 1.5;
+  }
+
+  @media (max-width: 900px) {
+    .admin-showcase-section {
+      padding: 60px 24px;
+    }
+    .admin-showcase-inner {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+    .admin-showcase-left {
+      order: 2;
+    }
+    .admin-showcase-right {
+      order: 1;
+    }
+  }
 </style>
 @endsection
 
@@ -227,6 +330,57 @@
       </ul>
       <div class="template-actions">
         <a href="javascript:void(0)" onclick="openDemoAccess(event, '{{ route('v1.home') }}')" class="btn-primary" style="width: 100%; text-align: center;">View Live Demo</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CENTRALIZED ADMIN MANAGEMENT SHOWCASE -->
+<section class="admin-showcase-section">
+  <div class="admin-showcase-inner">
+    <!-- Left Column: Copywriting & Bullet list -->
+    <div class="admin-showcase-left">
+      <p class="section-label">Centralized Operations</p>
+      <h2 class="section-title" style="font-size: clamp(32px, 3.5vw, 48px); line-height: 1.2; margin-bottom: 20px;">One unified dashboard.<br/><em>All your storefront themes.</em></h2>
+      <p class="section-desc" style="max-width: 100%; margin-bottom: 32px; font-size: 14px; line-height: 1.7; color: var(--stone);">Whichever exquisite storefront template you select to tell your brand's olfactory story, your operations remain beautifully simple. Centralize your inventory, manage product listings, configure custom checkout paths, and direct customer experiences inside the unified VESPR Admin Panel.</p>
+      
+      <div class="admin-feature-list">
+        <div class="admin-feature-item">
+          <div class="admin-feature-num">01</div>
+          <div class="admin-feature-content">
+            <h4>Centrally Managed Scent Bundles</h4>
+            <p>Design, track, and optimize custom perfume bundles (e.g. extracts paired with travel sets) directly inside your central admin interface. Changes sync instantly to any active storefront template.</p>
+          </div>
+        </div>
+        <div class="admin-feature-item">
+          <div class="admin-feature-num">02</div>
+          <div class="admin-feature-content">
+            <h4>Unified Olfactory Pyramids</h4>
+            <p>Upload and manage ingredients, structures, and scent note descriptors centrally, helping buyers across all storefronts discover their perfect fragrance.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Right Column: Autoplay browser mockup walkthrough video -->
+    <div class="admin-showcase-right">
+      <div class="admin-browser-frame">
+        <div class="admin-browser-header">
+          <div class="admin-browser-dots">
+            <div class="admin-browser-dot" style="background: #FF5F56;"></div>
+            <div class="admin-browser-dot" style="background: #FFBD2E;"></div>
+            <div class="admin-browser-dot" style="background: #27C93F;"></div>
+          </div>
+          <div style="font-family: var(--sans); font-size: 11px; letter-spacing: 0.5px; color: var(--stone); font-weight: 400;">vespr.store /admin panel</div>
+          <div style="width: 32px;"></div>
+        </div>
+        <div class="admin-video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/V3meLd6ylJM?autoplay=1&amp;mute=1&amp;loop=1&amp;playlist=V3meLd6ylJM&amp;controls=0&amp;modestbranding=1&amp;rel=0&amp;playsinline=1"
+            title="VESPR Atelier Walkthrough Video"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen></iframe>
+        </div>
       </div>
     </div>
   </div>
