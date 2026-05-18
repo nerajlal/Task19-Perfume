@@ -145,11 +145,11 @@
     padding: 120px 48px;
   }
   .admin-showcase-inner {
-    max-width: 1200px;
+    max-width: 1300px;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: 1fr 1.2fr;
-    gap: 64px;
+    grid-template-columns: 1fr 1.55fr;
+    gap: 56px;
     align-items: center;
   }
   .admin-showcase-left {
@@ -374,12 +374,16 @@
           <div style="font-family: var(--sans); font-size: 11px; letter-spacing: 0.5px; color: var(--stone); font-weight: 400;">vespr.store /admin panel</div>
           <div style="width: 32px;"></div>
         </div>
-        <div class="admin-video-wrapper">
-          <iframe
-            src="https://www.youtube.com/embed/V3meLd6ylJM?autoplay=1&amp;mute=1&amp;loop=1&amp;playlist=V3meLd6ylJM&amp;controls=0&amp;modestbranding=1&amp;rel=0&amp;playsinline=1"
-            title="VESPR Atelier Walkthrough Video"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen></iframe>
+        <div class="admin-video-wrapper" style="aspect-ratio: 1.8285714285714285;">
+          <style>
+            wistia-player[media-id='0dhesptrqu']:not(:defined) {
+              background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/0dhesptrqu/swatch');
+              display: block;
+              filter: blur(5px);
+              padding-top: 54.69%;
+            }
+          </style>
+          <wistia-player media-id="0dhesptrqu" aspect="1.8285714285714285" autoplay="true" muted="true" end-video-behavior="loop" playbar="false" style="display: block; width: 100%; height: 100%;"></wistia-player>
         </div>
       </div>
     </div>
@@ -393,4 +397,9 @@
   <p class="section-desc" style="margin: 0 auto 40px;">We can craft a bespoke fragrance experience tailored specifically to your brand heritage.</p>
   <a href="{{ route('landing') }}#contact" class="btn-primary">Request Custom Theme</a>
 </section>
+@endsection
+
+@section('scripts')
+  <script src="https://fast.wistia.com/player.js" async></script>
+  <script src="https://fast.wistia.com/embed/0dhesptrqu.js" async type="module"></script>
 @endsection
