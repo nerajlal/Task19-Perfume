@@ -12,7 +12,7 @@
             <p class="hero-subtitle">Discover VESPR's curated collection of artisanal fragrances. Crafted for those who appreciate the finer things in life.</p>
             <a href="{{ route('v1.all-products') }}" class="btn-primary">Explore Collection</a>
         </div>
-        <img src="{{ asset('images/hero-banner.png') }}" alt="VESPR Perfume" class="hero-image">
+        <img src="{{ asset('Images/hero-banner.png') }}" alt="VESPR Perfume" class="hero-image">
     </div>
     
     <!-- USP Trust Bar -->

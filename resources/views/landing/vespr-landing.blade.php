@@ -212,7 +212,7 @@
       text-align: center;
       margin-bottom: 72px;
     }
-    
+
     .features-head .section-desc {
       margin: 0 auto;
     }
@@ -251,7 +251,7 @@
     .feature-tab.active {
       background: var(--white);
       border-color: var(--sand);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
     }
 
     .tab-icon {
@@ -289,7 +289,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      border-bottom: 1px solid rgba(255,255,255,0.05);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     }
 
     .browser-dots {
@@ -326,7 +326,8 @@
 
     .browser-content {
       position: relative;
-      height: 480px;
+      width: 100%;
+      aspect-ratio: 2940 / 1606;
       background: var(--warm);
       overflow: hidden;
     }
@@ -350,7 +351,8 @@
     .tab-content-img {
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: contain;
+      background: var(--white);
     }
 
     .tab-content-overlay {
@@ -358,7 +360,7 @@
       bottom: 0;
       left: 0;
       right: 0;
-      background: linear-gradient(to top, rgba(30,26,22,0.85) 0%, rgba(30,26,22,0.4) 60%, transparent 100%);
+      background: linear-gradient(to top, rgba(30, 26, 22, 0.85) 0%, rgba(30, 26, 22, 0.4) 60%, transparent 100%);
       padding: 40px;
       color: var(--white);
       display: flex;
@@ -383,24 +385,357 @@
       max-width: 600px;
     }
 
+    /* ── CHECKOUT MOCKUP SHOWCASE ── */
+    .checkout-mockup {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      height: 100%;
+      background: var(--white);
+      color: var(--ink);
+    }
+
+    .checkout-form-pane {
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      border-right: 1px solid var(--sand);
+      text-align: left;
+    }
+
+    .checkout-brand-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+
+    .checkout-lock-icon {
+      color: var(--violet);
+      font-size: 14px;
+    }
+
+    .checkout-secure-title {
+      font-family: var(--sans);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--stone);
+      font-weight: 500;
+    }
+
+    .checkout-field-group {
+      margin-bottom: 16px;
+    }
+
+    .checkout-label {
+      font-family: var(--sans);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--stone);
+      margin-bottom: 8px;
+      display: block;
+      font-weight: 500;
+    }
+
+    .checkout-card-input-wrapper {
+      position: relative;
+      margin-bottom: 12px;
+    }
+
+    .checkout-card-brand-icon {
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #1A1F71;
+      font-size: 20px;
+    }
+
+    .checkout-input {
+      width: 100%;
+      background: var(--cream);
+      border: 1px solid var(--sand);
+      border-radius: 4px;
+      padding: 12px 16px;
+      font-family: var(--sans);
+      font-size: 14px;
+      color: var(--ink);
+      transition: border-color 0.3s ease;
+      outline: none;
+    }
+
+    .checkout-input:focus {
+      border-color: var(--violet);
+    }
+
+    .checkout-row-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .checkout-btn-pay {
+      background: var(--ink);
+      color: var(--white);
+      border: none;
+      border-radius: 4px;
+      padding: 16px;
+      font-family: var(--sans);
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      margin-top: 8px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .checkout-btn-pay:hover {
+      background: var(--violet);
+    }
+
+    .checkout-secure-footer {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-family: var(--sans);
+      font-size: 11px;
+      color: var(--stone);
+      margin-top: 24px;
+    }
+
+    .checkout-summary-pane {
+      background: var(--warm);
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: left;
+    }
+
+    .summary-title {
+      font-family: var(--serif);
+      font-size: 22px;
+      color: var(--ink);
+      margin-bottom: 24px;
+      font-weight: 400;
+    }
+
+    .summary-product {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .summary-product-img {
+      width: 56px;
+      height: 56px;
+      border-radius: 4px;
+      background-size: cover;
+      background-position: center;
+      border: 1px solid var(--sand);
+      flex-shrink: 0;
+    }
+
+    .summary-product-info {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .product-title {
+      font-family: var(--serif);
+      font-size: 16px;
+      color: var(--ink);
+      font-weight: 400;
+    }
+
+    .product-desc {
+      font-family: var(--sans);
+      font-size: 12px;
+      color: var(--stone);
+    }
+
+    .product-price {
+      font-family: var(--sans);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--ink);
+    }
+
+    .summary-divider {
+      height: 1px;
+      background: var(--sand);
+      margin: 20px 0;
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--sans);
+      font-size: 13px;
+      color: var(--stone);
+      margin-bottom: 12px;
+    }
+
+    .shipping-free {
+      color: var(--violet);
+      font-weight: 500;
+      letter-spacing: 1px;
+    }
+
+    .summary-row.total {
+      font-family: var(--serif);
+      font-size: 22px;
+      color: var(--ink);
+      font-weight: 400;
+      margin-bottom: 0;
+    }
+
+    /* ── SCENT BUNDLING SLIDER ── */
+    .bundle-slider {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .bundle-slide {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: var(--white);
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    .bundle-slide:nth-child(1) {
+      animation: bundleFade1 10s infinite ease-in-out;
+    }
+
+    .bundle-slide:nth-child(2) {
+      animation: bundleFade2 10s infinite ease-in-out;
+    }
+
+    .browser-content:hover .bundle-slide {
+      animation-play-state: paused;
+    }
+
+    @keyframes bundleFade1 {
+
+      0%,
+      45%,
+      100% {
+        opacity: 1;
+        z-index: 2;
+      }
+
+      50%,
+      95% {
+        opacity: 0;
+        z-index: 1;
+      }
+    }
+
+    @keyframes bundleFade2 {
+
+      0%,
+      45%,
+      100% {
+        opacity: 0;
+        z-index: 1;
+      }
+
+      50%,
+      95% {
+        opacity: 1;
+        z-index: 2;
+      }
+    }
+
     @media (max-width: 900px) {
       .features-showcase {
         grid-template-columns: 1fr;
         gap: 40px;
       }
+
       .features-tabs {
         flex-direction: row;
         overflow-x: auto;
         padding-bottom: 12px;
         -webkit-overflow-scrolling: touch;
       }
+
       .feature-tab {
         flex-shrink: 0;
         width: auto;
         padding: 14px 20px;
       }
+
+      .features-preview {
+        border: 1px solid var(--sand);
+        border-radius: 8px;
+        overflow: hidden;
+      }
+
       .browser-content {
-        height: 350px;
+        height: auto;
+        aspect-ratio: auto;
+        overflow: visible;
+        background: transparent;
+      }
+
+      .tab-content {
+        position: relative;
+        opacity: 1;
+        visibility: visible;
+        display: none;
+        background: var(--white);
+      }
+
+      .tab-content.active {
+        display: flex;
+      }
+
+      .tab-content-img {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 2940 / 1606;
+        object-fit: contain;
+        border-bottom: 1px solid var(--sand);
+      }
+
+      .tab-content-overlay {
+        position: relative;
+        background: var(--cream);
+        padding: 24px 20px;
+        color: var(--ink);
+        text-align: left;
+      }
+
+      .tab-content-title {
+        color: var(--ink);
+        font-size: 18px;
+        font-family: var(--serif);
+        margin-bottom: 6px;
+      }
+
+      .tab-content-desc {
+        color: var(--stone);
+        font-size: 13px;
+        line-height: 1.5;
+        max-width: 100%;
       }
     }
 
@@ -837,13 +1172,19 @@
     }
 
     @keyframes autoScrollLanding {
-      0%, 8% {
+
+      0%,
+      8% {
         transform: translateY(0);
       }
-      45%, 55% {
+
+      45%,
+      55% {
         transform: translateY(calc(-100% + 320px));
       }
-      92%, 100% {
+
+      92%,
+      100% {
         transform: translateY(0);
       }
     }
@@ -1155,7 +1496,8 @@
       <div class="features-head">
         <p class="section-label">Platform features</p>
         <h2 class="section-title">Everything a fragrance<br /><em>brand needs</em></h2>
-        <p class="section-desc">Meticulously engineered tools to convey the sensory details, brand legacy, and visual beauty of your scent collections.</p>
+        <p class="section-desc">Meticulously engineered tools to convey the sensory details, brand legacy, and visual
+          beauty of your scent collections.</p>
       </div>
 
       <div class="features-showcase">
@@ -1201,20 +1543,23 @@
               <div class="browser-btn-dummy"></div>
             </div>
           </div>
-          
+
           <div class="browser-content">
             <!-- Couture Themes Tab Content -->
             <div class="tab-content active" id="tab-themes">
-              <img src="https://images.unsplash.com/photo-1594035910387-fea47794261f?w=1000&auto=format&fit=crop&q=80" alt="Couture Themes" class="tab-content-img">
+              <img src="{{ asset('Images/landing/couture_theme.png') }}" alt="Couture Themes" class="tab-content-img"
+                style="object-fit: contain; background: var(--white);">
               <div class="tab-content-overlay">
                 <h3 class="tab-content-title">Couture Storefront Themes</h3>
-                <p class="tab-content-desc">Switch between world-class fragrance-specific designs with a single click. Every template is meticulously engineered to tell your brand’s olfactory story with premium elegance.</p>
+                <p class="tab-content-desc">Switch between world-class fragrance-specific designs with a single click.
+                  Every template is meticulously engineered to tell your brand’s olfactory story with premium elegance.
+                </p>
               </div>
             </div>
 
             <!-- Scent Bundling Tab Content -->
             <div class="tab-content" id="tab-bundling">
-              <img src="https://images.unsplash.com/photo-1547887537-6158d64c35b3?w=1000&auto=format&fit=crop&q=80" alt="Scent Bundling" class="tab-content-img">
+              <img src="{{ asset('Images/landing/bundle1.png') }}" alt="Scent Bundling" class="tab-content-img" style="object-fit: contain; background: var(--white);">
               <div class="tab-content-overlay">
                 <h3 class="tab-content-title">Intelligent Scent Bundles</h3>
                 <p class="tab-content-desc">Maximize your average order value automatically. Combine complementary perfume sprays, solid balms, and travel vials into custom gift sets directly inside checkout.</p>
@@ -1223,37 +1568,46 @@
 
             <!-- Multi-Brand Hub Tab Content -->
             <div class="tab-content" id="tab-multibrand">
-              <img src="https://images.unsplash.com/photo-1616949755610-8c9bbc08f138?w=1000&auto=format&fit=crop&q=80" alt="Multi-Brand Dashboard" class="tab-content-img">
+              <img src="{{ asset('Images/landing/multibrand_hub.png') }}" alt="Multi-Brand Dashboard"
+                class="tab-content-img" style="object-fit: contain; background: var(--white);">
               <div class="tab-content-overlay">
                 <h3 class="tab-content-title">Multi-Brand House Dashboard</h3>
-                <p class="tab-content-desc">Manage all of your custom fragrance labels, inventory logs, and product collections from one central, unified administration dashboard. Perfect for multi-line ateliers.</p>
+                <p class="tab-content-desc">Manage all of your custom fragrance labels, inventory logs, and product
+                  collections from one central, unified administration dashboard. Perfect for multi-line ateliers.</p>
               </div>
             </div>
 
             <!-- Velvet Speed Tab Content -->
             <div class="tab-content" id="tab-performance">
-              <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1000&auto=format&fit=crop&q=80" alt="Velvet Performance" class="tab-content-img">
+              <img src="{{ asset('Images/landing/velvet_speed.png') }}" alt="Velvet Performance" class="tab-content-img"
+                style="object-fit: contain; background: var(--white);">
               <div class="tab-content-overlay">
                 <h3 class="tab-content-title">Velvet Speed &amp; Analytics</h3>
-                <p class="tab-content-desc">Lightning-fast store loading speeds built to maximize perfume conversions. Every single millisecond is finely tuned to keep premium clientele engaged and buying.</p>
+                <p class="tab-content-desc">Lightning-fast store loading speeds built to maximize perfume conversions.
+                  Every single millisecond is finely tuned to keep premium clientele engaged and buying.</p>
               </div>
             </div>
 
             <!-- Discovery SEO Tab Content -->
             <div class="tab-content" id="tab-seo">
-              <img src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=1000&auto=format&fit=crop&q=80" alt="Discovery SEO" class="tab-content-img">
+              <img src="{{ asset('Images/landing/discovery_seo.png') }}" alt="Discovery SEO" class="tab-content-img"
+                style="object-fit: contain; background: var(--white);">
               <div class="tab-content-overlay">
                 <h3 class="tab-content-title">Olfactory Search &amp; Discovery SEO</h3>
-                <p class="tab-content-desc">Help potential clients find your specific scent profiles in organic search. Auto-generates structural metadata matching scent notes, bottles, and ingredients.</p>
+                <p class="tab-content-desc">Help potential clients find your specific scent profiles in organic search.
+                  Auto-generates structural metadata matching scent notes, bottles, and ingredients.</p>
               </div>
             </div>
 
             <!-- Secure Checkout Tab Content -->
             <div class="tab-content" id="tab-payments">
-              <img src="https://images.unsplash.com/photo-1563013544-824ae1d704d3?w=1000&auto=format&fit=crop&q=80" alt="Secure Checkout" class="tab-content-img">
+              <img src="{{ asset('Images/landing/checkout.png') }}" alt="Secure Checkout" class="tab-content-img"
+                style="object-fit: contain; background: var(--white);">
               <div class="tab-content-overlay">
                 <h3 class="tab-content-title">Secure &amp; Elegant Checkout</h3>
-                <p class="tab-content-desc">Fully secure, high-trust encrypted payment experiences built for high-value transactions. Seamlessly accepts credit cards, UPI, and international methods out of the box.</p>
+                <p class="tab-content-desc">Fully secure, high-trust encrypted payment payment gateways built for
+                  high-value conversions. Seamlessly integrates credit cards, Apple Pay, Stripe, and global gateways out
+                  of the box.</p>
               </div>
             </div>
           </div>
@@ -1496,91 +1850,91 @@
         </div>
 
         <!-- <div class="faq-item">
-            <button class="faq-question">
-              <span>Can I migrate my existing store from Shopify or WooCommerce?</span>
-              <span class="faq-toggle-icon">+</span>
-            </button>
-            <div class="faq-answer">
-              <div class="faq-answer-content">
-                Yes! We provide built-in migration tools that allow you to import your products, collections, pricing lists, and media assets using standard CSV formatting. If you require assistance, our support team is available on WhatsApp and email to help make the transition completely seamless.
+              <button class="faq-question">
+                <span>Can I migrate my existing store from Shopify or WooCommerce?</span>
+                <span class="faq-toggle-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                <div class="faq-answer-content">
+                  Yes! We provide built-in migration tools that allow you to import your products, collections, pricing lists, and media assets using standard CSV formatting. If you require assistance, our support team is available on WhatsApp and email to help make the transition completely seamless.
+                </div>
               </div>
-            </div>
-          </div> -->
+            </div> -->
       </div>
     </div>
   </section>
 
   <!-- BRAND SYSTEM -->
   <!-- <section class="brand" id="brand">
-      <div class="brand-inner">
-        <div class="brand-head">
-          <p class="section-label">Brand system</p>
-          <h2 class="section-title">Colour palette &<br /><em>typography</em></h2>
-        </div>
-        <div class="brand-grid">
-          <div class="brand-block">
-            <h4>Neutral colour palette</h4>
-            <div class="palette" style="margin-bottom: 36px;">
-              <div class="swatch" style="background:#F5F0E8; border: 1px solid #D4C9B0;"><span>Cream</span></div>
-              <div class="swatch" style="background:#EDE6D6;"><span>Warm</span></div>
-              <div class="swatch" style="background:#D4C9B0;"><span>Sand</span></div>
-              <div class="swatch" style="background:#9C9080;"><span>Stone</span></div>
-              <div class="swatch" style="background:#5C5147;"><span>Bark</span></div>
-              <div class="swatch" style="background:#1E1A16;"><span>Ink</span></div>
-              <div class="swatch" style="background:#7C5C8A;"><span>Violet</span></div>
-            </div>
-            <h4 style="margin-top: 48px;">Usage</h4>
-            <div style="display:grid; gap:8px; margin-top:12px;">
-              <div style="display:flex; align-items:center; gap:12px; font-size:13px; color: var(--bark);">
-                <div
-                  style="width:16px; height:16px; background:#F5F0E8; border:1px solid #D4C9B0; border-radius:2px; flex-shrink:0;">
+        <div class="brand-inner">
+          <div class="brand-head">
+            <p class="section-label">Brand system</p>
+            <h2 class="section-title">Colour palette &<br /><em>typography</em></h2>
+          </div>
+          <div class="brand-grid">
+            <div class="brand-block">
+              <h4>Neutral colour palette</h4>
+              <div class="palette" style="margin-bottom: 36px;">
+                <div class="swatch" style="background:#F5F0E8; border: 1px solid #D4C9B0;"><span>Cream</span></div>
+                <div class="swatch" style="background:#EDE6D6;"><span>Warm</span></div>
+                <div class="swatch" style="background:#D4C9B0;"><span>Sand</span></div>
+                <div class="swatch" style="background:#9C9080;"><span>Stone</span></div>
+                <div class="swatch" style="background:#5C5147;"><span>Bark</span></div>
+                <div class="swatch" style="background:#1E1A16;"><span>Ink</span></div>
+                <div class="swatch" style="background:#7C5C8A;"><span>Violet</span></div>
+              </div>
+              <h4 style="margin-top: 48px;">Usage</h4>
+              <div style="display:grid; gap:8px; margin-top:12px;">
+                <div style="display:flex; align-items:center; gap:12px; font-size:13px; color: var(--bark);">
+                  <div
+                    style="width:16px; height:16px; background:#F5F0E8; border:1px solid #D4C9B0; border-radius:2px; flex-shrink:0;">
+                  </div>
+                  Cream — page backgrounds
                 </div>
-                Cream — page backgrounds
-              </div>
-              <div style="display:flex; align-items:center; gap:12px; font-size:13px; color: var(--bark);">
-                <div style="width:16px; height:16px; background:#D4C9B0; border-radius:2px; flex-shrink:0;"></div>
-                Sand — borders, dividers
-              </div>
-              <div style="display:flex; align-items:center; gap:12px; font-size:13px; color: var(--bark);">
-                <div style="width:16px; height:16px; background:#9C9080; border-radius:2px; flex-shrink:0;"></div>
-                Stone — body text, secondary
-              </div>
-              <div style="display:flex; align-items:center; gap:12px; font-size:13px; color: var(--bark);">
-                <div style="width:16px; height:16px; background:#1E1A16; border-radius:2px; flex-shrink:0;"></div>
-                Ink — headings, CTAs
-              </div>
-              <div style="display:flex; align-items:center; gap:12px; font-size:13px; color: var(--bark);">
-                <div style="width:16px; height:16px; background:#7C5C8A; border-radius:2px; flex-shrink:0;"></div>
-                Violet — accents, highlights
+                <div style="display:flex; align-items:center; gap:12px; font-size:13px; color: var(--bark);">
+                  <div style="width:16px; height:16px; background:#D4C9B0; border-radius:2px; flex-shrink:0;"></div>
+                  Sand — borders, dividers
+                </div>
+                <div style="display:flex; align-items:center; gap:12px; font-size:13px; color: var(--bark);">
+                  <div style="width:16px; height:16px; background:#9C9080; border-radius:2px; flex-shrink:0;"></div>
+                  Stone — body text, secondary
+                </div>
+                <div style="display:flex; align-items:center; gap:12px; font-size:13px; color: var(--bark);">
+                  <div style="width:16px; height:16px; background:#1E1A16; border-radius:2px; flex-shrink:0;"></div>
+                  Ink — headings, CTAs
+                </div>
+                <div style="display:flex; align-items:center; gap:12px; font-size:13px; color: var(--bark);">
+                  <div style="width:16px; height:16px; background:#7C5C8A; border-radius:2px; flex-shrink:0;"></div>
+                  Violet — accents, highlights
+                </div>
               </div>
             </div>
-          </div>
-          <div class="brand-block">
-            <h4>Font pairing</h4>
-            <div class="font-sample">
-              <div class="fs-name">Display — Cormorant Garamond</div>
-              <div class="fs-display">The Art of Scent</div>
-              <div style="font-size:12px; color:var(--stone); margin-top:6px; font-weight:300;">Light 300 · Italic for
-                emphasis · Headlines &amp; hero text</div>
-            </div>
-            <div style="height:1px; background: var(--sand); margin: 24px 0;"></div>
-            <div class="font-sample">
-              <div class="fs-name">Body — DM Sans</div>
-              <div class="fs-body">Sell fragrance, effortlessly. Built for independent perfumers and luxury fragrance
-                houses.</div>
-              <div style="font-size:12px; color:var(--stone); margin-top:6px; font-weight:300;">Light 300 · Regular 400 ·
-                UI, navigation, body copy</div>
-            </div>
-            <div style="height:1px; background: var(--sand); margin: 24px 0;"></div>
-            <div style="font-size:12px; color:var(--stone); font-weight:300; line-height:1.8;">
-              <strong style="font-weight:500; color:var(--bark);">Why this pairing:</strong> Cormorant brings old-world
-              fragrance house elegance. DM Sans keeps the SaaS UI clean and readable. The contrast between serif display and
-              geometric sans signals both luxury and modern simplicity.
+            <div class="brand-block">
+              <h4>Font pairing</h4>
+              <div class="font-sample">
+                <div class="fs-name">Display — Cormorant Garamond</div>
+                <div class="fs-display">The Art of Scent</div>
+                <div style="font-size:12px; color:var(--stone); margin-top:6px; font-weight:300;">Light 300 · Italic for
+                  emphasis · Headlines &amp; hero text</div>
+              </div>
+              <div style="height:1px; background: var(--sand); margin: 24px 0;"></div>
+              <div class="font-sample">
+                <div class="fs-name">Body — DM Sans</div>
+                <div class="fs-body">Sell fragrance, effortlessly. Built for independent perfumers and luxury fragrance
+                  houses.</div>
+                <div style="font-size:12px; color:var(--stone); margin-top:6px; font-weight:300;">Light 300 · Regular 400 ·
+                  UI, navigation, body copy</div>
+              </div>
+              <div style="height:1px; background: var(--sand); margin: 24px 0;"></div>
+              <div style="font-size:12px; color:var(--stone); font-weight:300; line-height:1.8;">
+                <strong style="font-weight:500; color:var(--bark);">Why this pairing:</strong> Cormorant brings old-world
+                fragrance house elegance. DM Sans keeps the SaaS UI clean and readable. The contrast between serif display and
+                geometric sans signals both luxury and modern simplicity.
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </section> -->
+      </section> -->
 
   <!-- CTA -->
   <section class="cta-section">
