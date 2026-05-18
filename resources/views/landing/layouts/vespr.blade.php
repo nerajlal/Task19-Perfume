@@ -292,47 +292,13 @@
         <form id="demoAccessForm">
             @csrf
             <input type="hidden" id="targetDemoUrl">
-            <div style="display: flex; gap: 15px; margin-bottom: 1.5rem;">
-                <div style="flex: 1;">
-                    <label style="display: block; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; color: var(--stone);">Full Name</label>
-                    <input type="text" name="name" style="width: 100%; padding: 1rem; border: 1px solid var(--sand); border-radius: 2px; background: #fcfcfc; font-family: var(--sans);" required placeholder="Enter your name">
-                </div>
-                <div style="flex: 1;">
-                    <label style="display: block; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; color: var(--stone);">Country</label>
-                    <input type="text" name="country" style="width: 100%; padding: 1rem; border: 1px solid var(--sand); border-radius: 2px; background: #fcfcfc; font-family: var(--sans);" required placeholder="Your Country">
-                </div>
-            </div>
             <div style="margin-bottom: 1.5rem;">
+                <label style="display: block; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; color: var(--stone);">Business Name</label>
+                <input type="text" name="business_name" style="width: 100%; padding: 1rem; border: 1px solid var(--sand); border-radius: 2px; background: #fcfcfc; font-family: var(--sans);" required placeholder="Your Brand Name">
+            </div>
+            <div style="margin-bottom: 2rem;">
                 <label style="display: block; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; color: var(--stone);">Business Email</label>
                 <input type="email" name="email" style="width: 100%; padding: 1rem; border: 1px solid var(--sand); border-radius: 2px; background: #fcfcfc; font-family: var(--sans);" required placeholder="name@company.com">
-            </div>
-            <div style="margin-bottom: 1.5rem;">
-                <label style="display: block; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; color: var(--stone);">Phone Number</label>
-                <div style="display: flex; gap: 10px;">
-                    <select name="country_code" style="width: 100px; padding: 1rem; border: 1px solid var(--sand); border-radius: 2px; background: #fcfcfc; font-family: var(--sans);">
-                        <option value="+91">+91 (IN)</option>
-                        <option value="+971">+971 (UAE)</option>
-                        <option value="+1">+1 (US)</option>
-                        <option value="+44">+44 (UK)</option>
-                        <option value="+33">+33 (FR)</option>
-                        <option value="+966">+966 (KSA)</option>
-                        <option value="+9Om">+968 (OM)</option>
-                    </select>
-                    <input type="tel" name="phone" pattern="[0-9]{10}" title="Please enter a 10-digit phone number" style="flex: 1; padding: 1rem; border: 1px solid var(--sand); border-radius: 2px; background: #fcfcfc; font-family: var(--sans);" required placeholder="10-digit mobile number">
-                </div>
-            </div>
-            <div style="display: flex; gap: 15px; margin-bottom: 2rem;">
-                <div style="flex: 1;">
-                    <label style="display: block; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; color: var(--stone);">Business Name</label>
-                    <input type="text" name="business_name" style="width: 100%; padding: 1rem; border: 1px solid var(--sand); border-radius: 2px; background: #fcfcfc; font-family: var(--sans);" required placeholder="Your Brand Name">
-                </div>
-                <div style="flex: 1;">
-                    <label style="display: block; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; color: var(--stone);">Business Type</label>
-                    <select name="business_status" style="width: 100%; padding: 1rem; border: 1px solid var(--sand); border-radius: 2px; background: #fcfcfc; font-family: var(--sans);" required>
-                        <option value="New Business">New Business</option>
-                        <option value="Existing Business">Existing Business</option>
-                    </select>
-                </div>
             </div>
             <button type="submit" id="submitDemoBtn" class="btn-primary" style="width: 100%;">Access Live Demo</button>
         </form>

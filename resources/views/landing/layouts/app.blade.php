@@ -538,20 +538,12 @@
             <form id="demoAccessForm">
                 <input type="hidden" id="targetDemoUrl">
                 <div class="demo-form-group">
-                    <label>Full Name</label>
-                    <input type="text" class="demo-input" required placeholder="Enter your name">
+                    <label>Business Name</label>
+                    <input type="text" name="business_name" class="demo-input" required placeholder="Your Brand Name">
                 </div>
                 <div class="demo-form-group">
                     <label>Business Email</label>
-                    <input type="email" class="demo-input" required placeholder="name@company.com">
-                </div>
-                <div class="demo-form-group">
-                    <label>Phone Number</label>
-                    <input type="tel" class="demo-input" required placeholder="+1 (555) 000-0000">
-                </div>
-                <div class="demo-form-group">
-                    <label>Business Name</label>
-                    <input type="text" class="demo-input" required placeholder="Your Brand Name">
+                    <input type="email" name="email" class="demo-input" required placeholder="name@company.com">
                 </div>
                 <button type="submit" class="btn-premium" style="width: 100%; border: none; cursor: pointer;">Access Live Demo</button>
             </form>

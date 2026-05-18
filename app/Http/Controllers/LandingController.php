@@ -20,13 +20,8 @@ class LandingController extends Controller
     public function handleDemoRequest(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
-            'country_code' => 'required|string|max:10',
-            'phone' => 'required|string|regex:/^[0-9]{10}$/',
             'business_name' => 'required|string|max:255',
-            'country' => 'required|string|max:255',
-            'business_status' => 'required|string|max:255',
             'target_url' => 'nullable|string'
         ]);
 
@@ -35,15 +30,9 @@ class LandingController extends Controller
             $senderEmail = config('mail.from.address');
             $appName = config('app.name');
 
-            $fullPhone = $validated['country_code'] . ' ' . $validated['phone'];
-
             $messageContent = "New Demo Request Received for {$appName}:\n\n" .
-                             "Name: {$validated['name']}\n" .
-                             "Country: {$validated['country']}\n" .
                              "Email: {$validated['email']}\n" .
-                             "Phone: {$fullPhone}\n" .
-                             "Business: {$validated['business_name']}\n" .
-                             "Business Type: {$validated['business_status']}\n" .
+                             "Business Name: {$validated['business_name']}\n" .
                              "Requested Demo: {$validated['target_url']}\n\n" .
                              "Timestamp: " . now()->format('Y-m-d H:i:s');
 
