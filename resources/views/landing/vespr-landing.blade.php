@@ -197,59 +197,211 @@
       display: none;
     }
 
-    /* ── FEATURES ── */
+    /* ── FEATURES SHOWCASE ── */
     .features {
       background: var(--cream);
+      padding: 120px 48px;
     }
 
     .features-inner {
-      max-width: 1100px;
+      max-width: 1200px;
       margin: 0 auto;
     }
 
-    .features-grid {
+    .features-head {
+      text-align: center;
+      margin-bottom: 72px;
+    }
+    
+    .features-head .section-desc {
+      margin: 0 auto;
+    }
+
+    .features-showcase {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2px;
-      margin-top: 64px;
+      grid-template-columns: 350px 1fr;
+      gap: 64px;
+      align-items: center;
     }
 
-    .feature {
-      background: var(--white);
-      padding: 40px 36px;
-      transition: transform var(--transition);
+    .features-tabs {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
     }
 
-    .feature:hover {
-      transform: translateY(-4px);
-    }
-
-    .feature-icon {
-      width: 40px;
-      height: 40px;
-      border: 1px solid var(--sand);
-      border-radius: 2px;
+    .feature-tab {
+      background: transparent;
+      border: 1px solid transparent;
+      padding: 20px 24px;
+      text-align: left;
+      cursor: pointer;
       display: flex;
       align-items: center;
-      justify-content: center;
-      margin-bottom: 24px;
-      color: var(--violet);
-      font-size: 18px;
+      gap: 16px;
+      border-radius: 4px;
+      transition: var(--transition);
+      width: 100%;
     }
 
-    .feature-title {
+    .feature-tab:hover {
+      background: rgba(237, 230, 214, 0.5);
+    }
+
+    .feature-tab.active {
+      background: var(--white);
+      border-color: var(--sand);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+    }
+
+    .tab-icon {
+      font-size: 18px;
+      color: var(--stone);
+      transition: color 0.3s ease;
+      width: 24px;
+      text-align: center;
+    }
+
+    .feature-tab.active .tab-icon {
+      color: var(--violet);
+    }
+
+    .tab-label {
       font-family: var(--serif);
       font-size: 20px;
       font-weight: 400;
       color: var(--ink);
-      margin-bottom: 10px;
     }
 
-    .feature-desc {
+    /* Browser Mockup Frame */
+    .features-preview {
+      background: var(--white);
+      border: 1px solid var(--sand);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 30px 60px rgba(30, 26, 22, 0.08);
+      position: relative;
+    }
+
+    .browser-header {
+      background: var(--ink);
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .browser-dots {
+      display: flex;
+      gap: 8px;
+    }
+
+    .browser-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .browser-title {
+      font-family: var(--sans);
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.4);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .browser-actions {
+      display: flex;
+      gap: 12px;
+    }
+
+    .browser-btn-dummy {
+      width: 12px;
+      height: 12px;
+      border-radius: 2px;
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .browser-content {
+      position: relative;
+      height: 480px;
+      background: var(--warm);
+      overflow: hidden;
+    }
+
+    .tab-content {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .tab-content.active {
+      opacity: 1;
+      visibility: visible;
+      z-index: 2;
+    }
+
+    .tab-content-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .tab-content-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(to top, rgba(30,26,22,0.85) 0%, rgba(30,26,22,0.4) 60%, transparent 100%);
+      padding: 40px;
+      color: var(--white);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      text-align: left;
+    }
+
+    .tab-content-title {
+      font-family: var(--serif);
+      font-size: 28px;
+      font-weight: 300;
+      color: var(--cream);
+    }
+
+    .tab-content-desc {
+      font-family: var(--sans);
       font-size: 14px;
       font-weight: 300;
-      color: var(--stone);
-      line-height: 1.8;
+      color: rgba(255, 255, 255, 0.8);
+      line-height: 1.6;
+      max-width: 600px;
+    }
+
+    @media (max-width: 900px) {
+      .features-showcase {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      .features-tabs {
+        flex-direction: row;
+        overflow-x: auto;
+        padding-bottom: 12px;
+        -webkit-overflow-scrolling: touch;
+      }
+      .feature-tab {
+        flex-shrink: 0;
+        width: auto;
+        padding: 14px 20px;
+      }
+      .browser-content {
+        height: 350px;
+      }
     }
 
     /* ── TESTIMONIALS ── */
@@ -1000,44 +1152,111 @@
   <!-- FEATURES -->
   <section class="features" id="features">
     <div class="features-inner">
-      <p class="section-label">Platform features</p>
-      <h2 class="section-title">Everything a fragrance<br /><em>brand needs</em></h2>
-      <div class="features-grid">
-        <div class="feature">
-          <div class="feature-icon">◈</div>
-          <div class="feature-title">Couture themes</div>
-          <div class="feature-desc">Switch between world-class fragrance-specific designs with a single click. Every
-            template built for high-conversion scent storytelling.</div>
+      <div class="features-head">
+        <p class="section-label">Platform features</p>
+        <h2 class="section-title">Everything a fragrance<br /><em>brand needs</em></h2>
+        <p class="section-desc">Meticulously engineered tools to convey the sensory details, brand legacy, and visual beauty of your scent collections.</p>
+      </div>
+
+      <div class="features-showcase">
+        <!-- Left Side: Interactive Tabs -->
+        <div class="features-tabs">
+          <button class="feature-tab active" data-tab="themes">
+            <span class="tab-icon">◈</span>
+            <span class="tab-label">Couture Themes</span>
+          </button>
+          <button class="feature-tab" data-tab="bundling">
+            <span class="tab-icon">◎</span>
+            <span class="tab-label">Scent Bundling</span>
+          </button>
+          <button class="feature-tab" data-tab="multibrand">
+            <span class="tab-icon">⊞</span>
+            <span class="tab-label">Multi-Brand Hub</span>
+          </button>
+          <button class="feature-tab" data-tab="performance">
+            <span class="tab-icon">◐</span>
+            <span class="tab-label">Velvet Speed</span>
+          </button>
+          <button class="feature-tab" data-tab="seo">
+            <span class="tab-icon">◉</span>
+            <span class="tab-label">Discovery SEO</span>
+          </button>
+          <button class="feature-tab" data-tab="payments">
+            <span class="tab-icon">◇</span>
+            <span class="tab-label">Secure Checkout</span>
+          </button>
         </div>
-        <div class="feature">
-          <div class="feature-icon">◎</div>
-          <div class="feature-title">Scent bundling</div>
-          <div class="feature-desc">Maximise revenue with intelligent fragrance combo pools. Suggest complementary scents
-            automatically at checkout.</div>
-        </div>
-        <div class="feature">
-          <div class="feature-icon">⊞</div>
-          <div class="feature-title">Multi-brand dashboard</div>
-          <div class="feature-desc">Manage multiple fragrance labels from one elite dashboard. Perfect for houses that
-            carry more than one line.</div>
-        </div>
-        <div class="feature">
-          <div class="feature-icon">◐</div>
-          <div class="feature-title">Velvet performance</div>
-          <div class="feature-desc">Ultra-fast loading built for high-conversion fragrance sales. Every millisecond
-            optimised so customers stay and buy.</div>
-        </div>
-        <div class="feature">
-          <div class="feature-icon">◉</div>
-          <div class="feature-title">Discovery SEO</div>
-          <div class="feature-desc">Built-in tools to dominate organic search for your scents. Structured data, meta
-            tools, and sitemap generation included.</div>
-        </div>
-        <div class="feature">
-          <div class="feature-icon">◇</div>
-          <div class="feature-title">Secure payments</div>
-          <div class="feature-desc">Robust, encrypted payment flows for high-value trust. Accept cards, UPI, and
-            international payments out of the box.</div>
+
+        <!-- Right Side: Browser Mockup Showcase -->
+        <div class="features-preview">
+          <div class="browser-header">
+            <div class="browser-dots">
+              <div class="browser-dot" style="background: #FF5F56;"></div>
+              <div class="browser-dot" style="background: #FFBD2E;"></div>
+              <div class="browser-dot" style="background: #27C93F;"></div>
+            </div>
+            <div class="browser-title">vespr.platform // brand_manager</div>
+            <div class="browser-actions">
+              <div class="browser-btn-dummy"></div>
+              <div class="browser-btn-dummy"></div>
+            </div>
+          </div>
+          
+          <div class="browser-content">
+            <!-- Couture Themes Tab Content -->
+            <div class="tab-content active" id="tab-themes">
+              <img src="https://images.unsplash.com/photo-1594035910387-fea47794261f?w=1000&auto=format&fit=crop&q=80" alt="Couture Themes" class="tab-content-img">
+              <div class="tab-content-overlay">
+                <h3 class="tab-content-title">Couture Storefront Themes</h3>
+                <p class="tab-content-desc">Switch between world-class fragrance-specific designs with a single click. Every template is meticulously engineered to tell your brand’s olfactory story with premium elegance.</p>
+              </div>
+            </div>
+
+            <!-- Scent Bundling Tab Content -->
+            <div class="tab-content" id="tab-bundling">
+              <img src="https://images.unsplash.com/photo-1547887537-6158d64c35b3?w=1000&auto=format&fit=crop&q=80" alt="Scent Bundling" class="tab-content-img">
+              <div class="tab-content-overlay">
+                <h3 class="tab-content-title">Intelligent Scent Bundles</h3>
+                <p class="tab-content-desc">Maximize your average order value automatically. Combine complementary perfume sprays, solid balms, and travel vials into custom gift sets directly inside checkout.</p>
+              </div>
+            </div>
+
+            <!-- Multi-Brand Hub Tab Content -->
+            <div class="tab-content" id="tab-multibrand">
+              <img src="https://images.unsplash.com/photo-1616949755610-8c9bbc08f138?w=1000&auto=format&fit=crop&q=80" alt="Multi-Brand Dashboard" class="tab-content-img">
+              <div class="tab-content-overlay">
+                <h3 class="tab-content-title">Multi-Brand House Dashboard</h3>
+                <p class="tab-content-desc">Manage all of your custom fragrance labels, inventory logs, and product collections from one central, unified administration dashboard. Perfect for multi-line ateliers.</p>
+              </div>
+            </div>
+
+            <!-- Velvet Speed Tab Content -->
+            <div class="tab-content" id="tab-performance">
+              <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1000&auto=format&fit=crop&q=80" alt="Velvet Performance" class="tab-content-img">
+              <div class="tab-content-overlay">
+                <h3 class="tab-content-title">Velvet Speed &amp; Analytics</h3>
+                <p class="tab-content-desc">Lightning-fast store loading speeds built to maximize perfume conversions. Every single millisecond is finely tuned to keep premium clientele engaged and buying.</p>
+              </div>
+            </div>
+
+            <!-- Discovery SEO Tab Content -->
+            <div class="tab-content" id="tab-seo">
+              <img src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=1000&auto=format&fit=crop&q=80" alt="Discovery SEO" class="tab-content-img">
+              <div class="tab-content-overlay">
+                <h3 class="tab-content-title">Olfactory Search &amp; Discovery SEO</h3>
+                <p class="tab-content-desc">Help potential clients find your specific scent profiles in organic search. Auto-generates structural metadata matching scent notes, bottles, and ingredients.</p>
+              </div>
+            </div>
+
+            <!-- Secure Checkout Tab Content -->
+            <div class="tab-content" id="tab-payments">
+              <img src="https://images.unsplash.com/photo-1563013544-824ae1d704d3?w=1000&auto=format&fit=crop&q=80" alt="Secure Checkout" class="tab-content-img">
+              <div class="tab-content-overlay">
+                <h3 class="tab-content-title">Secure &amp; Elegant Checkout</h3>
+                <p class="tab-content-desc">Fully secure, high-trust encrypted payment experiences built for high-value transactions. Seamlessly accepts credit cards, UPI, and international methods out of the box.</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -1379,6 +1598,7 @@
 @section('scripts')
   <script>
     document.addEventListener('DOMContentLoaded', () => {
+      // FAQ Accordion Logic
       const faqQuestions = document.querySelectorAll('.faq-question');
       faqQuestions.forEach(q => {
         q.addEventListener('click', () => {
@@ -1400,6 +1620,27 @@
           } else {
             item.classList.remove('active');
             answer.style.maxHeight = null;
+          }
+        });
+      });
+
+      // Interactive Features Tabs Logic
+      const featureTabs = document.querySelectorAll('.feature-tab');
+      const tabContents = document.querySelectorAll('.tab-content');
+
+      featureTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          const targetTab = tab.getAttribute('data-tab');
+
+          // Deactivate all tabs and contents
+          featureTabs.forEach(t => t.classList.remove('active'));
+          tabContents.forEach(c => c.classList.remove('active'));
+
+          // Activate selected tab and target content
+          tab.classList.add('active');
+          const activeContent = document.getElementById(`tab-${targetTab}`);
+          if (activeContent) {
+            activeContent.classList.add('active');
           }
         });
       });
