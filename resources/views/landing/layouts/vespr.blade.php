@@ -263,7 +263,7 @@
       <li><a href="{{ route('landing') }}#features">Features</a></li>
       <li><a href="{{ route('landing.templates') }}">Templates</a></li>
       <li><a href="{{ route('landing') }}#pricing">Pricing</a></li>
-      <li><a href="{{ route('landing.templates') }}">Live demos</a></li>
+      <li><a href="{{ route('landing') }}#faq">FAQ</a></li>
     </ul>
   </div>
   <div>

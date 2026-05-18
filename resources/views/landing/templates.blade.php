@@ -44,15 +44,18 @@
     height: 400px;
     background: var(--warm);
     overflow: hidden;
+    position: relative;
   }
   .template-preview img {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 1s ease;
+    height: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: transform 4s ease-in-out;
   }
   .template-card:hover .template-preview img {
-    transform: scale(1.05);
+    transform: translateY(calc(-100% + 400px));
   }
 
   .template-info {
