@@ -40,6 +40,18 @@
     box-shadow: 0 20px 40px rgba(0,0,0,0.05);
   }
 
+  @keyframes autoScrollTemplates {
+    0%, 8% {
+      transform: translateY(0);
+    }
+    45%, 55% {
+      transform: translateY(calc(-100% + 400px));
+    }
+    92%, 100% {
+      transform: translateY(0);
+    }
+  }
+
   .template-preview {
     height: 400px;
     background: var(--warm);
@@ -52,10 +64,10 @@
     position: absolute;
     top: 0;
     left: 0;
-    transition: transform 4s ease-in-out;
+    animation: autoScrollTemplates 18s ease-in-out infinite;
   }
   .template-card:hover .template-preview img {
-    transform: translateY(calc(-100% + 400px));
+    animation-play-state: paused;
   }
 
   .template-info {

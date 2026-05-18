@@ -734,6 +734,18 @@
       background: var(--warm);
     }
 
+    @keyframes autoScrollLanding {
+      0%, 8% {
+        transform: translateY(0);
+      }
+      45%, 55% {
+        transform: translateY(calc(-100% + 320px));
+      }
+      92%, 100% {
+        transform: translateY(0);
+      }
+    }
+
     .t-preview-img {
       height: 320px;
       overflow: hidden;
@@ -747,11 +759,11 @@
       position: absolute;
       top: 0;
       left: 0;
-      transition: transform 4s ease-in-out;
+      animation: autoScrollLanding 16s ease-in-out infinite;
     }
 
     .t-preview-card:hover .t-preview-img img {
-      transform: translateY(calc(-100% + 320px));
+      animation-play-state: paused;
     }
 
     .t-preview-info {
